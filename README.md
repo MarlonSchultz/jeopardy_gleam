@@ -19,6 +19,7 @@ Further documentation can be found at <https://hexdocs.pm/jeopardy_gleam>.
 ## Development
 
 ```sh
+gleam run -m lustre/dev start # run development server
 gleam run   # Run the project
 gleam test  # Run the tests
 ```
