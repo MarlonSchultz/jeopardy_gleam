@@ -1,8 +1,9 @@
 import gleam/dynamic
-import gleam/int
+import gleam/io
 import gleam/json
 import gleam/list
-import gleam/result
+import gleam/string
+import gleam/string_builder
 import lustre
 import lustre/element.{text}
 import lustre/element/html.{button, div, p}
@@ -16,56 +17,46 @@ pub fn main() {
 }
 
 fn get_json() -> String {
-  "\"categories\": [
-    {
-      \"category\": \"Science\",
-      \"answers\": [
-        {
-          \"question\": \"What is the boiling point of water?\",
-          \"answer\": \"100°C\"
-        }
-        ]
-      }
-    ]"
+  "{\"categories\":  [
+    {\"cat_name\": \"cat1\"},
+    {\"cat_name\": \"cat2\"},
+    {\"cat_name\": \"cat3\"}
+  ]
+  }"
+}
+
+pub type SingleCategory {
+  SingleCategory(cat_name: String)
 }
 
 pub type JsonCategories {
-  JsonCategories(categories: List(JsonCategory))
+  JsonCategories(categories: List(SingleCategory))
 }
 
-pub type JsonCategory {
-  JsonCategory(category: String)
-}
-
+// Function to extract categories and display them
 fn extract_categories(json_string: String) -> String {
-  // Define a decoder for the "category" field inside each object in the "categories" array
-  let category_decoder =
-    dynamic.decode1(JsonCategory, dynamic.field("category", dynamic.string))
+  // Define a decoder for a single category object
+  let single_category_decoder =
+    dynamic.decode1(SingleCategory, dynamic.field("cat_name", dynamic.string))
 
-  // Define a decoder for the "categories" array wrapped in the JsonCategories type
-  let categories_decoder =
+  // Define a decoder for the list of categories
+  let decoder =
     dynamic.decode1(
       JsonCategories,
-      dynamic.field("categories", dynamic.list(category_decoder)),
+      dynamic.field("categories", dynamic.list(single_category_decoder)),
     )
 
-  let decoded = json.decode(json_string, categories_decoder)
+  // Decode the JSON string
+  let decoded = json.decode(json_string, decoder)
 
-  // Extract the first category or return the fallback string
+  // Extract categories or return a fallback message
   case decoded {
-    Ok(JsonCategories([JsonCategory(category)])) -> category
-    Error(error) -> decode_error_to_string(error)
-    _ -> "json decode failed"
-    // Fallback if decoding fails
+    Ok(JsonCategories(categories)) -> turn_json_list_into_string(categories)
+    Error(_) -> "Error decoding JSON"
   }
 }
 
-fn decode_error_to_string(error: json.DecodeError) -> String {
-  case error {
-    json.UnexpectedEndOfInput -> "Unexpected end of input"
-    json.UnexpectedByte(message, second) ->
-      "Unexpected byte: " <> message <> second
-    json.UnexpectedSequence(message, _) -> "Unexpected sequence: " <> message
-    _ -> "dont know"
-  }
+fn turn_json_list_into_string(lists: List(SingleCategory)) -> String {
+  let listed = list.map(lists, fn(single) { single.cat_name })
+  string.join(listed, ", ")
 }
