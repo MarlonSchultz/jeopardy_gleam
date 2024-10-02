@@ -3,6 +3,7 @@ import gleam/json
 import gleam/list
 import gleam/string
 import lustre
+import lustre/effect
 import lustre/element.{text}
 import lustre/element/html.{div}
 
@@ -67,9 +68,32 @@ fn get_json() -> String {
   }"
 }
 
+// Lets try to add a simple model with msg
+type Msg {
+  Incr
+}
+
+fn update(model, msg) -> #(Model, effect.Effect(Msg)) {
+  case msg {
+    Incr -> #(Model(..model, count: model.count + 1), effect.none())
+  }
+}
+
+type Model {
+  Model(count: Int)
+}
+
+fn init(_flags) -> #(Model, effect.Effect(Msg)) {
+  #(Model(0), effect.none())
+}
+
+fn view(model) {
+  div([], [text(extract_categories(get_json()))])
+}
+
 // Main function to render the app
 pub fn main() {
-  let app = lustre.element(div([], [text(extract_categories(get_json()))]))
+  let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
   Nil
 }
