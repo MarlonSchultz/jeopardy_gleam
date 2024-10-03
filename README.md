@@ -9,7 +9,8 @@ The frontend will try top catch a json from an API. For easy mocking use in game
 ```sh
 go run github.com/eliben/static-server@latest -cors
 ```
-Do not forget the CORS flag, otherwise you will get a network error
+
+> Do not forget the CORS flag, otherwise you will get a network error
 
 ```sh
 gleam run -m lustre/dev start # run development server

@@ -1,12 +1,9 @@
 import gleam/bool
 import gleam/dynamic
-import gleam/int
-import gleam/io
-import gleam/json
+
 import gleam/list
 import gleam/string
 import lustre
-import lustre/attribute
 import lustre/effect
 import lustre/element.{text}
 import lustre/element/html.{button, div}
@@ -39,16 +36,6 @@ pub fn decode_single_category() -> fn(dynamic.Dynamic) ->
   )
 }
 
-// Function to extract categories and display them
-fn extract_categories(json_string: String) -> String {
-  let decoded = json.decode(json_string, decode_json_categories())
-
-  case decoded {
-    Ok(JsonCategories(categories)) -> turn_json_list_into_string(categories)
-    Error(_) -> "Error decoding JSON"
-  }
-}
-
 // Convert the list of categories to a comma-separated string
 fn turn_json_list_into_string(lists: List(SingleCategory)) -> String {
   let listed = list.map(lists, fn(single) { single.name })
@@ -61,25 +48,6 @@ fn get_json_from_api() -> effect.Effect(Msg) {
   lustre_http.get("http://localhost:8080/answers.json", expect)
 }
 
-fn json_string() -> String {
-  "{
-    \"categories\": [
-        {
-            \"category\": {
-                \"name\": \"cat1\",
-                \"answers\": [
-                    {
-                        \"answer\": \"AnswerString\",
-                        \"question\": \"QuestionString\",
-                        \"points\": 10
-                    }
-                ]
-            }
-        }
-    ]
-}"
-}
-
 type Msg {
   UserRequestsJson
   ApiReturnedJson(Result(JsonCategories, lustre_http.HttpError))
@@ -87,12 +55,11 @@ type Msg {
 
 fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
   case msg {
-    ApiReturnedJson(Ok(_json)) -> #(
-      Model(..model, json_loaded: True),
-      effect.none(),
-    )
-    ApiReturnedJson(Error(error)) -> #(
-      Model(..model, json_loaded: False, json_string: error_to_string(error)),
+    ApiReturnedJson(Ok(json)) -> {
+      #(Model(..model, json_loaded: True, json_content: json), effect.none())
+    }
+    ApiReturnedJson(Error(_)) -> #(
+      Model(..model, json_loaded: False),
       effect.none(),
     )
 
@@ -103,27 +70,24 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
   }
 }
 
-fn error_to_string(error: lustre_http.HttpError) -> String {
-  case error {
-    lustre_http.BadUrl(url) -> "Invalid URL: " <> url
-    lustre_http.InternalServerError(body) ->
-      "Server returned 500 Internal Server Error: " <> body
-    lustre_http.JsonError(_) -> "Error decoding the JSON response"
-    lustre_http.NetworkError -> "Network error occurred"
-    lustre_http.NotFound -> "The server returned 404 Not Found"
-    lustre_http.OtherError(code, body) ->
-      "HTTP Error " <> int.to_string(code) <> ": " <> body
-    lustre_http.Unauthorized -> "The server returned 401 Unauthorized"
+fn render_jeopardy_grid(model: Model) {
+  case model.json_loaded {
+    True -> div([], [text("sometext")])
+    _ -> div([], [text("nothing to render")])
   }
 }
 
 type Model {
-  Model(json_loaded: Bool, json_requested: Bool, json_string: String)
+  Model(json_loaded: Bool, json_requested: Bool, json_content: JsonCategories)
 }
 
 fn init(_flags) -> #(Model, effect.Effect(Msg)) {
   #(
-    Model(json_loaded: False, json_requested: False, json_string: ""),
+    Model(
+      json_loaded: False,
+      json_requested: False,
+      json_content: JsonCategories([]),
+    ),
     effect.none(),
   )
 }
@@ -134,9 +98,8 @@ fn view(model: Model) {
   div([], [
     text("Loaded " <> loaded <> " "),
     text("Requested " <> requested <> " "),
-    text("Content" <> model.json_string <> " "),
-    text("Json Local parse" <> extract_categories(json_string()) <> " "),
     button([event.on_click(UserRequestsJson)], [element.text("Call Json")]),
+    render_jeopardy_grid(model),
   ])
 }
 
