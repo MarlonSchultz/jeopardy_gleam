@@ -37,9 +37,10 @@ pub fn decode_single_category() -> fn(dynamic.Dynamic) ->
 }
 
 // Convert the list of categories to a comma-separated string
-fn turn_json_list_into_string(lists: List(SingleCategory)) -> String {
-  let listed = list.map(lists, fn(single) { single.name })
-  string.join(listed, ", ")
+fn view_create_table_headers(
+  lists: List(SingleCategory),
+) -> List(element.Element(a)) {
+  list.map(lists, fn(single) { html.th([], [text(single.name)]) })
 }
 
 fn get_json_from_api() -> effect.Effect(Msg) {
@@ -70,9 +71,10 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
   }
 }
 
-fn render_jeopardy_grid(model: Model) {
+fn view_render_jeopardy_grid(model: Model) -> element.Element(a) {
   case model.json_loaded {
-    True -> div([], [text("sometext")])
+    True ->
+      html.table([], view_create_table_headers(model.json_content.categories))
     _ -> div([], [text("nothing to render")])
   }
 }
@@ -95,11 +97,16 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
 fn view(model: Model) {
   let loaded = bool.to_string(model.json_loaded)
   let requested = bool.to_string(model.json_requested)
-  div([], [
-    text("Loaded " <> loaded <> " "),
-    text("Requested " <> requested <> " "),
-    button([event.on_click(UserRequestsJson)], [element.text("Call Json")]),
-    render_jeopardy_grid(model),
+  html.html([], [
+    html.title([], "Jeopardy"),
+    html.body([], [
+      div([], [
+        text("Loaded " <> loaded <> " "),
+        text("Requested " <> requested <> " "),
+        button([event.on_click(UserRequestsJson)], [element.text("Call Json")]),
+        view_render_jeopardy_grid(model),
+      ]),
+    ]),
   ])
 }
 
