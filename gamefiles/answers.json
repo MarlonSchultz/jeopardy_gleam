@@ -5,7 +5,55 @@
                 "name": "cat1",
                 "answers": [
                     {
-                        "answer": "AnswerString",
+                        "answer": "AnswerString1",
+                        "question": "QuestionString",
+                        "points": 10
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat2",
+                "answers": [
+                    {
+                        "answer": "AnswerString2",
+                        "question": "QuestionString",
+                        "points": 10
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat3",
+                "answers": [
+                    {
+                        "answer": "AnswerString3",
+                        "question": "QuestionString",
+                        "points": 10
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat4",
+                "answers": [
+                    {
+                        "answer": "AnswerString4",
+                        "question": "QuestionString",
+                        "points": 10
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat5",
+                "answers": [
+                    {
+                        "answer": "AnswerString5",
                         "question": "QuestionString",
                         "points": 10
                     }
