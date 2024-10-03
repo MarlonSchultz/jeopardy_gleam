@@ -1,58 +1,14 @@
 import gleam/bool
-import gleam/dynamic
 import gleam/io
 import gleam/list
 import helper.{error_to_string}
+import json_decoders.{type JsonCategories, type SingleCategory}
 import lustre
 import lustre/effect
 import lustre/element.{text}
 import lustre/element/html.{button, div}
 import lustre/event
 import lustre_http
-
-// Type for the JSON categories
-pub type JsonCategories {
-  JsonCategories(categories: List(SingleCategory))
-}
-
-pub fn decode_json_categories() -> fn(dynamic.Dynamic) ->
-  Result(JsonCategories, List(dynamic.DecodeError)) {
-  dynamic.decode1(
-    JsonCategories,
-    dynamic.field("categories", dynamic.list(decode_single_category())),
-  )
-}
-
-// Type for a single category
-pub type SingleCategory {
-  SingleCategory(name: String, answers: List(AnswersList))
-}
-
-pub fn decode_single_category() -> fn(dynamic.Dynamic) ->
-  Result(SingleCategory, List(dynamic.DecodeError)) {
-  dynamic.decode2(
-    SingleCategory,
-    dynamic.field("category", dynamic.field("name", dynamic.string)),
-    dynamic.field(
-      "category",
-      dynamic.field("answers", dynamic.list(decode_answer_list())),
-    ),
-  )
-}
-
-pub type AnswersList {
-  AnswersList(answer: String, question: String, points: Int)
-}
-
-pub fn decode_answer_list() -> fn(dynamic.Dynamic) ->
-  Result(AnswersList, List(dynamic.DecodeError)) {
-  dynamic.decode3(
-    AnswersList,
-    dynamic.field("answer", dynamic.string),
-    dynamic.field("question", dynamic.string),
-    dynamic.field("points", dynamic.int),
-  )
-}
 
 fn view_create_table_headers(
   lists: List(SingleCategory),
@@ -62,7 +18,10 @@ fn view_create_table_headers(
 
 fn get_json_from_api() -> effect.Effect(Msg) {
   let expect =
-    lustre_http.expect_json(decode_json_categories(), ApiReturnedJson)
+    lustre_http.expect_json(
+      json_decoders.decode_json_categories(),
+      ApiReturnedJson,
+    )
   lustre_http.get("http://localhost:8080/answers.json", expect)
 }
 
@@ -107,7 +66,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
     Model(
       json_loaded: False,
       json_requested: False,
-      json_content: JsonCategories([]),
+      json_content: json_decoders.JsonCategories([]),
     ),
     effect.none(),
   )
