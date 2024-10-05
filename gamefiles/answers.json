@@ -7,7 +7,27 @@
                     {
                         "answer": "AnswerString1",
                         "question": "QuestionString",
-                        "points": 10
+                        "points": 100
+                    },
+                    {
+                        "answer": "AnswerString1-2",
+                        "question": "QuestionString",
+                        "points": 200
+                    },
+                    {
+                        "answer": "AnswerString1-3",
+                        "question": "QuestionString",
+                        "points": 300
+                    },
+                    {
+                        "answer": "AnswerString1-4",
+                        "question": "QuestionString",
+                        "points": 400
+                    },
+                    {
+                        "answer": "AnswerString1-5",
+                        "question": "QuestionString",
+                        "points": 500
                     }
                 ]
             }
@@ -19,7 +39,27 @@
                     {
                         "answer": "AnswerString2",
                         "question": "QuestionString",
-                        "points": 10
+                        "points": 100
+                    },
+                    {
+                        "answer": "AnswerString2-2",
+                        "question": "QuestionString",
+                        "points": 200
+                    },
+                    {
+                        "answer": "AnswerString2-3",
+                        "question": "QuestionString",
+                        "points": 300
+                    },
+                    {
+                        "answer": "AnswerString2-4",
+                        "question": "QuestionString",
+                        "points": 400
+                    },
+                    {
+                        "answer": "AnswerString2-5",
+                        "question": "QuestionString",
+                        "points": 500
                     }
                 ]
             }
@@ -31,7 +71,27 @@
                     {
                         "answer": "AnswerString3",
                         "question": "QuestionString",
-                        "points": 10
+                        "points": 100
+                    },
+                    {
+                        "answer": "AnswerString3-2",
+                        "question": "QuestionString",
+                        "points": 200
+                    },
+                    {
+                        "answer": "AnswerString3-3",
+                        "question": "QuestionString",
+                        "points": 300
+                    },
+                    {
+                        "answer": "AnswerString3-4",
+                        "question": "QuestionString",
+                        "points": 400
+                    },
+                    {
+                        "answer": "AnswerString3-5",
+                        "question": "QuestionString",
+                        "points": 500
                     }
                 ]
             }
@@ -43,7 +103,27 @@
                     {
                         "answer": "AnswerString4",
                         "question": "QuestionString",
-                        "points": 10
+                        "points": 100
+                    },
+                    {
+                        "answer": "AnswerString4-2",
+                        "question": "QuestionString",
+                        "points": 200
+                    },
+                    {
+                        "answer": "AnswerString4-3",
+                        "question": "QuestionString",
+                        "points": 300
+                    },
+                    {
+                        "answer": "AnswerString4-4",
+                        "question": "QuestionString",
+                        "points": 400
+                    },
+                    {
+                        "answer": "AnswerString4-5",
+                        "question": "QuestionString",
+                        "points": 500
                     }
                 ]
             }
@@ -55,7 +135,27 @@
                     {
                         "answer": "AnswerString5",
                         "question": "QuestionString",
-                        "points": 10
+                        "points": 100
+                    },
+                    {
+                        "answer": "AnswerString5-2",
+                        "question": "QuestionString",
+                        "points": 200
+                    },
+                    {
+                        "answer": "AnswerString5-3",
+                        "question": "QuestionString",
+                        "points": 300
+                    },
+                    {
+                        "answer": "AnswerString5-4",
+                        "question": "QuestionString",
+                        "points": 400
+                    },
+                    {
+                        "answer": "AnswerString5-5",
+                        "question": "QuestionString",
+                        "points": 500
                     }
                 ]
             }

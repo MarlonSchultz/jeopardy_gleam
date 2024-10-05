@@ -1,13 +1,13 @@
 import gleam/dynamic
 
-pub type AnswersList {
-  AnswersList(answer: String, question: String, points: Int)
+pub type Answer {
+  Answer(answer: String, question: String, points: Int)
 }
 
 pub fn decode_answer_list() -> fn(dynamic.Dynamic) ->
-  Result(AnswersList, List(dynamic.DecodeError)) {
+  Result(Answer, List(dynamic.DecodeError)) {
   dynamic.decode3(
-    AnswersList,
+    Answer,
     dynamic.field("answer", dynamic.string),
     dynamic.field("question", dynamic.string),
     dynamic.field("points", dynamic.int),
@@ -16,7 +16,7 @@ pub fn decode_answer_list() -> fn(dynamic.Dynamic) ->
 
 // Type for a single category
 pub type SingleCategory {
-  SingleCategory(name: String, answers: List(AnswersList))
+  SingleCategory(name: String, answers: List(Answer))
 }
 
 pub fn decode_single_category() -> fn(dynamic.Dynamic) ->

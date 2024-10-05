@@ -16,6 +16,23 @@ fn view_create_table_headers(
   list.map(lists, fn(single) { html.th([], [text(single.name)]) })
 }
 
+fn filter_answers_by_points(
+  categories: List(SingleCategory),
+  target_points: Int,
+) -> List(json_decoders.Answer) {
+  categories
+  |> list.map(fn(category) {
+    category.answers
+    |> list.filter(fn(answer) {
+      case answer {
+        json_decoders.Answer(_, _, points) if points == target_points -> True
+        _ -> False
+      }
+    })
+  })
+  |> list.concat
+}
+
 fn get_json_from_api() -> effect.Effect(Msg) {
   let expect =
     lustre_http.expect_json(
@@ -33,6 +50,7 @@ type Msg {
 fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
   case msg {
     ApiReturnedJson(Ok(json)) -> {
+      io.debug(filter_answers_by_points(json.categories, 100))
       #(Model(..model, json_loaded: True, json_content: json), effect.none())
     }
     ApiReturnedJson(Error(error)) -> {
@@ -92,5 +110,6 @@ fn view(model: Model) {
 pub fn main() {
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
+
   Nil
 }
