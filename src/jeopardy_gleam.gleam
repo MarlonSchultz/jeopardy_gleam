@@ -1,19 +1,19 @@
-import gleam/bool
+import gleam/int
 import gleam/io
 import gleam/list
 import helper.{error_to_string}
 import json_decoders.{type JsonCategories, type SingleCategory}
 import lustre
+import lustre/attribute.{class}
 import lustre/effect
 import lustre/element.{text}
 import lustre/element/html.{button, div}
-import lustre/event
 import lustre_http
 
-fn view_create_table_headers(
-  lists: List(SingleCategory),
-) -> List(element.Element(a)) {
-  list.map(lists, fn(single) { html.th([], [text(single.name)]) })
+fn view_th(lists: List(SingleCategory)) -> List(element.Element(a)) {
+  list.map(lists, fn(single) {
+    html.th([class("px-6 py-3")], [text(single.name)])
+  })
 }
 
 fn filter_answers_by_points(
@@ -31,6 +31,17 @@ fn filter_answers_by_points(
     })
   })
   |> list.concat
+}
+
+fn view_td_by_points(
+  points: Int,
+  categories: List(SingleCategory),
+) -> List(element.Element(a)) {
+  list.map(filter_answers_by_points(categories, points), fn(answer) {
+    html.td([class("px-6 py-4 hover:bg-blue-500")], [
+      text(int.to_string(answer.points)),
+    ])
+  })
 }
 
 fn get_json_from_api() -> effect.Effect(Msg) {
@@ -66,12 +77,47 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
 }
 
 fn view_render_jeopardy_grid(model: Model) -> element.Element(a) {
+  let style_tr = "bg-blue-400 border-b"
   case model.json_loaded {
     True ->
-      html.table([], [
-        html.tr([], view_create_table_headers(model.json_content.categories)),
+      html.div([class("relative overflow-x-auto sm:rounded-lg bg-blue-200")], [
+        html.table(
+          [class("w-full text-sm text-center border-spacing-1 border-separate")],
+          [
+            html.thead([class("text-xs text-gray-700 uppercase bg-blue-700")], [
+              html.tr(
+                [
+                  class(
+                    "w-full text-sm text-center text-gray-500 dark:text-gray-400",
+                  ),
+                ],
+                view_th(model.json_content.categories),
+              ),
+            ]),
+            html.tr(
+              [class(style_tr)],
+              view_td_by_points(100, model.json_content.categories),
+            ),
+            html.tr(
+              [class(style_tr)],
+              view_td_by_points(200, model.json_content.categories),
+            ),
+            html.tr(
+              [class(style_tr)],
+              view_td_by_points(300, model.json_content.categories),
+            ),
+            html.tr(
+              [class(style_tr)],
+              view_td_by_points(400, model.json_content.categories),
+            ),
+            html.tr(
+              [class(style_tr)],
+              view_td_by_points(500, model.json_content.categories),
+            ),
+          ],
+        ),
       ])
-    _ -> div([], [text("nothing to render")])
+    _ -> div([], [text("Something went wrong in parsing JSON, or API calling")])
   }
 }
 
@@ -86,23 +132,13 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
       json_requested: False,
       json_content: json_decoders.JsonCategories([]),
     ),
-    effect.none(),
+    get_json_from_api(),
   )
 }
 
 fn view(model: Model) {
-  let loaded = bool.to_string(model.json_loaded)
-  let requested = bool.to_string(model.json_requested)
-  html.html([], [
-    html.title([], "Jeopardy"),
-    html.body([], [
-      div([], [
-        text("Loaded " <> loaded <> " "),
-        text("Requested " <> requested <> " "),
-        button([event.on_click(UserRequestsJson)], [element.text("Call Json")]),
-        view_render_jeopardy_grid(model),
-      ]),
-    ]),
+  div([class("container mx-auto")], [
+    div([class("relative py-15")], [view_render_jeopardy_grid(model)]),
   ])
 }
 
