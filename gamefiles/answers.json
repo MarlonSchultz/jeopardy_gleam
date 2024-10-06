@@ -5,26 +5,31 @@
                 "name": "cat1",
                 "answers": [
                     {
+                        "id": 1,
                         "answer": "AnswerString1",
                         "question": "QuestionString",
                         "points": 100
                     },
                     {
+                        "id": 2,
                         "answer": "AnswerString1-2",
                         "question": "QuestionString",
                         "points": 200
                     },
                     {
+                        "id": 3,
                         "answer": "AnswerString1-3",
                         "question": "QuestionString",
                         "points": 300
                     },
                     {
+                        "id": 4,
                         "answer": "AnswerString1-4",
                         "question": "QuestionString",
                         "points": 400
                     },
                     {
+                        "id": 5,
                         "answer": "AnswerString1-5",
                         "question": "QuestionString",
                         "points": 500
@@ -37,26 +42,31 @@
                 "name": "cat2",
                 "answers": [
                     {
+                        "id": 6,
                         "answer": "AnswerString2",
                         "question": "QuestionString",
                         "points": 100
                     },
                     {
+                        "id": 7,
                         "answer": "AnswerString2-2",
                         "question": "QuestionString",
                         "points": 200
                     },
                     {
+                        "id": 8,
                         "answer": "AnswerString2-3",
                         "question": "QuestionString",
                         "points": 300
                     },
                     {
+                        "id": 9,
                         "answer": "AnswerString2-4",
                         "question": "QuestionString",
                         "points": 400
                     },
                     {
+                        "id": 10,
                         "answer": "AnswerString2-5",
                         "question": "QuestionString",
                         "points": 500
@@ -69,26 +79,31 @@
                 "name": "cat3",
                 "answers": [
                     {
+                        "id": 11,
                         "answer": "AnswerString3",
                         "question": "QuestionString",
                         "points": 100
                     },
                     {
+                        "id": 12,
                         "answer": "AnswerString3-2",
                         "question": "QuestionString",
                         "points": 200
                     },
                     {
+                        "id": 13,
                         "answer": "AnswerString3-3",
                         "question": "QuestionString",
                         "points": 300
                     },
                     {
+                        "id": 14,
                         "answer": "AnswerString3-4",
                         "question": "QuestionString",
                         "points": 400
                     },
                     {
+                        "id": 15,
                         "answer": "AnswerString3-5",
                         "question": "QuestionString",
                         "points": 500
@@ -101,26 +116,31 @@
                 "name": "cat4",
                 "answers": [
                     {
+                        "id": 16,
                         "answer": "AnswerString4",
                         "question": "QuestionString",
                         "points": 100
                     },
                     {
+                        "id": 17,
                         "answer": "AnswerString4-2",
                         "question": "QuestionString",
                         "points": 200
                     },
                     {
+                        "id": 18,
                         "answer": "AnswerString4-3",
                         "question": "QuestionString",
                         "points": 300
                     },
                     {
+                        "id": 19,
                         "answer": "AnswerString4-4",
                         "question": "QuestionString",
                         "points": 400
                     },
                     {
+                        "id": 20,
                         "answer": "AnswerString4-5",
                         "question": "QuestionString",
                         "points": 500
@@ -133,26 +153,31 @@
                 "name": "cat5",
                 "answers": [
                     {
+                        "id": 21,
                         "answer": "AnswerString5",
                         "question": "QuestionString",
                         "points": 100
                     },
                     {
+                        "id": 22,
                         "answer": "AnswerString5-2",
                         "question": "QuestionString",
                         "points": 200
                     },
                     {
+                        "id": 23,
                         "answer": "AnswerString5-3",
                         "question": "QuestionString",
                         "points": 300
                     },
                     {
+                        "id": 24,
                         "answer": "AnswerString5-4",
                         "question": "QuestionString",
                         "points": 400
                     },
                     {
+                        "id": 25,
                         "answer": "AnswerString5-5",
                         "question": "QuestionString",
                         "points": 500

@@ -4,9 +4,10 @@ import gleam/list
 import lustre/attribute.{class}
 import lustre/element
 import lustre/element/html.{div, text}
-import model.{type Model, Model}
+import lustre/event
+import model.{type Model, type Msg, Model, UserClickedField}
 
-pub fn view_jeopardy_table(model: Model) -> element.Element(a) {
+pub fn view_jeopardy_table(model: Model) -> element.Element(Msg) {
   let style_tr = "bg-blue-400 border-b"
   case model.json_loaded {
     True ->
@@ -62,11 +63,15 @@ fn view_th(
 fn view_td_by_points(
   points: Int,
   categories: List(json_decoders.SingleCategory),
-) -> List(element.Element(a)) {
+) -> List(element.Element(Msg)) {
   list.map(filter_answers_by_points(categories, points), fn(answer) {
-    html.td([class("px-6 py-4 hover:bg-blue-500")], [
-      text(int.to_string(answer.points)),
-    ])
+    html.td(
+      [
+        class("px-6 py-4 hover:bg-blue-500"),
+        event.on_click(UserClickedField(answer.id)),
+      ],
+      [text(int.to_string(answer.points))],
+    )
   })
 }
 
@@ -79,7 +84,8 @@ fn filter_answers_by_points(
     category.answers
     |> list.filter(fn(answer) {
       case answer {
-        json_decoders.Answer(_, _, points) if points == target_points -> True
+        json_decoders.Answer(points: points, ..) if points == target_points ->
+          True
         _ -> False
       }
     })

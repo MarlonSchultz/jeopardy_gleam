@@ -1,10 +1,13 @@
-import decoders/json_decoders.{type JsonCategories}
+import decoders/json_decoders.{JsonCategories}
 import lustre
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
 import lustre_http
-import model.{type Model, Model}
+import model.{
+  type Model, type Msg, ApiReturnedJson, Model, UserClickedField,
+  UserRequestsJson,
+}
 import views/jeopardy_grid/jeopardy_table.{view_jeopardy_table}
 
 fn get_json_from_api() -> effect.Effect(Msg) {
@@ -14,11 +17,6 @@ fn get_json_from_api() -> effect.Effect(Msg) {
       ApiReturnedJson,
     )
   lustre_http.get("http://localhost:8080/answers.json", expect)
-}
-
-type Msg {
-  UserRequestsJson
-  ApiReturnedJson(Result(JsonCategories, lustre_http.HttpError))
 }
 
 fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
@@ -34,6 +32,8 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       Model(..model, json_requested: True),
       get_json_from_api(),
     )
+
+    UserClickedField(_id) -> #(model, effect.none())
   }
 }
 
@@ -42,17 +42,20 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
     model.Model(
       json_loaded: False,
       json_requested: False,
-      json_content: json_decoders.JsonCategories([]),
+      json_content: JsonCategories([]),
     ),
     get_json_from_api(),
   )
 }
 
 fn view(model: Model) {
-  div([class("container mx-auto")], [
-    div([class("relative py-15")], [
-      view_jeopardy_table(model),
-      div([], [text("something")]),
+  div([class("min-h-screen flex flex-col mx-auto container")], [
+    div([class("flex-grow py-15")], [view_jeopardy_table(model)]),
+    html.footer([class("w-full h-10 bg-gray-400 flex items-center")], [
+      text("🔴 Player 1 | "),
+      text("🟢 Player 2 | "),
+      text("🔵 Player 3 | "),
+      text("🟡 Player 4 | "),
     ]),
   ])
 }
