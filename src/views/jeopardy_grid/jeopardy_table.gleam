@@ -4,7 +4,7 @@ import gleam/list
 import lustre/attribute.{class}
 import lustre/element
 import lustre/element/html.{div, text}
-import model.{type Model as Model, Model as Model}
+import model.{type Model, Model}
 
 pub fn view_jeopardy_table(model: Model) -> element.Element(a) {
   let style_tr = "bg-blue-400 border-b"

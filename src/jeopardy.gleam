@@ -50,9 +50,9 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
 
 fn view(model: Model) {
   div([class("container mx-auto")], [
-    div([class("relative py-15")], [view_jeopardy_table(model)]),
-    div([class("relative h-32 w-32")], [
-      div([class("absolute inset-x-0 bottom-0 h-16")], [text("content")]),
+    div([class("relative py-15")], [
+      view_jeopardy_table(model),
+      div([], [text("something")]),
     ]),
   ])
 }
