@@ -56,7 +56,7 @@ fn view_th(
   lists: List(json_decoders.SingleCategory),
 ) -> List(element.Element(a)) {
   list.map(lists, fn(single) {
-    html.th([class("px-6 py-3")], [text(single.name)])
+    html.th([class("px-6 py-3 rounded-xl")], [text(single.name)])
   })
 }
 
@@ -67,7 +67,7 @@ fn view_td_by_points(
   list.map(filter_answers_by_points(categories, points), fn(answer) {
     html.td(
       [
-        class("px-6 py-4 hover:bg-blue-500"),
+        class("px-6 py-4 hover:bg-blue-500 rounded-xl"),
         event.on_click(UserClickedField(answer.id)),
       ],
       [text(int.to_string(answer.points))],

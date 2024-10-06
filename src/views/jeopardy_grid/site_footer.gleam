@@ -1,5 +1,6 @@
 import decipher
 import gleam/dynamic
+import gleam/int
 import gleam/list
 import gleam/result
 import lustre/attribute.{class}
@@ -21,7 +22,16 @@ pub fn get_player_names(players: List(Player)) -> List(element.Element(Msg)) {
         ),
         event.on_click(UserClickedPlayername(player)),
       ],
-      [text(player.color <> player.name <> " | ")],
+      [
+        text(
+          player.color
+          <> " "
+          <> player.name
+          <> ": "
+          <> int.to_string(player.points)
+          <> " |",
+        ),
+      ],
     )
   })
 }
