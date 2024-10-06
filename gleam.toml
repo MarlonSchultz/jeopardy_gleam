@@ -1,4 +1,4 @@
-name = "jeopardy_gleam"
+name = "main"
 version = "1.0.0"
 target = "javascript"
 
