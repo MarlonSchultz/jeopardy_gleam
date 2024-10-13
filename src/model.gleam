@@ -1,5 +1,7 @@
 import decoders/json_decoders.{type JsonCategories}
+import gleam/option.{type Option}
 import lustre_http
+import repeatedly.{type Repeater}
 
 pub type Model {
   Model(
@@ -8,6 +10,9 @@ pub type Model {
     json_content: JsonCategories,
     players: List(Player),
     modal_open: Modal,
+    modal_timer: Int,
+    modal_timer_running: Bool,
+    repeater_instance: Option(Repeater(Int)),
   )
 }
 
@@ -16,7 +21,7 @@ pub type Player {
 }
 
 pub type Modal {
-  Question
+  Question(Int)
   EditUser(Player)
   None
 }

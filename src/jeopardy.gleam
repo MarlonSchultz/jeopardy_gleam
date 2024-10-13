@@ -2,6 +2,7 @@ import decoders/json_decoders.{JsonCategories}
 import gleam/int
 import gleam/io
 import gleam/list
+import gleam/option
 import lustre
 import lustre/attribute.{class}
 import lustre/effect
@@ -41,7 +42,11 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     )
 
     UserClickedQuestion(_id) -> #(
-      Model(..model, modal_open: Question),
+      Model(
+        ..model,
+        modal_open: Question(3),
+        repeater_instance: option.Some(start_repeater()),
+      ),
       effect.none(),
     )
     UserClickedPlayername(player) -> #(
@@ -77,10 +82,21 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
         Player("Player4", 0, "🟡"),
       ],
       modal_open: None,
+      modal_timer: 30,
+      modal_timer_running: False,
+      repeater_instance: option.None,
       // None, Question, EditUser See: model.gleam
     ),
     get_json_from_api(),
   )
+}
+
+fn start_repeater() -> repeatedly.Repeater(Int) {
+  repeatedly.call(500, 30, fn(state, i) { todo })
+}
+
+fn decrement_timer(repeater: repeatedly.Repeater(Nil)) {
+  io.debug(repeater)
 }
 
 fn question_modal(
@@ -90,7 +106,7 @@ fn question_modal(
   model: Model,
 ) {
   case model.modal_open {
-    model.Question ->
+    model.Question(_) ->
       div([class("flex justify-center")], [
         div(
           [
@@ -165,6 +181,7 @@ fn view(model: Model) {
 }
 
 // Main function to render the app
+
 pub fn main() {
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
