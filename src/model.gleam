@@ -24,7 +24,7 @@ pub type Modal {
 pub type Msg {
   UserRequestsJson
   UserClosesModal
-  UserClickedField(Int)
+  UserClickedQuestion(Int)
   UserClickedPlayername(Player)
   UserSavedPlayername(Player)
   ApiReturnedJson(Result(JsonCategories, lustre_http.HttpError))

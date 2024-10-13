@@ -5,7 +5,7 @@ import lustre/attribute.{class}
 import lustre/element
 import lustre/element/html.{div, text}
 import lustre/event
-import model.{type Model, type Msg, Model, UserClickedField}
+import model.{type Model, type Msg, Model, UserClickedQuestion}
 
 pub fn view_jeopardy_table(model: Model) -> element.Element(Msg) {
   let style_tr = "bg-blue-400 border-b"
@@ -68,7 +68,7 @@ fn view_td_by_points(
     html.td(
       [
         class("px-6 py-4 hover:bg-blue-500 rounded-xl"),
-        event.on_click(UserClickedField(answer.id)),
+        event.on_click(UserClickedQuestion(answer.id)),
       ],
       [text(int.to_string(answer.points))],
     )

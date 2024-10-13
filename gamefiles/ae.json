@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "category": {
+        "name": "cat1",
+        "answers": [
+          {
+            "answer": "AnswerString",
+            "question": "QuestionString",
+            "points": 10
+          }
+        ]
+      }
+    },
+    {
+      "category": {
+        "name": "cat2",
+        "answers": [
+          {
+            "answer": "AnswerString",
+            "question": "QuestionString",
+            "points": 10
+          }
+        ]
+      }
+    }
+  ]
+}

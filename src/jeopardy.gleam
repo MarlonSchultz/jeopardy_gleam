@@ -1,5 +1,6 @@
 import decoders/json_decoders.{JsonCategories}
 import gleam/int
+import gleam/io
 import gleam/list
 import lustre
 import lustre/attribute.{class}
@@ -9,9 +10,10 @@ import lustre/element/svg
 import lustre_http
 import model.{
   type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, None,
-  Player, UserClickedField, UserClickedPlayername, UserClosesModal,
+  Player, Question, UserClickedPlayername, UserClickedQuestion, UserClosesModal,
   UserRequestsJson, UserSavedPlayername,
 }
+import repeatedly
 import views/jeopardy_grid/jeopardy_table.{view_jeopardy_table}
 import views/jeopardy_grid/site_footer.{get_player_names, set_player_names_modal}
 
@@ -38,7 +40,10 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       get_json_from_api(),
     )
 
-    UserClickedField(_id) -> #(model, effect.none())
+    UserClickedQuestion(_id) -> #(
+      Model(..model, modal_open: Question),
+      effect.none(),
+    )
     UserClickedPlayername(player) -> #(
       Model(..model, modal_open: EditUser(player)),
       effect.none(),
@@ -72,67 +77,83 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
         Player("Player4", 0, "🟡"),
       ],
       modal_open: None,
+      // None, Question, EditUser See: model.gleam
     ),
     get_json_from_api(),
   )
 }
 
-fn question_modal(width_of_svg: Int, width_of_green: Int, text_to_show: String) {
-  div([class("flex justify-center")], [
-    div(
-      [
-        class(
-          "absolute z-50 p-4 bg-blue-200 w-4/5 h-4/5 container flex flex-col justify-between mt-10 border-4 rounded-2xl",
-        ),
-      ],
-      [
-        div([class("flex-grow flex items-center justify-center")], [
-          html.h1([], [text("Answer")]),
-        ]),
-        div([class("flex-grow flex items-center justify-center")], [
-          svg.svg(
-            [
-              attribute.attribute("width", width_of_svg |> int.to_string),
-              attribute.attribute("height", "40"),
-            ],
-            [
-              // red
-              svg.rect([
-                attribute.attribute("x", "0"),
-                attribute.attribute("y", "0"),
-                attribute.attribute("width", width_of_svg |> int.to_string),
-                attribute.attribute("height", "40"),
-                attribute.attribute("fill", "#f47d64"),
-              ]),
-              // green
-              svg.rect([
-                attribute.attribute("x", "0"),
-                attribute.attribute("y", "0"),
-                attribute.attribute("width", width_of_green |> int.to_string),
-                attribute.attribute("height", "40"),
-                attribute.attribute("fill", "#46b258"),
-              ]),
-              svg.text(
+fn question_modal(
+  width_of_svg: Int,
+  width_of_green: Int,
+  text_to_show: String,
+  model: Model,
+) {
+  case model.modal_open {
+    model.Question ->
+      div([class("flex justify-center")], [
+        div(
+          [
+            class(
+              "absolute z-50 p-4 bg-blue-200 w-4/5 h-4/5 container flex flex-col justify-between mt-10 border-4 rounded-2xl",
+            ),
+          ],
+          [
+            div([class("flex-grow flex items-center justify-center")], [
+              html.h1([], [text("Answer")]),
+            ]),
+            div([class("flex-grow flex items-center justify-center")], [
+              svg.svg(
                 [
-                  attribute.attribute("x", width_of_svg / 2 |> int.to_string),
-                  attribute.attribute("y", "25"),
-                  attribute.attribute("fill", "white"),
-                  attribute.attribute("text-anchor", "middle"),
+                  attribute.attribute("width", width_of_svg |> int.to_string),
+                  attribute.attribute("height", "40"),
                 ],
-                text_to_show,
+                [
+                  // red
+                  svg.rect([
+                    attribute.attribute("x", "0"),
+                    attribute.attribute("y", "0"),
+                    attribute.attribute("width", width_of_svg |> int.to_string),
+                    attribute.attribute("height", "40"),
+                    attribute.attribute("fill", "#f47d64"),
+                  ]),
+                  // green
+                  svg.rect([
+                    attribute.attribute("x", "0"),
+                    attribute.attribute("y", "0"),
+                    attribute.attribute(
+                      "width",
+                      width_of_green |> int.to_string,
+                    ),
+                    attribute.attribute("height", "40"),
+                    attribute.attribute("fill", "#46b258"),
+                  ]),
+                  svg.text(
+                    [
+                      attribute.attribute(
+                        "x",
+                        width_of_svg / 2 |> int.to_string,
+                      ),
+                      attribute.attribute("y", "25"),
+                      attribute.attribute("fill", "white"),
+                      attribute.attribute("text-anchor", "middle"),
+                    ],
+                    text_to_show,
+                  ),
+                ],
               ),
-            ],
-          ),
-        ]),
-      ],
-    ),
-  ])
+            ]),
+          ],
+        ),
+      ])
+    _ -> div([], [])
+  }
 }
 
 fn view(model: Model) {
   div([class("min-h-screen flex flex-col mx-auto container")], [
     div([class("flex-grow py-15")], [
-      question_modal(800, 400, "seconds remaining"),
+      question_modal(800, 400, "seconds remaining", model),
       view_jeopardy_table(model),
     ]),
     set_player_names_modal(model),
@@ -147,6 +168,14 @@ fn view(model: Model) {
 pub fn main() {
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
+
+  let external = 1
+  let repeater =
+    repeatedly.call(500, external, fn(state, i) {
+      let state = state + 1
+    })
+
+  io.debug(repeater)
 
   Nil
 }
