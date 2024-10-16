@@ -30,6 +30,7 @@ packages = [
   { name = "hpack_erl", version = "0.3.0", build_tools = ["rebar3"], requirements = [], otp_app = "hpack", source = "hex", outer_checksum = "D6137D7079169D8C485C6962DFE261AF5B9EF60FBC557344511C1E65E3D95FB0" },
   { name = "logging", version = "1.3.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "logging", source = "hex", outer_checksum = "1098FBF10B54B44C2C7FDF0B01C1253CAFACDACABEFB4B0D027803246753E06D" },
   { name = "lustre", version = "4.4.3", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_json", "gleam_otp", "gleam_stdlib"], otp_app = "lustre", source = "hex", outer_checksum = "AA54C98497C0CF8750B0247F351D7E38EB43E46B9E8AA755900E4C64103BD9F7" },
+  { name = "lustre_animation", version = "0.3.2", build_tools = ["gleam"], requirements = ["gleam_stdlib", "lustre"], otp_app = "lustre_animation", source = "hex", outer_checksum = "52823F66C2884AF8D3D616A30EC1D15479552363C19BD7E54006C642941015B8" },
   { name = "lustre_dev_tools", version = "1.5.4", build_tools = ["gleam"], requirements = ["argv", "filepath", "fs", "gleam_community_ansi", "gleam_crypto", "gleam_erlang", "gleam_http", "gleam_httpc", "gleam_json", "gleam_otp", "gleam_package_interface", "gleam_stdlib", "glint", "glisten", "mist", "simplifile", "spinner", "term_size", "tom", "wisp"], otp_app = "lustre_dev_tools", source = "hex", outer_checksum = "3EB59C7044E149B17772395CC7BF504B331D64E15FDFE07840418896E78B939C" },
   { name = "lustre_http", version = "0.5.2", build_tools = ["gleam"], requirements = ["gleam_fetch", "gleam_http", "gleam_javascript", "gleam_json", "gleam_stdlib", "lustre"], otp_app = "lustre_http", source = "hex", outer_checksum = "FB0478CBFA6B16DBE8ECA326DAE2EC15645E04900595EF2C4F039ABFA0512ABA" },
   { name = "marceau", version = "1.2.0", build_tools = ["gleam"], requirements = [], otp_app = "marceau", source = "hex", outer_checksum = "5188D643C181EE350D8A20A3BDBD63AF7B6C505DE333CFBE05EF642ADD88A59B" },
@@ -54,6 +55,7 @@ gleam_json = { version = ">= 1.0.1 and < 2.0.0" }
 gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 lustre = { version = ">= 4.4.3 and < 5.0.0" }
+lustre_animation = { version = ">= 0.3.2 and < 1.0.0" }
 lustre_dev_tools = { version = ">= 1.5.4 and < 2.0.0" }
 lustre_http = { version = ">= 0.5.2 and < 1.0.0" }
 repeatedly = { version = ">= 2.1.1 and < 3.0.0" }

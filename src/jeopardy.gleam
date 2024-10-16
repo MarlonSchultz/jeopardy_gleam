@@ -42,11 +42,7 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     )
 
     UserClickedQuestion(_id) -> #(
-      Model(
-        ..model,
-        modal_open: Question(3),
-        repeater_instance: option.Some(start_repeater()),
-      ),
+      Model(..model, modal_open: Question(3)),
       effect.none(),
     )
     UserClickedPlayername(player) -> #(
@@ -89,14 +85,6 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
     ),
     get_json_from_api(),
   )
-}
-
-fn start_repeater() -> repeatedly.Repeater(Int) {
-  repeatedly.call(500, 30, fn(state, i) { todo })
-}
-
-fn decrement_timer(repeater: repeatedly.Repeater(Nil)) {
-  io.debug(repeater)
 }
 
 fn question_modal(
