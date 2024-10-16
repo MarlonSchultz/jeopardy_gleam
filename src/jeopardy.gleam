@@ -1,8 +1,7 @@
 import decoders/json_decoders.{JsonCategories}
+import gleam/float
 import gleam/int
-import gleam/io
 import gleam/list
-import gleam/option
 import lustre
 import lustre/attribute.{class}
 import lustre/effect
@@ -14,7 +13,8 @@ import model.{
   Player, Question, UserClickedPlayername, UserClickedQuestion, UserClosesModal,
   UserRequestsJson, UserSavedPlayername,
 }
-import repeatedly
+
+import lustre/animation
 import views/jeopardy_grid/jeopardy_table.{view_jeopardy_table}
 import views/jeopardy_grid/site_footer.{get_player_names, set_player_names_modal}
 
@@ -41,10 +41,22 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       get_json_from_api(),
     )
 
-    UserClickedQuestion(_id) -> #(
-      Model(..model, modal_open: Question(3)),
-      effect.none(),
-    )
+    UserClickedQuestion(_id) -> {
+      let animation_countdown =
+        animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
+      let animation_svg =
+        animation.add(
+          animation_countdown,
+          "svg_width",
+          model.svg_width,
+          0.0,
+          30.0,
+        )
+      #(
+        Model(..model, modal_open: Question(3), animation: animation_svg),
+        animation.effect(animation_svg, model.Tick),
+      )
+    }
     UserClickedPlayername(player) -> #(
       Model(..model, modal_open: EditUser(player)),
       effect.none(),
@@ -62,6 +74,23 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     UserClosesModal -> {
       #(Model(..model, modal_open: None), effect.none())
     }
+    model.Tick(time_offset) -> {
+      let new_animations = animation.tick(model.animation, time_offset)
+      let new_countdown =
+        animation.value(model.animation, "countdown", model.countdown)
+      let svg_width =
+        animation.value(model.animation, "svg_width", model.svg_width)
+      #(
+        Model(
+          ..model,
+          countdown: new_countdown,
+          svg_width: svg_width,
+          animation: new_animations,
+        ),
+        animation.effect(model.animation, model.Tick),
+      )
+    }
+    _ -> #(model, effect.none())
   }
 }
 
@@ -78,10 +107,9 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
         Player("Player4", 0, "🟡"),
       ],
       modal_open: None,
-      modal_timer: 30,
-      modal_timer_running: False,
-      repeater_instance: option.None,
-      // None, Question, EditUser See: model.gleam
+      animation: animation.new(),
+      countdown: 30.0,
+      svg_width: 800.0,
     ),
     get_json_from_api(),
   )
@@ -89,7 +117,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
 
 fn question_modal(
   width_of_svg: Int,
-  width_of_green: Int,
+  width_of_green: Float,
   text_to_show: String,
   model: Model,
 ) {
@@ -127,7 +155,7 @@ fn question_modal(
                     attribute.attribute("y", "0"),
                     attribute.attribute(
                       "width",
-                      width_of_green |> int.to_string,
+                      width_of_green |> float.to_string,
                     ),
                     attribute.attribute("height", "40"),
                     attribute.attribute("fill", "#46b258"),
@@ -157,7 +185,7 @@ fn question_modal(
 fn view(model: Model) {
   div([class("min-h-screen flex flex-col mx-auto container")], [
     div([class("flex-grow py-15")], [
-      question_modal(800, 400, "seconds remaining", model),
+      question_modal(800, model.svg_width, "seconds remaining", model),
       view_jeopardy_table(model),
     ]),
     set_player_names_modal(model),
@@ -165,6 +193,14 @@ fn view(model: Model) {
       [class("w-full h-10 bg-gray-400 flex items-center")],
       get_player_names(model.players),
     ),
+    div([], [
+      text(
+        "something"
+        <> float.to_string(model.svg_width)
+        <> "  "
+        <> float.to_string(model.countdown),
+      ),
+    ]),
   ])
 }
 
@@ -173,14 +209,6 @@ fn view(model: Model) {
 pub fn main() {
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
-
-  let external = 1
-  let repeater =
-    repeatedly.call(500, external, fn(state, i) {
-      let state = state + 1
-    })
-
-  io.debug(repeater)
 
   Nil
 }
