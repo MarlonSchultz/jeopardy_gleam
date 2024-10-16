@@ -1,6 +1,7 @@
 import decoders/json_decoders.{JsonCategories}
 import gleam/float
 import gleam/int
+import gleam/io
 import gleam/list
 import lustre
 import lustre/attribute.{class}
@@ -42,16 +43,10 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     )
 
     UserClickedQuestion(_id) -> {
-      let animation_countdown =
+      let animation_svg = {
         animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
-      let animation_svg =
-        animation.add(
-          animation_countdown,
-          "svg_width",
-          model.svg_width,
-          0.0,
-          30.0,
-        )
+        |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
+      }
       #(
         Model(..model, modal_open: Question(3), animation: animation_svg),
         animation.effect(animation_svg, model.Tick),
@@ -74,24 +69,39 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     UserClosesModal -> {
       #(Model(..model, modal_open: None), effect.none())
     }
+    model.EndTick(_time_offset) -> {
+      io.debug("15 seconds passed")
+      #(model, effect.none())
+    }
     model.Tick(time_offset) -> {
       let new_animations = animation.tick(model.animation, time_offset)
       let new_countdown =
         animation.value(model.animation, "countdown", model.countdown)
       let svg_width =
         animation.value(model.animation, "svg_width", model.svg_width)
+      let countdown = float.truncate(model.countdown)
+      let effect = case countdown {
+        count if count <= 0 -> animation.effect(model.animation, model.EndTick)
+        _ -> animation.effect(model.animation, model.Tick)
+      }
       #(
         Model(
           ..model,
           countdown: new_countdown,
-          svg_width: svg_width,
+          svg_width:,
           animation: new_animations,
         ),
-        animation.effect(model.animation, model.Tick),
+        effect,
       )
     }
+
     _ -> #(model, effect.none())
   }
+}
+
+pub fn something(_timeout_id) {
+  io.debug("something has been triggered")
+  model.SomeMessage
 }
 
 fn init(_flags) -> #(Model, effect.Effect(Msg)) {
@@ -185,7 +195,12 @@ fn question_modal(
 fn view(model: Model) {
   div([class("min-h-screen flex flex-col mx-auto container")], [
     div([class("flex-grow py-15")], [
-      question_modal(800, model.svg_width, "seconds remaining", model),
+      question_modal(
+        800,
+        model.svg_width,
+        model.countdown |> float.truncate |> int.to_string,
+        model,
+      ),
       view_jeopardy_table(model),
     ]),
     set_player_names_modal(model),

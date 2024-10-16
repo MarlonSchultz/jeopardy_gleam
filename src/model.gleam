@@ -34,4 +34,7 @@ pub type Msg {
   ApiReturnedJson(Result(JsonCategories, lustre_http.HttpError))
   Trigger
   Tick(Float)
+  EndTick(Float)
+  SomeMessage
+  AnimationCompleted(animation.TimeoutId)
 }
