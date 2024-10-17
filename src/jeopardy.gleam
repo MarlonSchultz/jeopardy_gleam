@@ -8,6 +8,7 @@ import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
 import lustre/element/svg
+import lustre/event
 import lustre_http
 import model.{
   type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, None,
@@ -67,7 +68,20 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       #(Model(..model, players: new_players, modal_open: None), effect.none())
     }
     UserClosesModal -> {
-      #(Model(..model, modal_open: None), effect.none())
+      let stop_animation = {
+        animation.remove(model.animation, "countdown")
+        |> animation.remove("svg_width")
+      }
+      #(
+        Model(
+          ..model,
+          modal_open: None,
+          countdown: 30.0,
+          svg_width: 800.0,
+          animation: stop_animation,
+        ),
+        effect.none(),
+      )
     }
     model.EndTick(_time_offset) -> {
       io.debug("15 seconds passed")
@@ -99,8 +113,8 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
   }
 }
 
-pub fn something(_timeout_id) {
-  io.debug("something has been triggered")
+pub fn debug_foote(_timeout_id) {
+  io.debug("debug_footer has been triggered")
   model.SomeMessage
 }
 
@@ -128,11 +142,22 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
 fn question_modal(
   width_of_svg: Int,
   width_of_green: Float,
-  text_to_show: String,
+  countdown_string: String,
   model: Model,
 ) {
   case model.modal_open {
-    model.Question(_) ->
+    model.Question(_) -> {
+      let text_size = case int.parse(countdown_string) {
+        Ok(number) -> {
+          case int.is_odd(number) {
+            True -> "24"
+            False -> "30"
+          }
+        }
+        Error(_) -> {
+          "26"
+        }
+      }
       div([class("flex justify-center")], [
         div(
           [
@@ -142,13 +167,16 @@ fn question_modal(
           ],
           [
             div([class("flex-grow flex items-center justify-center")], [
-              html.h1([], [text("Answer")]),
+              html.h1(
+                [class("text-4xl font-bold text-black text-center mb-4")],
+                [text("Answer")],
+              ),
             ]),
             div([class("flex-grow flex items-center justify-center")], [
               svg.svg(
                 [
                   attribute.attribute("width", width_of_svg |> int.to_string),
-                  attribute.attribute("height", "40"),
+                  attribute.attribute("height", "60"),
                 ],
                 [
                   // red
@@ -156,7 +184,7 @@ fn question_modal(
                     attribute.attribute("x", "0"),
                     attribute.attribute("y", "0"),
                     attribute.attribute("width", width_of_svg |> int.to_string),
-                    attribute.attribute("height", "40"),
+                    attribute.attribute("height", "60"),
                     attribute.attribute("fill", "#f47d64"),
                   ]),
                   // green
@@ -167,7 +195,7 @@ fn question_modal(
                       "width",
                       width_of_green |> float.to_string,
                     ),
-                    attribute.attribute("height", "40"),
+                    attribute.attribute("height", "60"),
                     attribute.attribute("fill", "#46b258"),
                   ]),
                   svg.text(
@@ -176,18 +204,48 @@ fn question_modal(
                         "x",
                         width_of_svg / 2 |> int.to_string,
                       ),
-                      attribute.attribute("y", "25"),
+                      attribute.attribute("y", "40"),
                       attribute.attribute("fill", "white"),
                       attribute.attribute("text-anchor", "middle"),
+                      attribute.attribute("font-family", "Arial, sans-serif"),
+                      attribute.attribute("font-size", text_size <> "px"),
                     ],
-                    text_to_show,
+                    countdown_string,
                   ),
                 ],
+              ),
+            ]),
+            div([class("flex justify-center space-x-4")], [
+              html.button(
+                [
+                  class(
+                    "self-auto bg-green-500 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-green-400 hover:cursor-pointer hover:scale-125",
+                  ),
+                ],
+                [text("Correct")],
+              ),
+              html.button(
+                [
+                  class(
+                    "self-auto bg-red-300 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-red-200 hover:cursor-pointer hover:scale-125",
+                  ),
+                ],
+                [text("Wrong")],
+              ),
+              html.button(
+                [
+                  class(
+                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125",
+                  ),
+                  event.on_click(UserClosesModal),
+                ],
+                [text("Close question")],
               ),
             ]),
           ],
         ),
       ])
+    }
     _ -> div([], [])
   }
 }
@@ -208,14 +266,10 @@ fn view(model: Model) {
       [class("w-full h-10 bg-gray-400 flex items-center")],
       get_player_names(model.players),
     ),
-    div([], [
-      text(
-        "something"
-        <> float.to_string(model.svg_width)
-        <> "  "
-        <> float.to_string(model.countdown),
-      ),
-    ]),
+    div([], [text("debug_footer
+    " <> float.to_string(model.svg_width) <> "  " <> float.to_string(
+        model.countdown,
+      ))]),
   ])
 }
 
