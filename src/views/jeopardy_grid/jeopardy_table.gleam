@@ -70,7 +70,7 @@ fn view_td_by_points(
         class("px-6 py-4 hover:bg-blue-500 rounded-xl"),
         event.on_click(UserClickedQuestion(answer.id)),
       ],
-      [text(int.to_string(answer.points))],
+      [text(int.to_string(answer.id))],
     )
   })
 }

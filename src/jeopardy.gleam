@@ -1,4 +1,4 @@
-import decoders/json_decoders.{JsonCategories}
+import decoders/json_decoders.{type Answer, Answer, JsonCategories}
 import gleam/float
 import gleam/int
 import gleam/io
@@ -16,6 +16,7 @@ import model.{
   UserRequestsJson, UserSavedPlayername,
 }
 
+import gleam/option.{type Option}
 import lustre/animation
 import views/jeopardy_grid/jeopardy_table.{view_jeopardy_table}
 import views/jeopardy_grid/site_footer.{get_player_names, set_player_names_modal}
@@ -43,13 +44,13 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       get_json_from_api(),
     )
 
-    UserClickedQuestion(_id) -> {
+    UserClickedQuestion(id) -> {
       let animation_svg = {
         animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
         |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
       }
       #(
-        Model(..model, modal_open: Question(3), animation: animation_svg),
+        Model(..model, modal_open: Question(id), animation: animation_svg),
         animation.effect(animation_svg, model.Tick),
       )
     }
@@ -139,6 +140,41 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
   )
 }
 
+fn text_size(number: String) {
+  case int.parse(number) {
+    Ok(number) -> {
+      case int.is_odd(number) {
+        True -> "24"
+        False -> "30"
+      }
+    }
+    Error(_) -> {
+      "26"
+    }
+  }
+}
+
+fn filter_for_question(model: Model, search_id: Int) -> Answer {
+  let result =
+    list.find_map(model.json_content.categories, fn(category) {
+      list.find(category.answers, fn(answer) {
+        case answer {
+          Answer(id, _, _, _) -> id == search_id
+        }
+      })
+    })
+  case result {
+    Ok(answer) -> answer
+    Error(_) ->
+      Answer(
+        id: 666,
+        answer: "Decoder failed",
+        question: "Decoder failed",
+        points: -3000,
+      )
+  }
+}
+
 fn question_modal(
   width_of_svg: Int,
   width_of_green: Float,
@@ -146,18 +182,7 @@ fn question_modal(
   model: Model,
 ) {
   case model.modal_open {
-    model.Question(_) -> {
-      let text_size = case int.parse(countdown_string) {
-        Ok(number) -> {
-          case int.is_odd(number) {
-            True -> "24"
-            False -> "30"
-          }
-        }
-        Error(_) -> {
-          "26"
-        }
-      }
+    model.Question(question_id) -> {
       div([class("flex justify-center")], [
         div(
           [
@@ -169,7 +194,7 @@ fn question_modal(
             div([class("flex-grow flex items-center justify-center")], [
               html.h1(
                 [class("text-4xl font-bold text-black text-center mb-4")],
-                [text("Answer")],
+                [text(filter_for_question(model, question_id).answer)],
               ),
             ]),
             div([class("flex-grow flex items-center justify-center")], [
@@ -208,7 +233,10 @@ fn question_modal(
                       attribute.attribute("fill", "white"),
                       attribute.attribute("text-anchor", "middle"),
                       attribute.attribute("font-family", "Arial, sans-serif"),
-                      attribute.attribute("font-size", text_size <> "px"),
+                      attribute.attribute(
+                        "font-size",
+                        text_size(countdown_string) <> "px",
+                      ),
                     ],
                     countdown_string,
                   ),

@@ -9,7 +9,7 @@ import lustre/element/html.{button, div}
 import lustre/event
 import model.{
   type Model, type Msg, type Player, EditUser, Player, UserClickedPlayername,
-  UserClickedQuestion, UserClosesModal, UserSavedPlayername,
+  UserClosesModal, UserSavedPlayername,
 }
 
 pub fn get_player_names(players: List(Player)) -> List(element.Element(Msg)) {
@@ -20,8 +20,7 @@ pub fn get_player_names(players: List(Player)) -> List(element.Element(Msg)) {
         class(
           "transition ease-in-out delay-150 hover:bg-blue-200 hover:cursor-pointer hover:scale-110 pl-5",
         ),
-        //event.on_click(UserClickedPlayername(player)),
-        event.on_click(UserClickedQuestion(3)),
+        event.on_click(UserClickedPlayername(player)),
       ],
       [
         text(
