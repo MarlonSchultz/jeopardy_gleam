@@ -4,22 +4,19 @@ import gleam/int
 import gleam/io
 import gleam/list
 import lustre
+import lustre/animation
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
-import lustre/element/svg
-import lustre/event
 import lustre_http
 import model.{
   type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, None,
   Player, Question, UserClickedPlayername, UserClickedQuestion, UserClosesModal,
   UserRequestsJson, UserSavedPlayername,
 }
-
-import gleam/option.{type Option}
-import lustre/animation
-import views/jeopardy_grid/jeopardy_table.{view_jeopardy_table}
-import views/jeopardy_grid/site_footer.{get_player_names, set_player_names_modal}
+import views/jeopardy_table.{view_jeopardy_table}
+import views/modals.{question_modal}
+import views/site_footer.{get_player_names, set_player_names_modal}
 
 fn get_json_from_api() -> effect.Effect(Msg) {
   let expect =
@@ -150,144 +147,6 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
     ),
     get_json_from_api(),
   )
-}
-
-fn text_size(number: String) {
-  case int.parse(number) {
-    Ok(number) -> {
-      case int.is_odd(number) {
-        True -> "24"
-        False -> "30"
-      }
-    }
-    Error(_) -> {
-      "26"
-    }
-  }
-}
-
-fn filter_for_question(model: Model, search_id: Int) -> Answer {
-  let result =
-    list.find_map(model.json_content.categories, fn(category) {
-      list.find(category.answers, fn(answer) {
-        case answer {
-          Answer(id, _, _, _) -> id == search_id
-        }
-      })
-    })
-  case result {
-    Ok(answer) -> answer
-    Error(_) ->
-      Answer(
-        id: 666,
-        answer: "Decoder failed",
-        question: "Decoder failed",
-        points: -3000,
-      )
-  }
-}
-
-fn question_modal(
-  width_of_svg: Int,
-  width_of_green: Float,
-  countdown_string: String,
-  model: Model,
-) {
-  case model.modal_open {
-    model.Question(question_id) -> {
-      div([class("flex justify-center")], [
-        div(
-          [
-            class(
-              "absolute z-50 p-4 bg-blue-200 w-4/5 h-4/5 container flex flex-col justify-between mt-10 border-4 rounded-2xl",
-            ),
-          ],
-          [
-            div([class("flex-grow flex items-center justify-center")], [
-              html.h1(
-                [class("text-4xl font-bold text-black text-center mb-4")],
-                [text(filter_for_question(model, question_id).answer)],
-              ),
-            ]),
-            div([class("flex-grow flex items-center justify-center")], [
-              svg.svg(
-                [
-                  attribute.attribute("width", width_of_svg |> int.to_string),
-                  attribute.attribute("height", "60"),
-                ],
-                [
-                  // red
-                  svg.rect([
-                    attribute.attribute("x", "0"),
-                    attribute.attribute("y", "0"),
-                    attribute.attribute("width", width_of_svg |> int.to_string),
-                    attribute.attribute("height", "60"),
-                    attribute.attribute("fill", "#f47d64"),
-                  ]),
-                  // green
-                  svg.rect([
-                    attribute.attribute("x", "0"),
-                    attribute.attribute("y", "0"),
-                    attribute.attribute(
-                      "width",
-                      width_of_green |> float.to_string,
-                    ),
-                    attribute.attribute("height", "60"),
-                    attribute.attribute("fill", "#46b258"),
-                  ]),
-                  svg.text(
-                    [
-                      attribute.attribute(
-                        "x",
-                        width_of_svg / 2 |> int.to_string,
-                      ),
-                      attribute.attribute("y", "40"),
-                      attribute.attribute("fill", "white"),
-                      attribute.attribute("text-anchor", "middle"),
-                      attribute.attribute("font-family", "Arial, sans-serif"),
-                      attribute.attribute(
-                        "font-size",
-                        text_size(countdown_string) <> "px",
-                      ),
-                    ],
-                    countdown_string,
-                  ),
-                ],
-              ),
-            ]),
-            div([class("flex justify-center space-x-4")], [
-              html.button(
-                [
-                  class(
-                    "self-auto bg-green-500 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-green-400 hover:cursor-pointer hover:scale-125",
-                  ),
-                ],
-                [text("Correct")],
-              ),
-              html.button(
-                [
-                  class(
-                    "self-auto bg-red-300 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-red-200 hover:cursor-pointer hover:scale-125",
-                  ),
-                ],
-                [text("Wrong")],
-              ),
-              html.button(
-                [
-                  class(
-                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125",
-                  ),
-                  event.on_click(UserClosesModal),
-                ],
-                [text("Close question")],
-              ),
-            ]),
-          ],
-        ),
-      ])
-    }
-    _ -> div([], [])
-  }
 }
 
 fn view(model: Model) {
