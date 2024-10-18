@@ -54,10 +54,22 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         animation.effect(animation_svg, model.Tick),
       )
     }
-    UserClickedPlayername(player) -> #(
-      Model(..model, modal_open: EditUser(player)),
-      effect.none(),
-    )
+    UserClickedPlayername(player) -> {
+      let stop_animation = {
+        animation.remove(model.animation, "countdown")
+        |> animation.remove("svg_width")
+      }
+      #(
+        Model(
+          ..model,
+          modal_open: EditUser(player),
+          countdown: 30.0,
+          svg_width: 800.0,
+          animation: stop_animation,
+        ),
+        effect.none(),
+      )
+    }
     UserSavedPlayername(new_player_record) -> {
       let new_players =
         list.map(model.players, fn(player) {

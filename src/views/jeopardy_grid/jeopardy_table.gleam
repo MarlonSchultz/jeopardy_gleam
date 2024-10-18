@@ -8,7 +8,8 @@ import lustre/event
 import model.{type Model, type Msg, Model, UserClickedQuestion}
 
 pub fn view_jeopardy_table(model: Model) -> element.Element(Msg) {
-  let style_tr = "bg-blue-400 border-b"
+  let style_tr =
+    "bg-blue-400 border-b text-3xl font-bold text-black text-center"
   case model.json_loaded {
     True ->
       html.div([class("relative overflow-x-auto sm:rounded-lg bg-blue-200")], [
@@ -56,7 +57,10 @@ fn view_th(
   lists: List(json_decoders.SingleCategory),
 ) -> List(element.Element(a)) {
   list.map(lists, fn(single) {
-    html.th([class("px-6 py-3 rounded-xl")], [text(single.name)])
+    html.th(
+      [class("px-6 py-3 rounded-xl text-2xl font-bold text-black text-center")],
+      [text(single.name)],
+    )
   })
 }
 
@@ -67,10 +71,12 @@ fn view_td_by_points(
   list.map(filter_answers_by_points(categories, points), fn(answer) {
     html.td(
       [
-        class("px-6 py-4 hover:bg-blue-500 rounded-xl"),
+        class(
+          "px-6 py-4 hover:bg-blue-500 rounded-xl transition ease-in-out delay-150 duration-500 hover:bg-blue-200 hover:cursor-pointer hover:scale-110",
+        ),
         event.on_click(UserClickedQuestion(answer.id)),
       ],
-      [text(int.to_string(answer.id))],
+      [text(int.to_string(answer.points))],
     )
   })
 }
