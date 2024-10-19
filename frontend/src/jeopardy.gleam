@@ -8,7 +8,6 @@ import lustre/animation
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
-import lustre/event
 import lustre_http
 import model.{
   type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, None,
@@ -25,7 +24,7 @@ fn get_json_from_api() -> effect.Effect(Msg) {
       json_decoders.decode_json_categories(),
       ApiReturnedJson,
     )
-  lustre_http.get("http://localhost:8080/answers.json", expect)
+  lustre_http.get("http://localhost:8888/questions", expect)
 }
 
 fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
