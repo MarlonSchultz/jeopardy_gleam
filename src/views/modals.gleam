@@ -1,6 +1,7 @@
 import decoders/json_decoders.{type Answer, Answer}
 import gleam/float
 import gleam/int
+import gleam/io
 import gleam/list
 import lustre/attribute.{class}
 import lustre/element/html.{div, text}
@@ -16,6 +17,11 @@ pub fn question_modal(
 ) {
   case model.modal_open {
     model.Question(question_id) -> {
+      let #(visibility_question_css, button_text) = case model.reveal_question {
+        True -> #("visible", "Hide")
+        _ -> #("invisible", "Reveal")
+      }
+
       div([class("flex justify-center")], [
         div(
           [
@@ -24,10 +30,21 @@ pub fn question_modal(
             ),
           ],
           [
-            div([class("flex-grow flex items-center justify-center")], [
+            div([class("flex-grow flex flex-col items-center justify-center")], [
+              // Answer
               html.h1(
                 [class("text-4xl font-bold text-black text-center mb-4")],
                 [text(filter_for_question(model, question_id).answer)],
+              ),
+              // Question
+              html.h1(
+                [
+                  class(
+                    "block text-4xl font-bold text-black text-center mt-20 whitespace-pre-line "
+                    <> visibility_question_css,
+                  ),
+                ],
+                [text(filter_for_question(model, question_id).question)],
               ),
             ]),
             div([class("flex-grow flex items-center justify-center")], [
@@ -100,7 +117,16 @@ pub fn question_modal(
                   ),
                   event.on_click(UserClosesModal),
                 ],
-                [text("Close question")],
+                [text("Close question (Do nothing)")],
+              ),
+              html.button(
+                [
+                  class(
+                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125",
+                  ),
+                  event.on_click(model.UserClicksReveal),
+                ],
+                [text(button_text)],
               ),
             ]),
           ],

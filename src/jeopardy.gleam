@@ -8,6 +8,7 @@ import lustre/animation
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
+import lustre/event
 import lustre_http
 import model.{
   type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, None,
@@ -118,6 +119,9 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         effect,
       )
     }
+    model.UserClicksReveal -> {
+      #(Model(..model, reveal_question: !model.reveal_question), effect.none())
+    }
 
     _ -> #(model, effect.none())
   }
@@ -144,6 +148,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
       animation: animation.new(),
       countdown: 30.0,
       svg_width: 800.0,
+      reveal_question: False,
     ),
     get_json_from_api(),
   )

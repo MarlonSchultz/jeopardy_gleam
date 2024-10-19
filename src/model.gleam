@@ -12,6 +12,7 @@ pub type Model {
     animation: animation.Animations,
     countdown: Float,
     svg_width: Float,
+    reveal_question: Bool,
   )
 }
 
@@ -37,4 +38,5 @@ pub type Msg {
   EndTick(Float)
   SomeMessage
   AnimationCompleted(animation.TimeoutId)
+  UserClicksReveal
 }
