@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["Marlon Schultz <m.schultz@ampeersenergy.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+tornado = "^6.4.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
