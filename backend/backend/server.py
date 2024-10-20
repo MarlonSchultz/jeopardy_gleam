@@ -3,18 +3,18 @@ import json
 import asyncio
 import tornado.web
 import tornado.websocket
-import RPi.GPIO as GPIO
+from gpiozero import Button
+from gpiozero.pins.mock import MockFactory
+from gpiozero.devices import Device
+from signal import pause
 
-# Setup GPIO
-GPIO.setmode(GPIO.BCM)  # BCM pin numbering
-INPUT_PIN = 17  # Example GPIO pin number
-GPIO.setup(INPUT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Set up the GPIO pin as input
+# remove on a real raspberry
+Device.pin_factory = MockFactory()
 
 # Path to the JSON file
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) 
 QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/answers.json')
 
-# Store WebSocket connections to broadcast messages
 clients = []
 
 class MainHandler(tornado.web.RequestHandler):
@@ -60,7 +60,7 @@ class ServeQuestionsHandler(tornado.web.RequestHandler):
 
 class ServeWebsocket(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
-        return True  # Allow CORS!!!!!
+        return True  # Allow CORS
 
     def open(self):
         print("WebSocket opened")
@@ -78,16 +78,21 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
             client.write_message(message) 
 
 
-def gpio_event_handler(channel):
+def gpio_buzzer_handler(buzzer):
     """Handler for GPIO events."""
-    print(f"GPIO event detected on pin {channel}")
-    # Broadcast the event to all connected WebSocket clients
+    print(f"GPIO event detected on pin {buzzer}")
     for client in clients:
-        client.write_message(f"GPIO event on pin {channel}")
+        client.write_message(f"GPIO event on pin {buzzer}")
 
 
-# Set up GPIO event detection
-GPIO.add_event_detect(INPUT_PIN, GPIO.FALLING, callback=gpio_event_handler, bouncetime=200)
+# Pin Listeners
+button1 = Button(17)  # First button connected to GPIO 17
+button2 = Button(18)  # Second button connected to GPIO 18
+button3 = Button(27)  # Third button connected to GPIO 27
+
+button1.when_pressed = lambda: gpio_buzzer_handler("red")
+button2.when_pressed = lambda: gpio_buzzer_handler("green")
+button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
 
 def make_app():
     return tornado.web.Application([
@@ -100,12 +105,20 @@ def make_app():
 async def main():
     app = make_app()
     app.listen(8888)
-    print("Server started at ws://localhost:8888/websocket")
+
+    # Fake a GPIO interaction (simulate button press)
+    print("Simulating button press")
+    await asyncio.sleep(10)  # Simulate delay
+    button1.pin.drive_low()  # Simulate pressing the button (GPIO falling)
+    await asyncio.sleep(1)  # Simulate delay
+    button1.pin.drive_high()  # Simulate releasing the button (GPIO rising)
+
+    # Keep the program running to allow Tornado and GPIO event handling
     await asyncio.Event().wait()
 
 
 if __name__ == "__main__":
     try:
         asyncio.run(main())
-    finally:
-        GPIO.cleanup()  # Ensure GPIO is cleaned up when the script exits
+    except KeyboardInterrupt:
+        print("Shutting down server")
