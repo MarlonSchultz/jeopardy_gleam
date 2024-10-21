@@ -1,18 +1,20 @@
-import decoders/json_decoders.{type Answer, Answer, JsonCategories}
+import decoders/json_decoders.{JsonCategories}
 import gleam/float
 import gleam/int
 import gleam/io
 import gleam/list
+import gleam/option.{None, Some}
 import lustre
 import lustre/animation
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
 import lustre_http
+import lustre_websocket.{OnOpen} as websocket
 import model.{
-  type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, None,
+  type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, Nothing,
   Player, Question, UserClickedPlayername, UserClickedQuestion, UserClosesModal,
-  UserRequestsJson, UserSavedPlayername,
+  UserRequestsJson, UserSavedPlayername, WsWrapper,
 }
 import views/jeopardy_table.{view_jeopardy_table}
 import views/modals.{question_modal}
@@ -46,9 +48,14 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
         |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
       }
+
+      //websocket.init("ws://localhost:8888/websocket", model.WsWrapper)
       #(
         Model(..model, modal_open: Question(id), animation: animation_svg),
-        animation.effect(animation_svg, model.Tick),
+        effect.batch([
+          animation.effect(animation_svg, model.Tick),
+          websocket.send(model.websocket, "dada-init"),
+        ]),
       )
     }
     UserClickedPlayername(player) -> {
@@ -75,7 +82,10 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
             _ -> player
           }
         })
-      #(Model(..model, players: new_players, modal_open: None), effect.none())
+      #(
+        Model(..model, players: new_players, modal_open: Nothing),
+        effect.none(),
+      )
     }
     UserClosesModal -> {
       let stop_animation = {
@@ -85,7 +95,7 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       #(
         Model(
           ..model,
-          modal_open: None,
+          modal_open: Nothing,
           countdown: 30.0,
           svg_width: 800.0,
           animation: stop_animation,
@@ -121,6 +131,10 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     model.UserClicksReveal -> {
       #(Model(..model, reveal_question: !model.reveal_question), effect.none())
     }
+    WsWrapper(OnOpen(socket)) -> #(
+      Model(..model, websocket: Some(socket)),
+      websocket.send(socket, "client-init"),
+    )
 
     _ -> #(model, effect.none())
   }
@@ -143,13 +157,17 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
         Player("Player3", 0, "🔵"),
         Player("Player4", 0, "🟡"),
       ],
-      modal_open: None,
+      modal_open: Nothing,
       animation: animation.new(),
       countdown: 30.0,
       svg_width: 800.0,
       reveal_question: False,
+      websocket: None,
     ),
-    get_json_from_api(),
+    effect.batch([
+      get_json_from_api(),
+      websocket.init("ws://localhost:8888/websocket", model.WsWrapper),
+    ]),
   )
 }
 

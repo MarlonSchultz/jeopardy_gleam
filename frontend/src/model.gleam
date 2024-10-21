@@ -1,6 +1,8 @@
 import decoders/json_decoders.{type JsonCategories}
+import gleam/option.{type Option}
 import lustre/animation
 import lustre_http
+import lustre_websocket as websocket
 
 pub type Model {
   Model(
@@ -13,6 +15,7 @@ pub type Model {
     countdown: Float,
     svg_width: Float,
     reveal_question: Bool,
+    websocket: Option(websocket.WebSocket),
   )
 }
 
@@ -23,7 +26,7 @@ pub type Player {
 pub type Modal {
   Question(Int)
   EditUser(Player)
-  None
+  Nothing
 }
 
 pub type Msg {
@@ -39,4 +42,5 @@ pub type Msg {
   SomeMessage
   AnimationCompleted(animation.TimeoutId)
   UserClicksReveal
+  WsWrapper(websocket.WebSocketEvent)
 }

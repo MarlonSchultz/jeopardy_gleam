@@ -1,7 +1,6 @@
 import decoders/json_decoders.{type Answer, Answer}
 import gleam/float
 import gleam/int
-import gleam/io
 import gleam/list
 import lustre/attribute.{class}
 import lustre/element/html.{div, text}
