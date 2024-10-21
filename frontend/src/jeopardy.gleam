@@ -49,14 +49,16 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
       }
 
-      //websocket.init("ws://localhost:8888/websocket", model.WsWrapper)
-      #(
-        Model(..model, modal_open: Question(id), animation: animation_svg),
-        effect.batch([
-          animation.effect(animation_svg, model.Tick),
-          websocket.send(model.websocket, "dada-init"),
-        ]),
-      )
+      case model.websocket {
+        Some(ws) -> #(
+          Model(..model, modal_open: Question(id), animation: animation_svg),
+          effect.batch([
+            animation.effect(animation_svg, model.Tick),
+            websocket.send(ws, "Question open"),
+          ]),
+        )
+        None -> #(model, effect.none())
+      }
     }
     UserClickedPlayername(player) -> {
       let stop_animation = {
@@ -92,16 +94,19 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         animation.remove(model.animation, "countdown")
         |> animation.remove("svg_width")
       }
-      #(
-        Model(
-          ..model,
-          modal_open: Nothing,
-          countdown: 30.0,
-          svg_width: 800.0,
-          animation: stop_animation,
-        ),
-        effect.none(),
-      )
+      case model.websocket {
+        Some(ws) -> #(
+          Model(
+            ..model,
+            modal_open: Nothing,
+            countdown: 30.0,
+            svg_width: 800.0,
+            animation: stop_animation,
+          ),
+          websocket.send(ws, "Question closed"),
+        )
+        None -> #(model, effect.none())
+      }
     }
     model.EndTick(_time_offset) -> {
       io.debug("15 seconds passed")
