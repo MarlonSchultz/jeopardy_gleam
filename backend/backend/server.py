@@ -7,11 +7,13 @@ from gpiozero import Button
 from gpiozero.pins.mock import MockFactory
 from gpiozero.devices import Device
 from signal import pause
+import random
 
-# remove on a real raspberry
+# remove on a real raspberry, rasperry gpios will be used then
 Device.pin_factory = MockFactory()
 
 # Path to the JSON file
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) 
 QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/answers.json')
 
@@ -94,6 +96,24 @@ button1.when_pressed = lambda: gpio_buzzer_handler("red")
 button2.when_pressed = lambda: gpio_buzzer_handler("green")
 button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
 
+
+
+async def simulate_button_press(button):
+    while True:
+        # Randomize the sleep time between presses
+        delay_before_press = random.uniform(0.5, 5.0)  # Between 0.5 and 5 seconds
+        delay_before_release = random.uniform(0.5, 2.0)  # Between 0.5 and 2 seconds
+        
+        # Wait before "pressing" the button
+        await asyncio.sleep(delay_before_press)
+        button.pin.drive_low()  # Simulate pressing the button
+        print(f"Button {button} pressed")
+
+        # Wait before "releasing" the button
+        await asyncio.sleep(delay_before_release)
+        button.pin.drive_high()  # Simulate releasing the button
+        print(f"Button {button} released")
+
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
@@ -106,13 +126,8 @@ async def main():
     app = make_app()
     app.listen(8888)
 
-    # Fake a GPIO interaction (simulate button press)
-    print("Simulating button press")
-    await asyncio.sleep(10)  # Simulate delay
-    button1.pin.drive_low()  # Simulate pressing the button (GPIO falling)
-    await asyncio.sleep(1)  # Simulate delay
-    button1.pin.drive_high()  # Simulate releasing the button (GPIO rising)
-
+    await simulate_button_press(button1)
+    
     # Keep the program running to allow Tornado and GPIO event handling
     await asyncio.Event().wait()
 
