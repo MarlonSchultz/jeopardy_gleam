@@ -84,7 +84,7 @@ def gpio_buzzer_handler(buzzer):
     """Handler for GPIO events."""
     print(f"GPIO event detected on pin {buzzer}")
     for client in clients:
-        client.write_message(f"GPIO event on pin {buzzer}")
+        client.write_message(f"Buzzer {buzzer}")
 
 
 # Pin Listeners
@@ -92,7 +92,8 @@ button1 = Button(17)  # First button connected to GPIO 17
 button2 = Button(18)  # Second button connected to GPIO 18
 button3 = Button(27)  # Third button connected to GPIO 27
 
-button1.when_pressed = lambda: gpio_buzzer_handler("red")
+button1.when_pressed = lambda: gpio_buzzer_handler("red pressed")
+button1.when_released = lambda: gpio_buzzer_handler("red releases")
 button2.when_pressed = lambda: gpio_buzzer_handler("green")
 button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
 

@@ -1,5 +1,6 @@
 import decoders/json_decoders.{type JsonCategories}
 import gleam/option.{type Option}
+import grille_pain/lustre/toast
 import lustre/animation
 import lustre_http
 import lustre_websocket as websocket
@@ -16,7 +17,16 @@ pub type Model {
     svg_width: Float,
     reveal_question: Bool,
     websocket: Option(websocket.WebSocket),
+    buzzed: Buzzer,
   )
+}
+
+pub type Buzzer {
+  Red
+  Yellow
+  Blue
+  Green
+  NoOne
 }
 
 pub type Player {
@@ -43,4 +53,5 @@ pub type Msg {
   AnimationCompleted(animation.TimeoutId)
   UserClicksReveal
   WsWrapper(websocket.WebSocketEvent)
+  DisplayBasicToast(content: String)
 }

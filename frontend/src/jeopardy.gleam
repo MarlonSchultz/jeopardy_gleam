@@ -4,17 +4,22 @@ import gleam/int
 import gleam/io
 import gleam/list
 import gleam/option.{None, Some}
+import grille_pain
+import grille_pain/lustre/toast
+import grille_pain/toast/level
 import lustre
 import lustre/animation
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
+import lustre/event
 import lustre_http
 import lustre_websocket.{OnOpen} as websocket
 import model.{
-  type Model, type Msg, type Player, ApiReturnedJson, EditUser, Model, Nothing,
-  Player, Question, UserClickedPlayername, UserClickedQuestion, UserClosesModal,
-  UserRequestsJson, UserSavedPlayername, WsWrapper,
+  type Model, type Msg, type Player, ApiReturnedJson, DisplayBasicToast,
+  EditUser, Model, Nothing, Player, Question, UserClickedPlayername,
+  UserClickedQuestion, UserClosesModal, UserRequestsJson, UserSavedPlayername,
+  WsWrapper,
 }
 import views/jeopardy_table.{view_jeopardy_table}
 import views/modals.{question_modal}
@@ -140,14 +145,34 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       Model(..model, websocket: Some(socket)),
       websocket.send(socket, "client-init"),
     )
+    WsWrapper(websocket.OnTextMessage(msg)) -> {
+      let buzzer = case msg {
+        "Buzzer red pressed" -> model.Red
+        "Buzzer red release" -> model.NoOne
+        _ -> model.NoOne
+      }
+      #(
+        Model(..model, buzzed: buzzer),
+        effect.from(fn(callback) { dispatch_as_toast(buzzer, callback) }),
+      )
+    }
+
+    DisplayBasicToast(content) -> {
+      #(model, toast.toast(content))
+    }
 
     _ -> #(model, effect.none())
   }
 }
 
-pub fn debug_foote(_timeout_id) {
-  io.debug("debug_footer has been triggered")
-  model.SomeMessage
+fn dispatch_as_toast(buzzed: model.Buzzer, callback: fn(Msg) -> Nil) -> Nil {
+  case buzzed {
+    model.Red -> callback(DisplayBasicToast("Red buzzed"))
+    model.Green -> callback(DisplayBasicToast("Green buzzed"))
+    model.Yellow -> callback(DisplayBasicToast("Yellow buzzed"))
+    model.Blue -> callback(DisplayBasicToast("Blue buzzed"))
+    _ -> Nil
+  }
 }
 
 fn init(_flags) -> #(Model, effect.Effect(Msg)) {
@@ -168,6 +193,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
       svg_width: 800.0,
       reveal_question: False,
       websocket: None,
+      buzzed: model.NoOne,
     ),
     effect.batch([
       get_json_from_api(),
@@ -195,13 +221,21 @@ fn view(model: Model) {
     div([], [text("debug_footer
     " <> float.to_string(model.svg_width) <> "  " <> float.to_string(
         model.countdown,
-      ))]),
+      ) <> " " <> buzzed_to_string(model.buzzed))]),
   ])
+}
+
+fn buzzed_to_string(buzzed: model.Buzzer) {
+  case buzzed {
+    model.Red -> "Red"
+    _ -> "No buzz!"
+  }
 }
 
 // Main function to render the app
 
 pub fn main() {
+  let assert Ok(_) = grille_pain.simple()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
