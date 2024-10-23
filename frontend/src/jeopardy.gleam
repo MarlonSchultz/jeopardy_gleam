@@ -6,13 +6,11 @@ import gleam/list
 import gleam/option.{None, Some}
 import grille_pain
 import grille_pain/lustre/toast
-import grille_pain/toast/level
 import lustre
 import lustre/animation
 import lustre/attribute.{class}
 import lustre/effect
 import lustre/element/html.{div, text}
-import lustre/event
 import lustre_http
 import lustre_websocket.{OnOpen} as websocket
 import model.{
@@ -148,7 +146,7 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     WsWrapper(websocket.OnTextMessage(msg)) -> {
       let buzzer = case msg {
         "Buzzer red pressed" -> model.Red
-        "Buzzer red release" -> model.NoOne
+        "buzzer release" -> model.NoOne
         _ -> model.NoOne
       }
       #(
@@ -158,7 +156,13 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     }
 
     DisplayBasicToast(content) -> {
-      #(model, toast.toast(content))
+      let style_of_toast = case model.buzzed {
+        model.Blue -> toast.info(content)
+        model.Green -> toast.success(content)
+        model.Red -> toast.error(content)
+        _ -> toast.warning(content)
+      }
+      #(model, style_of_toast)
     }
 
     _ -> #(model, effect.none())

@@ -1,6 +1,5 @@
 import decoders/json_decoders.{type JsonCategories}
 import gleam/option.{type Option}
-import grille_pain/lustre/toast
 import lustre/animation
 import lustre_http
 import lustre_websocket as websocket

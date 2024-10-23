@@ -8,6 +8,7 @@ from gpiozero.pins.mock import MockFactory
 from gpiozero.devices import Device
 from signal import pause
 import random
+from enum import Enum
 
 # remove on a real raspberry, rasperry gpios will be used then
 Device.pin_factory = MockFactory()
@@ -18,7 +19,24 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/answers.json')
 
 clients = []
+question_open : bool = False
+buzzer = "none"
 
+# Pin Listeners
+button1 = Button(17)  # First button connected to GPIO 17
+button2 = Button(18)  # Second button connected to GPIO 18
+button3 = Button(27)  # Third button connected to GPIO 27
+
+button1.when_pressed = lambda: gpio_buzzer_handler("red pressed")
+button1.when_released = lambda: gpio_buzzer_handler("buzzer release")
+button2.when_pressed = lambda: gpio_buzzer_handler("green")
+button2.when_released = lambda: gpio_buzzer_handler("buzzer release")
+button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
+button3.when_released = lambda: gpio_buzzer_handler("buzzer release")
+
+
+
+    
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello, world")
@@ -72,31 +90,28 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
         print("WebSocket closed")
         clients.remove(self) 
 
+
     def on_message(self, message):
+        global question_open
+        match message:
+            case "Question open":
+                question_open = True
+                print("question open")
+            case "Question closed":
+                question_open = False
         print(f"Received message from client: {message}")
         
     def send_message(self, message):
-        for client in clients:
-            client.write_message(message) 
+            for client in clients:
+                client.write_message(message) 
 
 
 def gpio_buzzer_handler(buzzer):
     """Handler for GPIO events."""
-    print(f"GPIO event detected on pin {buzzer}")
-    for client in clients:
-        client.write_message(f"Buzzer {buzzer}")
-
-
-# Pin Listeners
-button1 = Button(17)  # First button connected to GPIO 17
-button2 = Button(18)  # Second button connected to GPIO 18
-button3 = Button(27)  # Third button connected to GPIO 27
-
-button1.when_pressed = lambda: gpio_buzzer_handler("red pressed")
-button1.when_released = lambda: gpio_buzzer_handler("red releases")
-button2.when_pressed = lambda: gpio_buzzer_handler("green")
-button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
-
+    global question_open
+    if question_open:
+        for client in clients:
+            client.write_message(f"Buzzer {buzzer}")
 
 
 async def simulate_button_press(button):
