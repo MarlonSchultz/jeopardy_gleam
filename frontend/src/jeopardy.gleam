@@ -1,4 +1,3 @@
-import decoders/json_decoders.{JsonCategories}
 import gleam/float
 import gleam/int
 import gleam/io
@@ -17,6 +16,7 @@ import model.{
   UserClickedQuestion, UserClosesModal, UserRequestsJson, UserSavedPlayername,
   WsWrapper,
 }
+import shared/json_decoders.{JsonCategories}
 import views/jeopardy_table.{view_jeopardy_table}
 import views/modals.{question_modal}
 import views/site_footer.{get_player_names, set_player_names_modal}

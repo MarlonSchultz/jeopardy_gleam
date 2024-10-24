@@ -1,12 +1,11 @@
-import decoders/json_decoders.{type Answer, Answer}
 import gleam/float
 import gleam/int
-import gleam/list
 import lustre/attribute.{class}
 import lustre/element/html.{div, text}
 import lustre/element/svg
 import lustre/event
 import model.{UserClosesModal}
+import shared/shared.{get_question_by_id}
 
 pub fn question_modal(
   width_of_svg: Int,
@@ -43,7 +42,7 @@ pub fn question_modal(
               // Answer
               html.h1(
                 [class("text-4xl font-bold text-black text-center mb-4")],
-                [text(filter_for_question(model, question_id).answer)],
+                [text(get_question_by_id(model, question_id).answer)],
               ),
               // Question
               html.h1(
@@ -53,7 +52,7 @@ pub fn question_modal(
                     <> visibility_question_css,
                   ),
                 ],
-                [text(filter_for_question(model, question_id).question)],
+                [text(get_question_by_id(model, question_id).question)],
               ),
             ]),
             div([class("flex-grow flex items-center justify-center")], [
@@ -111,6 +110,7 @@ pub fn question_modal(
                   class(
                     "self-auto bg-green-500 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-green-400 hover:cursor-pointer hover:scale-125 shadow-lg border-2",
                   ),
+                  event.on_click(model.UserClickedCorrect(question_id)),
                 ],
                 [text("Correct")],
               ),
@@ -146,27 +146,6 @@ pub fn question_modal(
       ])
     }
     _ -> div([], [])
-  }
-}
-
-fn filter_for_question(model: model.Model, search_id: Int) -> Answer {
-  let result =
-    list.find_map(model.json_content.categories, fn(category) {
-      list.find(category.answers, fn(answer) {
-        case answer {
-          Answer(id, _, _, _) -> id == search_id
-        }
-      })
-    })
-  case result {
-    Ok(answer) -> answer
-    Error(_) ->
-      Answer(
-        id: 666,
-        answer: "Decoder failed",
-        question: "Decoder failed",
-        points: -3000,
-      )
   }
 }
 

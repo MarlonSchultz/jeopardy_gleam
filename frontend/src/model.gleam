@@ -1,8 +1,8 @@
-import decoders/json_decoders.{type JsonCategories}
 import gleam/option.{type Option}
 import lustre/animation
 import lustre_http
 import lustre_websocket as websocket
+import shared/json_decoders.{type JsonCategories}
 
 pub type Model {
   Model(
@@ -42,6 +42,7 @@ pub type Msg {
   UserRequestsJson
   UserClosesModal
   UserClickedQuestion(Int)
+  UserClickedCorrect(Int)
   UserClickedPlayername(Player)
   UserSavedPlayername(Player)
   ApiReturnedJson(Result(JsonCategories, lustre_http.HttpError))

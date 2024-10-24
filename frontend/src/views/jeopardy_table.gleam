@@ -1,4 +1,3 @@
-import decoders/json_decoders
 import gleam/int
 import gleam/list
 import lustre/attribute.{class}
@@ -6,6 +5,7 @@ import lustre/element
 import lustre/element/html.{div, text}
 import lustre/event
 import model.{type Model, type Msg, Model, UserClickedQuestion}
+import shared/json_decoders
 
 pub fn view_jeopardy_table(model: Model) -> element.Element(Msg) {
   let style_tr =
