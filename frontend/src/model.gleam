@@ -29,7 +29,7 @@ pub type Buzzer {
 }
 
 pub type Player {
-  Player(name: String, points: Int, color: String)
+  Player(name: String, points: Int, color: String, player_id: Buzzer)
 }
 
 pub type Modal {
@@ -53,5 +53,6 @@ pub type Msg {
   AnimationCompleted(animation.TimeoutId)
   UserClicksReveal
   WsWrapper(websocket.WebSocketEvent)
-  DisplayBasicToast(content: String)
+  SystemStopsCountdown
+  SystemClosesQuestionServerSide
 }

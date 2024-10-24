@@ -11,12 +11,13 @@ import lustre/element/html.{div, text}
 import lustre_http
 import lustre_websocket.{OnOpen} as websocket
 import model.{
-  type Model, type Msg, type Player, ApiReturnedJson, DisplayBasicToast,
-  EditUser, Model, Nothing, Player, Question, UserClickedPlayername,
-  UserClickedQuestion, UserClosesModal, UserRequestsJson, UserSavedPlayername,
-  WsWrapper,
+  type Model, type Msg, type Player, ApiReturnedJson, Blue, EditUser, Green,
+  Model, Nothing, Player, Question, Red, SystemClosesQuestionServerSide,
+  UserClickedCorrect, UserClickedPlayername, UserClickedQuestion,
+  UserClosesModal, UserRequestsJson, UserSavedPlayername, WsWrapper, Yellow,
 }
 import shared/json_decoders.{JsonCategories}
+import shared/shared
 import views/jeopardy_table.{view_jeopardy_table}
 import views/modals.{question_modal}
 import views/site_footer.{get_player_names, set_player_names_modal}
@@ -48,31 +49,26 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       case model.websocket {
         Some(ws) -> #(
           Model(..model, modal_open: Question(id)),
-          effect.batch([websocket.send(ws, "Question open")]),
+          websocket.send(ws, "Question open"),
         )
         None -> #(model, effect.none())
       }
     }
     UserClickedPlayername(player) -> {
-      let stop_animation = {
-        animation.remove(model.animation, "countdown")
-        |> animation.remove("svg_width")
-      }
       #(
-        Model(
-          ..model,
-          modal_open: EditUser(player),
-          countdown: 30.0,
-          svg_width: 800.0,
-          animation: stop_animation,
-        ),
-        effect.none(),
+        Model(..model, modal_open: EditUser(player)),
+        effect.batch([
+          effect.from(fn(callback) { callback(model.SystemStopsCountdown) }),
+          effect.from(fn(callback) {
+            callback(model.SystemClosesQuestionServerSide)
+          }),
+        ]),
       )
     }
     UserSavedPlayername(new_player_record) -> {
       let new_players =
         list.map(model.players, fn(player) {
-          case player.color == new_player_record.color {
+          case player.player_id == new_player_record.player_id {
             True -> Player(..player, name: new_player_record.name)
             _ -> player
           }
@@ -82,30 +78,51 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         effect.none(),
       )
     }
+
+    SystemClosesQuestionServerSide -> {
+      case model.websocket {
+        Some(ws) -> #(model, websocket.send(ws, "Question closed"))
+        None -> #(model, effect.none())
+      }
+    }
+
     UserClosesModal -> {
+      case model.websocket {
+        Some(ws) -> #(
+          Model(..model, modal_open: Nothing, buzzed: model.NoOne),
+          effect.batch([
+            websocket.send(ws, "Question closed"),
+            effect.from(fn(callback) { callback(model.SystemStopsCountdown) }),
+          ]),
+        )
+        None -> #(
+          Model(..model, modal_open: Nothing, buzzed: model.NoOne),
+          effect.from(fn(callback) { callback(model.SystemStopsCountdown) }),
+        )
+      }
+    }
+
+    model.SystemStopsCountdown -> {
       let stop_animation = {
         animation.remove(model.animation, "countdown")
         |> animation.remove("svg_width")
       }
-      case model.websocket {
-        Some(ws) -> #(
-          Model(
-            ..model,
-            modal_open: Nothing,
-            countdown: 30.0,
-            svg_width: 800.0,
-            animation: stop_animation,
-            buzzed: model.NoOne,
-          ),
-          websocket.send(ws, "Question closed"),
-        )
-        None -> #(model, effect.none())
-      }
+      #(
+        Model(
+          ..model,
+          countdown: 30.0,
+          svg_width: 800.0,
+          animation: stop_animation,
+          buzzed: model.NoOne,
+        ),
+        effect.none(),
+      )
     }
+
     model.EndTick(_time_offset) -> {
-      io.debug("15 seconds passed")
       #(model, effect.none())
     }
+
     model.Tick(time_offset) -> {
       let new_animations = animation.tick(model.animation, time_offset)
       let new_countdown =
@@ -130,14 +147,17 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     model.UserClicksReveal -> {
       #(Model(..model, reveal_question: !model.reveal_question), effect.none())
     }
+
     WsWrapper(OnOpen(socket)) -> #(
       Model(..model, websocket: Some(socket)),
       websocket.send(socket, "client-init"),
     )
+
     WsWrapper(websocket.OnClose(_)) -> #(
       Model(..model, websocket: None),
       websocket.init("ws://localhost:8888/websocket", model.WsWrapper),
     )
+
     WsWrapper(websocket.OnTextMessage(msg)) -> {
       let buzzer = case msg {
         "Buzzer red pressed" -> model.Red
@@ -155,6 +175,16 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       )
     }
 
+    UserClickedCorrect(question_points) -> {
+      let new_players =
+        shared.calculate_new_points_for_player(
+          model.players,
+          question_points,
+          model.buzzed,
+        )
+      #(Model(..model, players: new_players), effect.none())
+    }
+
     _ -> #(model, effect.none())
   }
 }
@@ -166,10 +196,10 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
       json_requested: False,
       json_content: JsonCategories([]),
       players: [
-        Player("Player1", 0, "🔴"),
-        Player("Player2", 0, "🟢"),
-        Player("Player3", 0, "🔵"),
-        Player("Player4", 0, "🟡"),
+        Player("Player1", 0, "🔴", Red),
+        Player("Player2", 0, "🟢", Green),
+        Player("Player3", 0, "🔵", Blue),
+        Player("Player4", 0, "🟡", Yellow),
       ],
       modal_open: Nothing,
       animation: animation.new(),

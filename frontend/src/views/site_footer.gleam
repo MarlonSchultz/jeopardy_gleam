@@ -39,7 +39,7 @@ pub fn get_player_names(players: List(Player)) -> List(element.Element(Msg)) {
 pub fn set_player_names_modal(model: Model) -> element.Element(Msg) {
   case model.modal_open {
     EditUser(player) -> {
-      let Player(name, _, _) = player
+      let Player(name, _, _, _) = player
       let path = ["target", "previousElementSibling", "value"]
       let handle_input = fn(e) {
         e
