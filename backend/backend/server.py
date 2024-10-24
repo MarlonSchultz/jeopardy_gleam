@@ -20,7 +20,7 @@ QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/answers.json')
 
 clients = []
 question_open : bool = False
-buzzer = "none"
+pressed_buzzer = "none"
 
 # Pin Listeners
 button1 = Button(17)  # First button connected to GPIO 17
@@ -33,8 +33,6 @@ button2.when_pressed = lambda: gpio_buzzer_handler("green")
 button2.when_released = lambda: gpio_buzzer_handler("buzzer release")
 button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
 button3.when_released = lambda: gpio_buzzer_handler("buzzer release")
-
-
 
     
 class MainHandler(tornado.web.RequestHandler):
@@ -93,12 +91,14 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         global question_open
+        global pressed_buzzer
         match message:
             case "Question open":
                 question_open = True
                 print("question open")
             case "Question closed":
                 question_open = False
+                pressed_buzzer = "none"
         print(f"Received message from client: {message}")
         
     def send_message(self, message):
@@ -109,9 +109,16 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
 def gpio_buzzer_handler(buzzer):
     """Handler for GPIO events."""
     global question_open
-    if question_open:
+    global pressed_buzzer
+    if question_open & (pressed_buzzer == "none"):
+        pressed_buzzer = buzzer
         for client in clients:
             client.write_message(f"Buzzer {buzzer}")
+    elif question_open != True:
+        print(f"No question open: Buzz by {buzzer}")
+    elif pressed_buzzer != "none":
+        print(f"question open but already buzzed: Buzz by {buzzer}")
+        
 
 
 async def simulate_button_press(button):
@@ -123,13 +130,11 @@ async def simulate_button_press(button):
         # Wait before "pressing" the button
         await asyncio.sleep(delay_before_press)
         button.pin.drive_low()  # Simulate pressing the button
-        print(f"Button {button} pressed")
-
+        
         # Wait before "releasing" the button
         await asyncio.sleep(delay_before_release)
         button.pin.drive_high()  # Simulate releasing the button
-        print(f"Button {button} released")
-
+        
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),

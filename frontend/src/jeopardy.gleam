@@ -4,8 +4,6 @@ import gleam/int
 import gleam/io
 import gleam/list
 import gleam/option.{None, Some}
-import grille_pain
-import grille_pain/lustre/toast
 import lustre
 import lustre/animation
 import lustre/attribute.{class}
@@ -47,18 +45,10 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     )
 
     UserClickedQuestion(id) -> {
-      let animation_svg = {
-        animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
-        |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
-      }
-
       case model.websocket {
         Some(ws) -> #(
-          Model(..model, modal_open: Question(id), animation: animation_svg),
-          effect.batch([
-            animation.effect(animation_svg, model.Tick),
-            websocket.send(ws, "Question open"),
-          ]),
+          Model(..model, modal_open: Question(id)),
+          effect.batch([websocket.send(ws, "Question open")]),
         )
         None -> #(model, effect.none())
       }
@@ -105,6 +95,7 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
             countdown: 30.0,
             svg_width: 800.0,
             animation: stop_animation,
+            buzzed: model.NoOne,
           ),
           websocket.send(ws, "Question closed"),
         )
@@ -143,39 +134,28 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       Model(..model, websocket: Some(socket)),
       websocket.send(socket, "client-init"),
     )
+    WsWrapper(websocket.OnClose(_)) -> #(
+      Model(..model, websocket: None),
+      websocket.init("ws://localhost:8888/websocket", model.WsWrapper),
+    )
     WsWrapper(websocket.OnTextMessage(msg)) -> {
       let buzzer = case msg {
         "Buzzer red pressed" -> model.Red
         "buzzer release" -> model.NoOne
         _ -> model.NoOne
       }
+
+      let animation_svg = {
+        animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
+        |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
+      }
       #(
-        Model(..model, buzzed: buzzer),
-        effect.from(fn(callback) { dispatch_as_toast(buzzer, callback) }),
+        Model(..model, buzzed: buzzer, animation: animation_svg),
+        animation.effect(animation_svg, model.Tick),
       )
     }
 
-    DisplayBasicToast(content) -> {
-      let style_of_toast = case model.buzzed {
-        model.Blue -> toast.info(content)
-        model.Green -> toast.success(content)
-        model.Red -> toast.error(content)
-        _ -> toast.warning(content)
-      }
-      #(model, style_of_toast)
-    }
-
     _ -> #(model, effect.none())
-  }
-}
-
-fn dispatch_as_toast(buzzed: model.Buzzer, callback: fn(Msg) -> Nil) -> Nil {
-  case buzzed {
-    model.Red -> callback(DisplayBasicToast("Red buzzed"))
-    model.Green -> callback(DisplayBasicToast("Green buzzed"))
-    model.Yellow -> callback(DisplayBasicToast("Yellow buzzed"))
-    model.Blue -> callback(DisplayBasicToast("Blue buzzed"))
-    _ -> Nil
   }
 }
 
@@ -222,24 +202,20 @@ fn view(model: Model) {
       [class("w-full h-10 bg-gray-400 flex items-center")],
       get_player_names(model.players),
     ),
-    div([], [text("debug_footer
-    " <> float.to_string(model.svg_width) <> "  " <> float.to_string(
-        model.countdown,
-      ) <> " " <> buzzed_to_string(model.buzzed))]),
+    div([], [text("Socket: " <> websocket_debug(model.websocket))]),
   ])
 }
 
-fn buzzed_to_string(buzzed: model.Buzzer) {
-  case buzzed {
-    model.Red -> "Red"
-    _ -> "No buzz!"
+fn websocket_debug(ws: option.Option(websocket.WebSocket)) {
+  case ws {
+    option.Some(_) -> "Websocket connected"
+    _ -> "Websocket not connected"
   }
 }
 
 // Main function to render the app
 
 pub fn main() {
-  let assert Ok(_) = grille_pain.simple()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 

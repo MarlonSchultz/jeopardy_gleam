@@ -21,11 +21,21 @@ pub fn question_modal(
         _ -> #("invisible", "Reveal")
       }
 
+      let css_background_for_buzzed: String = {
+        case model.buzzed {
+          model.Red -> "bg-red-200 border-8 border-red-400"
+          model.Yellow -> "bg-yellow-200 border-8 border-yellow-400"
+          model.Blue -> "bg-blue-200 border-8 border-blue-400"
+          model.Green -> "bg-green-200 border-8 border-green-400"
+          model.NoOne -> "bg-slate-400 border-8 border-slate-700"
+        }
+      }
       div([class("flex justify-center")], [
         div(
           [
             class(
-              "absolute z-50 p-4 bg-blue-200 w-4/5 h-4/5 container flex flex-col justify-between mt-10 border-4 rounded-2xl",
+              "absolute z-50 p-4 w-4/5 h-4/5 container flex flex-col justify-between mt-10 rounded-2xl shadow-2xl shadow-black "
+              <> css_background_for_buzzed,
             ),
           ],
           [
@@ -51,6 +61,7 @@ pub fn question_modal(
                 [
                   attribute.attribute("width", width_of_svg |> int.to_string),
                   attribute.attribute("height", "60"),
+                  attribute.attribute("stroke", "15"),
                 ],
                 [
                   // red
@@ -60,6 +71,7 @@ pub fn question_modal(
                     attribute.attribute("width", width_of_svg |> int.to_string),
                     attribute.attribute("height", "60"),
                     attribute.attribute("fill", "#f47d64"),
+                    attribute.attribute("rx", "15"),
                   ]),
                   // green
                   svg.rect([
@@ -71,6 +83,7 @@ pub fn question_modal(
                     ),
                     attribute.attribute("height", "60"),
                     attribute.attribute("fill", "#46b258"),
+                    attribute.attribute("rx", "15"),
                   ]),
                   svg.text(
                     [
@@ -96,7 +109,7 @@ pub fn question_modal(
               html.button(
                 [
                   class(
-                    "self-auto bg-green-500 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-green-400 hover:cursor-pointer hover:scale-125",
+                    "self-auto bg-green-500 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-green-400 hover:cursor-pointer hover:scale-125 shadow-lg border-2",
                   ),
                 ],
                 [text("Correct")],
@@ -104,7 +117,7 @@ pub fn question_modal(
               html.button(
                 [
                   class(
-                    "self-auto bg-red-300 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-red-200 hover:cursor-pointer hover:scale-125",
+                    "self-auto bg-red-300 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-red-200 hover:cursor-pointer hover:scale-125 shadow-lg border-2",
                   ),
                 ],
                 [text("Wrong")],
@@ -112,7 +125,7 @@ pub fn question_modal(
               html.button(
                 [
                   class(
-                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125",
+                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125 shadow-lg border-2",
                   ),
                   event.on_click(UserClosesModal),
                 ],
@@ -121,7 +134,7 @@ pub fn question_modal(
               html.button(
                 [
                   class(
-                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125",
+                    "self-auto bg-gray-400 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-gray-300 hover:cursor-pointer hover:scale-125 shadow-lg border-2",
                   ),
                   event.on_click(model.UserClicksReveal),
                 ],
