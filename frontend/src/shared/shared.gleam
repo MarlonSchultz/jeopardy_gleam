@@ -31,12 +31,7 @@ pub fn calculate_new_points_for_player(
 ) -> List(model.Player) {
   list.map(players, fn(player) {
     case player.player_id == buzzer {
-      True ->
-        model.Player(
-          ..player,
-          name: "for testing",
-          points: player.points + points,
-        )
+      True -> model.Player(..player, points: player.points + points)
       _ -> player
     }
   })

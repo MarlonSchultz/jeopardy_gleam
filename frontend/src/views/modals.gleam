@@ -121,6 +121,9 @@ pub fn question_modal(
                   class(
                     "self-auto bg-red-300 text-white px-4 py-2 rounded transition ease-in-out delay-150 hover:bg-red-200 hover:cursor-pointer hover:scale-125 shadow-lg border-2",
                   ),
+                  event.on_click(model.UserClickedCorrect(
+                    -get_question_by_id(model, question_id).points,
+                  )),
                 ],
                 [text("Wrong")],
               ),

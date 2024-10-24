@@ -178,13 +178,22 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     }
 
     UserClickedCorrect(question_points) -> {
-      let new_players =
-        shared.calculate_new_points_for_player(
-          model.players,
-          question_points,
-          model.buzzed,
-        )
-      #(Model(..model, players: new_players), effect.none())
+      case model.buzzed {
+        // no one buzzed, no need to hide
+        model.NoOne -> #(model, effect.none())
+        _ -> {
+          let new_players =
+            shared.calculate_new_points_for_player(
+              model.players,
+              question_points,
+              model.buzzed,
+            )
+          #(
+            Model(..model, players: new_players),
+            effect.from(fn(callback) { callback(model.UserClosesModal) }),
+          )
+        }
+      }
     }
 
     _ -> #(model, effect.none())
