@@ -159,11 +159,12 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     )
 
     WsWrapper(websocket.OnTextMessage(msg)) -> {
+      io.debug(msg)
       let buzzer = case msg {
-        "Red" -> model.Red
-        "Blue" -> model.Blue
-        "Yellow" -> model.Yellow
-        "Green" -> model.Green
+        "red" -> model.Red
+        "blue" -> model.Blue
+        "yellow" -> model.Yellow
+        "green" -> model.Green
         _ -> model.NoOne
       }
 

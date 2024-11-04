@@ -8,31 +8,36 @@
                         "id": 1,
                         "answer": "AnswerString1",
                         "question": "QuestionString",
-                        "points": 100
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 2,
                         "answer": "AnswerString1-2",
                         "question": "QuestionString",
-                        "points": 200
+                        "points": 200,
+                        "type": "question"
                     },
                     {
                         "id": 3,
                         "answer": "AnswerString1-3",
                         "question": "QuestionString",
-                        "points": 300
+                        "points": 300,
+                        "type": "question"
                     },
                     {
                         "id": 4,
                         "answer": "AnswerString1-4",
                         "question": "QuestionString",
-                        "points": 400
+                        "points": 400,
+                        "type": "question"
                     },
                     {
                         "id": 5,
                         "answer": "AnswerString1-5",
                         "question": "QuestionString",
-                        "points": 500
+                        "points": 500,
+                        "type": "question"
                     }
                 ]
             }
@@ -45,31 +50,36 @@
                         "id": 6,
                         "answer": "AnswerString2",
                         "question": "QuestionString",
-                        "points": 100
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 7,
                         "answer": "AnswerString2-2",
                         "question": "QuestionString",
-                        "points": 200
+                        "points": 200,
+                        "type": "question"
                     },
                     {
                         "id": 8,
                         "answer": "AnswerString2-3",
                         "question": "QuestionString",
-                        "points": 300
+                        "points": 300,
+                        "type": "question"
                     },
                     {
                         "id": 9,
                         "answer": "AnswerString2-4",
                         "question": "QuestionString",
-                        "points": 400
+                        "points": 400,
+                        "type": "question"
                     },
                     {
                         "id": 10,
                         "answer": "AnswerString2-5",
                         "question": "QuestionString",
-                        "points": 500
+                        "points": 500,
+                        "type": "question"
                     }
                 ]
             }
@@ -82,31 +92,36 @@
                         "id": 11,
                         "answer": "AnswerString3",
                         "question": "QuestionString",
-                        "points": 100
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 12,
                         "answer": "AnswerString3-2",
                         "question": "QuestionString",
-                        "points": 200
+                        "points": 200,
+                        "type": "question"
                     },
                     {
                         "id": 13,
                         "answer": "AnswerString3-3",
                         "question": "QuestionString",
-                        "points": 300
+                        "points": 300,
+                        "type": "question"
                     },
                     {
                         "id": 14,
                         "answer": "AnswerString3-4",
                         "question": "QuestionString",
-                        "points": 400
+                        "points": 400,
+                        "type": "question"
                     },
                     {
                         "id": 15,
                         "answer": "AnswerString3-5",
                         "question": "QuestionString",
-                        "points": 500
+                        "points": 500,
+                        "type": "question"
                     }
                 ]
             }
@@ -119,31 +134,36 @@
                         "id": 16,
                         "answer": "AnswerString4",
                         "question": "QuestionString",
-                        "points": 100
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 17,
                         "answer": "AnswerString4-2",
                         "question": "QuestionString",
-                        "points": 200
+                        "points": 200,
+                        "type": "question"
                     },
                     {
                         "id": 18,
                         "answer": "AnswerString4-3",
                         "question": "QuestionString",
-                        "points": 300
+                        "points": 300,
+                        "type": "question"
                     },
                     {
                         "id": 19,
                         "answer": "AnswerString4-4",
                         "question": "QuestionString",
-                        "points": 400
+                        "points": 400,
+                        "type": "question"
                     },
                     {
                         "id": 20,
                         "answer": "AnswerString4-5",
                         "question": "QuestionString",
-                        "points": 500
+                        "points": 500,
+                        "type": "question"
                     }
                 ]
             }
@@ -156,31 +176,36 @@
                         "id": 21,
                         "answer": "AnswerString5",
                         "question": "QuestionString",
-                        "points": 100
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 22,
                         "answer": "AnswerString5-2",
                         "question": "QuestionString",
-                        "points": 200
+                        "points": 200,
+                        "type": "question"
                     },
                     {
                         "id": 23,
                         "answer": "AnswerString5-3",
                         "question": "QuestionString",
-                        "points": 300
+                        "points": 300,
+                        "type": "question"
                     },
                     {
                         "id": 24,
                         "answer": "AnswerString5-4",
                         "question": "QuestionString",
-                        "points": 400
+                        "points": 400,
+                        "type": "question"
                     },
                     {
                         "id": 25,
                         "answer": "AnswerString5-5",
                         "question": "QuestionString",
-                        "points": 500
+                        "points": 500,
+                        "type": "question"
                     }
                 ]
             }

@@ -27,12 +27,10 @@ button1 = Button(17)  # First button connected to GPIO 17
 button2 = Button(18)  # Second button connected to GPIO 18
 button3 = Button(27)  # Third button connected to GPIO 27
 
-button1.when_pressed = lambda: gpio_buzzer_handler("red pressed")
-button1.when_released = lambda: gpio_buzzer_handler("buzzer release")
+button1.when_pressed = lambda: gpio_buzzer_handler("red")
 button2.when_pressed = lambda: gpio_buzzer_handler("green")
-button2.when_released = lambda: gpio_buzzer_handler("buzzer release")
 button3.when_pressed = lambda: gpio_buzzer_handler("yellow")
-button3.when_released = lambda: gpio_buzzer_handler("buzzer release")
+
 
     
 class MainHandler(tornado.web.RequestHandler):
@@ -95,7 +93,6 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
         match message:
             case "Question open":
                 question_open = True
-                print("question open")
             case "Question closed":
                 question_open = False
                 pressed_buzzer = "none"
@@ -110,10 +107,13 @@ def gpio_buzzer_handler(buzzer):
     """Handler for GPIO events."""
     global question_open
     global pressed_buzzer
-    if question_open & (pressed_buzzer == "none"):
+    
+    print(f"current state question: {question_open}, pressed buzzer {pressed_buzzer}, actual: {buzzer}")
+    if question_open and pressed_buzzer == "none":
         pressed_buzzer = buzzer
         for client in clients:
-            client.write_message(f"Buzzer {buzzer}")
+            client.write_message(buzzer)
+
     elif question_open != True:
         print(f"No question open: Buzz by {buzzer}")
     elif pressed_buzzer != "none":
@@ -147,7 +147,11 @@ async def main():
     app = make_app()
     app.listen(8888)
 
-    await simulate_button_press(button1)
+    await asyncio.gather(
+            simulate_button_press(button1),
+            simulate_button_press(button2),
+            simulate_button_press(button3)
+        )
     
     # Keep the program running to allow Tornado and GPIO event handling
     await asyncio.Event().wait()

@@ -1,17 +1,24 @@
 import gleam/dynamic
 
 pub type Answer {
-  Answer(id: Int, answer: String, question: String, points: Int)
+  Answer(
+    id: Int,
+    answer: String,
+    question: String,
+    points: Int,
+    question_type: String,
+  )
 }
 
 pub fn decode_answer_list() -> fn(dynamic.Dynamic) ->
   Result(Answer, List(dynamic.DecodeError)) {
-  dynamic.decode4(
+  dynamic.decode5(
     Answer,
     dynamic.field("id", dynamic.int),
     dynamic.field("answer", dynamic.string),
     dynamic.field("question", dynamic.string),
     dynamic.field("points", dynamic.int),
+    dynamic.field("type", dynamic.string),
   )
 }
 
