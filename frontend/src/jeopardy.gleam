@@ -178,7 +178,7 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
       )
     }
 
-    UserClickedCorrect(question_points) -> {
+    UserClickedCorrect(question_points, question_id) -> {
       case model.buzzed {
         // no one buzzed, no need to hide
         model.NoOne -> #(model, effect.none())
@@ -189,8 +189,14 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
               question_points,
               model.buzzed,
             )
+
+          let new_answered =
+            list.append(model.answered, [
+              model.AnsweredQuestions(id: question_id, buzzed: model.Red),
+            ])
+
           #(
-            Model(..model, players: new_players),
+            Model(..model, players: new_players, answered: new_answered),
             effect.from(fn(callback) { callback(model.UserClosesModal) }),
           )
         }
@@ -220,6 +226,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
       reveal_question: False,
       websocket: None,
       buzzed: model.NoOne,
+      answered: [model.AnsweredQuestions(id: 0, buzzed: model.NoOne)],
     ),
     effect.batch([
       get_json_from_api(),

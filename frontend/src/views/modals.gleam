@@ -112,6 +112,7 @@ pub fn question_modal(
                   ),
                   event.on_click(model.UserClickedCorrect(
                     get_question_by_id(model, question_id).points,
+                    question_id,
                   )),
                 ],
                 [text("Correct")],
@@ -123,6 +124,7 @@ pub fn question_modal(
                   ),
                   event.on_click(model.UserClickedCorrect(
                     -get_question_by_id(model, question_id).points,
+                    question_id,
                   )),
                 ],
                 [text("Wrong")],

@@ -17,7 +17,12 @@ pub type Model {
     reveal_question: Bool,
     websocket: Option(websocket.WebSocket),
     buzzed: Buzzer,
+    answered: List(AnsweredQuestions),
   )
+}
+
+pub type AnsweredQuestions {
+  AnsweredQuestions(id: Int, buzzed: Buzzer)
 }
 
 pub type Buzzer {
@@ -42,7 +47,7 @@ pub type Msg {
   UserRequestsJson
   UserClosesModal
   UserClickedQuestion(Int)
-  UserClickedCorrect(Int)
+  UserClickedCorrect(Int, Int)
   UserClickedPlayername(Player)
   UserSavedPlayername(Player)
   ApiReturnedJson(Result(JsonCategories, lustre_http.HttpError))
