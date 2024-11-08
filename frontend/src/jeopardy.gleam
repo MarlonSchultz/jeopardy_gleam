@@ -237,8 +237,8 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
 }
 
 fn view(model: Model) {
-  div([class("min-h-screen flex flex-col mx-auto container")], [
-    div([class("flex py-15")], [
+  div([class("h-[calc(100vh-10rem)] flex flex-col")], [
+    div([class("flex-grow flex mx-auto container")], [
       question_modal(
         800,
         model.svg_width,
@@ -249,10 +249,20 @@ fn view(model: Model) {
     ]),
     set_player_names_modal(model),
     html.footer(
-      [class("w-full h-10 bg-gray-400 flex items-center")],
-      get_player_names(model.players),
+      [
+        class(
+          "fixed bottom-0 left-0 w-screen h-10 bg-gray-400 flex items-center",
+        ),
+      ],
+      [
+        div([class("container mx-auto flex justify-between px-4")], [
+          div([], get_player_names(model.players)),
+          div([class("text-right")], [
+            text("🔌 Socket: " <> websocket_debug(model.websocket)),
+          ]),
+        ]),
+      ],
     ),
-    div([], [text("Socket: " <> websocket_debug(model.websocket))]),
   ])
 }
 

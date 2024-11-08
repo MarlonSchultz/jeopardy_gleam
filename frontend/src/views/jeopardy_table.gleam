@@ -14,7 +14,11 @@ pub fn view_jeopardy_table(model: Model) -> element.Element(Msg) {
     True ->
       html.div([class("relative overflow-x-auto sm:rounded-lg bg-blue-200")], [
         html.table(
-          [class("w-full text-sm text-center border-spacing-1 border-separate")],
+          [
+            class(
+              "w-full text-sm text-center border-spacing-1 border-separate table-fixed",
+            ),
+          ],
           [
             html.thead([class("text-xs text-gray-700 uppercase bg-blue-700")], [
               html.tr(
