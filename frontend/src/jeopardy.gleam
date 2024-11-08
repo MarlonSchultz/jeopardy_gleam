@@ -48,7 +48,7 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     UserClickedQuestion(id) -> {
       case model.websocket {
         Some(ws) -> #(
-          Model(..model, modal_open: Question(id)),
+          Model(..model, modal_open: Question(id), reveal_question: False),
           websocket.send(ws, "Question open"),
         )
         None -> #(model, effect.none())
@@ -124,22 +124,24 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     }
 
     model.Tick(time_offset) -> {
-      let new_animations = animation.tick(model.animation, time_offset)
-      let new_countdown =
-        animation.value(model.animation, "countdown", model.countdown)
-      let svg_width =
-        animation.value(model.animation, "svg_width", model.svg_width)
-      let countdown = float.truncate(model.countdown)
-      let effect = case countdown {
+      let effect = case float.truncate(model.countdown) {
         count if count <= 0 -> animation.effect(model.animation, model.EndTick)
         _ -> animation.effect(model.animation, model.Tick)
       }
       #(
         Model(
           ..model,
-          countdown: new_countdown,
-          svg_width:,
-          animation: new_animations,
+          countdown: animation.value(
+            model.animation,
+            "countdown",
+            model.countdown,
+          ),
+          svg_width: animation.value(
+            model.animation,
+            "svg_width",
+            model.svg_width,
+          ),
+          animation: animation.tick(model.animation, time_offset),
         ),
         effect,
       )
@@ -159,21 +161,22 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
     )
 
     WsWrapper(websocket.OnTextMessage(msg)) -> {
-      io.debug(msg)
-      let buzzer = case msg {
-        "red" -> model.Red
-        "blue" -> model.Blue
-        "yellow" -> model.Yellow
-        "green" -> model.Green
-        _ -> model.NoOne
-      }
-
       let animation_svg = {
         animation.add(model.animation, "countdown", model.countdown, 0.0, 30.0)
         |> animation.add("svg_width", model.svg_width, 0.0, 29.0)
       }
       #(
-        Model(..model, buzzed: buzzer, animation: animation_svg),
+        Model(
+          ..model,
+          buzzed: case msg {
+            "red" -> model.Red
+            "blue" -> model.Blue
+            "yellow" -> model.Yellow
+            "green" -> model.Green
+            _ -> model.NoOne
+          },
+          animation: animation_svg,
+        ),
         animation.effect(animation_svg, model.Tick),
       )
     }
@@ -183,20 +186,18 @@ fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
         // no one buzzed, no need to hide
         model.NoOne -> #(model, effect.none())
         _ -> {
-          let new_players =
-            shared.calculate_new_points_for_player(
-              model.players,
-              question_points,
-              model.buzzed,
-            )
-
-          let new_answered =
-            list.append(model.answered, [
-              model.AnsweredQuestions(id: question_id, buzzed: model.Red),
-            ])
-
           #(
-            Model(..model, players: new_players, answered: new_answered),
+            Model(
+              ..model,
+              players: shared.calculate_new_points_for_player(
+                model.players,
+                question_points,
+                model.buzzed,
+              ),
+              answered: list.append(model.answered, [
+                model.AnsweredQuestions(id: question_id, buzzed: model.buzzed),
+              ]),
+            ),
             effect.from(fn(callback) { callback(model.UserClosesModal) }),
           )
         }
@@ -237,7 +238,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
 
 fn view(model: Model) {
   div([class("min-h-screen flex flex-col mx-auto container")], [
-    div([class("flex-grow py-15")], [
+    div([class("flex py-15")], [
       question_modal(
         800,
         model.svg_width,

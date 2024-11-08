@@ -1,28 +1,214 @@
 {
   "categories": [
-    {
-      "category": {
-        "name": "cat1",
-        "answers": [
-          {
-            "answer": "AnswerString",
-            "question": "QuestionString",
-            "points": 10
+      {
+          "category": {
+              "name": "Female IT cornerstones",
+              "answers": [
+                  {
+                      "id": 1,
+                      "answer": "The L in the SOLID design principles for OOP stands for the name of this famous mathematician.",
+                      "question": "Who is Barbara Liskov? (Liskov principle of substitution)",
+                      "points": 100,
+                      "type": "question"
+                  },
+                  {
+                      "id": 2,
+                      "answer": "She developed the first compiler A-0 and helped develop the COBOL programming language.",
+                      "question": "Who is Grace Hopper?",
+                      "points": 200,
+                      "type": "question"
+                  },
+                  {
+                      "id": 3,
+                      "answer": "She is considered the world's first computer programmer and worked on the Analytical Engine",
+                      "question": "Who is Ada Lovelace?",
+                      "points": 300,
+                      "type": "question"
+                  },
+                  {
+                      "id": 4,
+                      "answer": "Known as the \"Mother of the Internet,\" she developed the spanning-tree protocol (STP), a key component of network communications.",
+                      "question": "Who is Radia Perlman?",
+                      "points": 400,
+                      "type": "question"
+                  },
+                  {
+                      "id": 5,
+                      "answer": "This computer scientist and electrical engineer revolutionized VLSI (very large scale integration) chip design and became a prominent transgender advocate.",
+                      "question": "Who is Lynn Conway? (Not related to Melvin)",
+                      "points": 500,
+                      "type": "question"
+                  }
+              ]
           }
-        ]
-      }
-    },
-    {
-      "category": {
-        "name": "cat2",
-        "answers": [
-          {
-            "answer": "AnswerString",
-            "question": "QuestionString",
-            "points": 10
+      },
+      {
+          "category": {
+              "name": "Snakes everywhere!",
+              "answers": [
+                  {
+                      "id": 6,
+                      "answer": "a,b = b, a",
+                      "question": "What is (tuple) unpacking?",
+                      "points": 100,
+                      "type": "question"
+                  },
+                  {
+                      "id": 7,
+                      "answer": "This is the inspiration behind the name of the Python programming language.",
+                      "question": "What is Monty Python?",
+                      "points": 200,
+                      "type": "question"
+                  },
+                  {
+                      "id": 8,
+                      "answer": "The creator of the Python programming language.",
+                      "question": "Who is Guido van Rossum?",
+                      "points": 300,
+                      "type": "question"
+                  },
+                  {
+                      "id": 9,
+                      "answer": "This type of function returns an iterator using the yield statement.",
+                      "question": "What is a generator?",
+                      "points": 400,
+                      "type": "question"
+                  },
+                  {
+                      "id": 10,
+                      "answer": "A mechanism in Python that prevents multiple threads from executing Python bytecode simultaneously.",
+                      "question": "What is the Global Interpreter Lock (GIL)",
+                      "points": 500,
+                      "type": "question"
+                  }
+              ]
           }
-        ]
+      },
+      {
+          "category": {
+              "name": "Call the nerds to port!",
+              "answers": [
+                  {
+                      "id": 11,
+                      "answer": "Port 80",
+                      "question": "What is HTTP?",
+                      "points": 100,
+                      "type": "question"
+                  },
+                  {
+                      "id": 12,
+                      "answer": "Port 993",
+                      "question": "What is IMAP over SSL (IMAPS)?",
+                      "points": 200,
+                      "type": "question"
+                  },
+                  {
+                      "id": 13,
+                      "answer": "The xmpp-client is using this port.",
+                      "question": "What is port 5222?",
+                      "points": 300,
+                      "type": "question"
+                  },
+                  {
+                      "id": 14,
+                      "answer": "ntp - http + 400",
+                      "question": "What is HTTPS?",
+                      "points": 400,
+                      "type": "question"
+                  },
+                  {
+                      "id": 15,
+                      "answer": "Port 1833",
+                      "question": "What is mqtt?",
+                      "points": 500,
+                      "type": "question"
+                  }
+              ]
+          }
+      },
+      {
+          "category": {
+              "name": "Dont like long words!",
+              "answers": [
+                  {
+                      "id": 16,
+                      "answer": "It called IBM in short.",
+                      "question": "What is \"International Business Machines\" ?",
+                      "points": 100,
+                      "type": "question"
+                  },
+                  {
+                      "id": 17,
+                      "answer": "In short it is RAID",
+                      "question": "What is the abbreviation for \"Redundant Array of Independent Discs\" ?",
+                      "points": 300,
+                      "type": "question"
+                  },
+                  {
+                      "id": 18,
+                      "answer": "We ususally just call it USB",
+                      "question": "What is the universal serial bus?",
+                      "points": 200,
+                      "type": "question"
+                  },
+                  {
+                      "id": 19,
+                      "answer": "Oh! You mean JPEG!",
+                      "question": "What is the Joint Photographic Experts Group?",
+                      "points": 400,
+                      "type": "question"
+                  },
+                  {
+                      "id": 20,
+                      "answer": "PCMCIA",
+                      "question": "What is the Personal Computer Memory Card International Association?",
+                      "points": 500,
+                      "type": "question"
+                  }
+              ]
+          }
+      },
+      {
+          "category": {
+              "name": "It took 10 days...",
+              "answers": [
+                  {
+                      "id": 21,
+                      "answer": "The only operator that can be mistaken for a typo but evaluates to false when compared with itself.",
+                      "question": "What is NaN?",
+                      "points": 100,
+                      "type": "question"
+                  },
+                  {
+                      "id": 22,
+                      "answer": "This method creates a new array with the results of calling a provided function on every element in the calling array.",
+                      "question": "What is .map()?",
+                      "points": 200,
+                      "type": "question"
+                  },
+                  {
+                      "id": 23,
+                      "answer": "Yoda almost said: \"There is no ...., there is only catch, or catch not\"",
+                      "question": "What is .try()?",
+                      "points": 300,
+                      "type": "question"
+                  },
+                  {
+                      "id": 24,
+                      "answer": "AnswerString5-4",
+                      "question": "QuestionString",
+                      "points": 400,
+                      "type": "question"
+                  },
+                  {
+                      "id": 25,
+                      "answer": "AnswerString5-5",
+                      "question": "QuestionString",
+                      "points": 500,
+                      "type": "question"
+                  }
+              ]
+          }
       }
-    }
   ]
 }

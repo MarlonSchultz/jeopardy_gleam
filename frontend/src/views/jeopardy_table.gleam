@@ -58,7 +58,11 @@ fn view_th(
 ) -> List(element.Element(a)) {
   list.map(lists, fn(single) {
     html.th(
-      [class("px-6 py-3 rounded-xl text-2xl font-bold text-black text-center")],
+      [
+        class(
+          "px-6 py-3 rounded-xl text-2xl font-bold text-black text-center animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent font-black",
+        ),
+      ],
       [text(single.name)],
     )
   })
@@ -72,7 +76,7 @@ fn view_td_by_points(
     html.td(
       [
         class(
-          "px-6 py-4 hover:bg-blue-500 rounded-xl transition ease-in-out delay-150 duration-500 hover:bg-blue-200 hover:cursor-pointer hover:scale-110",
+          "px-6 py-4 hover:bg-blue-500 rounded-xl transition ease-in-out delay-150 duration-500 hover:bg-blue-200 hover:cursor-pointer hover:scale-110 animated-background bg-gradient-to-b from-blue-500 via-blue-500 to-indigo-500",
         ),
         event.on_click(UserClickedQuestion(answer.id)),
       ],
