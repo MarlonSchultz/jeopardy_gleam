@@ -32,23 +32,43 @@ pub fn view_jeopardy_table(model: Model) -> element.Element(Msg) {
             ]),
             html.tr(
               [class(style_tr)],
-              view_td_by_points(100, model.json_content.categories),
+              view_td_by_points(
+                100,
+                model.json_content.categories,
+                model.answered,
+              ),
             ),
             html.tr(
               [class(style_tr)],
-              view_td_by_points(200, model.json_content.categories),
+              view_td_by_points(
+                200,
+                model.json_content.categories,
+                model.answered,
+              ),
             ),
             html.tr(
               [class(style_tr)],
-              view_td_by_points(300, model.json_content.categories),
+              view_td_by_points(
+                300,
+                model.json_content.categories,
+                model.answered,
+              ),
             ),
             html.tr(
               [class(style_tr)],
-              view_td_by_points(400, model.json_content.categories),
+              view_td_by_points(
+                400,
+                model.json_content.categories,
+                model.answered,
+              ),
             ),
             html.tr(
               [class(style_tr)],
-              view_td_by_points(500, model.json_content.categories),
+              view_td_by_points(
+                500,
+                model.json_content.categories,
+                model.answered,
+              ),
             ),
           ],
         ),
@@ -75,18 +95,41 @@ fn view_th(
 fn view_td_by_points(
   points: Int,
   categories: List(json_decoders.SingleCategory),
+  answered: List(model.AnsweredQuestions),
 ) -> List(element.Element(Msg)) {
   list.map(filter_answers_by_points(categories, points), fn(answer) {
     html.td(
       [
         class(
-          "px-6 py-4 hover:bg-blue-500 rounded-xl transition ease-in-out delay-150 duration-500 hover:bg-blue-200 hover:cursor-pointer hover:scale-110 animated-background bg-gradient-to-b from-blue-500 via-blue-500 to-indigo-500",
+          "px-6 py-4 hover:bg-blue-500 rounded-xl transition ease-in-out delay-150 duration-500 hover:cursor-pointer hover:scale-110 "
+          <> mark_answer_by_player(answer.id, answered),
         ),
         event.on_click(UserClickedQuestion(answer.id)),
       ],
       [text(int.to_string(answer.points))],
     )
   })
+}
+
+fn mark_answer_by_player(
+  answer_id: Int,
+  answered: List(model.AnsweredQuestions),
+) -> String {
+  let buzzercolor = case
+    list.find(answered, fn(single_answer) { single_answer.id == answer_id })
+  {
+    Ok(list_item) -> list_item.buzzed
+    Error(_) -> model.NoOne
+  }
+
+  case buzzercolor {
+    model.Blue -> "bg-blue-500 transition-colors duration-500"
+    model.Green -> "bg-green-500 transition-colors duration-500"
+    model.NoOne ->
+      "bg-gradient-to-b from-cyan-500 to-blue-500 transition-colors duration-500"
+    model.Red -> "bg-red-500 transition-colors duration-500"
+    model.Yellow -> "bg-yellow-500 transition-colors duration-500"
+  }
 }
 
 fn filter_answers_by_points(
