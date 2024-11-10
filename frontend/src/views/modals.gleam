@@ -29,7 +29,7 @@ pub fn question_modal(
           model.NoOne -> "bg-slate-400 border-8 border-slate-700"
         }
       }
-      div([class("flex justify-center")], [
+      div([class("flex")], [
         div(
           [
             class(
