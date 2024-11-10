@@ -16,7 +16,7 @@ Device.pin_factory = MockFactory()
 # Path to the JSON file
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) 
-QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/ae.json')
+QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/product_owners_de.json')
 
 clients = []
 question_open : bool = False

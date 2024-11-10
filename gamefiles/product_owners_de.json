@@ -1,0 +1,256 @@
+{
+    "categories": [
+        {
+            "category": {
+                "name": "Backlog & Priorisierung",
+                "answers": [
+                    {
+                        "id": 1,
+                        "answer": "Englisch für Kurzsstreckenlauf-Rückenbaumstamm.",
+                        "question": "Was ist ein \"Sprint Backlog\"?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 2,
+                        "answer": "Angemessen detailliert, geschätzt, emergent und priorisiert.",
+                        "question": "Was ist ein/das DEEP Backlog?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 3,
+                        "answer": "Noriako Kanos Weg zur Kundenzufriedenheit.",
+                        "question": "Was ist das Kano-Modell?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 4,
+                        "answer": "Den Preis, den man bezahlt, wenn man Dinge verzögert.",
+                        "question": "Was ist Cost of Delay?",
+                        "points": 500,
+                        "type": "question"
+                    },
+                    {
+                        "id": 5,
+                        "answer": "Beschreibt, was man in Russland tun müsste, sollte, könnte oder würde.",
+                        "question": "Was ist die MoSCoW Methode?",
+                        "points": 400,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Rituale",
+                "answers": [
+                    {
+                        "id": 6,
+                        "answer": "Zeit für Inspect & Adapt für das Team.",
+                        "question": "Was ist die Retrospektive?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 7,
+                        "answer": "Das Ritual, das man auch als Grooming kennt.",
+                        "question": "Was ist das Refinement?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 8,
+                        "answer": "Es findet jeden Tag statt & beantwortet drei Fragen.",
+                        "question": "Was ist das Daily Scrum?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 9,
+                        "answer": "Dort plant das Team das WIE des Sprints.",
+                        "question": "Was ist das Technical Planning? (Früher Planning 2)",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 100,
+                        "answer": "Ein informelles Meeting, in dem nicht (!) reported wird.",
+                        "question": "Was ist das Sprint Review?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Rollen",
+                "answers": [
+                    {
+                        "id": 11,
+                        "answer": "Die Rolle ist verantwortlich dafür, dass das Team Wert liefert.",
+                        "question": "Wer ist der/die Product Owner?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 12,
+                        "answer": "Es ist POP, es ist ein Antipattern, aber es gibt die Rolle manchmal doch.",
+                        "question": "Was ist der Product Owner Proxy?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 13,
+                        "answer": "Ein Antipattern. Kocht guten Kaffee und bringt den Entwicklern Süßigkeiten.",
+                        "question": "Was ist die Scrum-Mutti? (AKA Scrum Master Antipattern)",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 14,
+                        "answer": "Sie diskutieren mit dem Scrum Team die Sprint Ergebnisse im Review.",
+                        "question": "Wer sind Stakeholder?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 15,
+                        "answer": "Die einen liefern Eier, die anderen den Speck.",
+                        "question": "Was sind Chicken & Pigs?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Stories",
+                "answers": [
+                    {
+                        "id": 16,
+                        "answer": "Ein Akronym und Gedankenstütze für Backlog Items guter Qualität.",
+                        "question": "Was sind INVEST-Kriterien?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 17,
+                        "answer": "Eine zeitlich begrenzte Recherche oder prototypische Implementierung.",
+                        "question": "Was ist ein Spike?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 18,
+                        "answer": "Woran man >wirklich fertig< erkennt.",
+                        "question": "Was ist eine Definition of Done (DoD)?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 19,
+                        "answer": "Das CCC einer guten User Story. Kein Club.",
+                        "question": "Was ist Card, Conversation, Confirmation?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 200,
+                        "answer": "21 wäre im Planning Poker die echte Fibonacci-Zahl gewesen.",
+                        "question": "Was ist 200?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Strategy",
+                "answers": [
+                    {
+                        "id": 21,
+                        "answer": "Lean Startups kleinstes Produkt, mit dem man trotzdem etwas lernen kann.",
+                        "question": "Was ist das MVP? (Minimum Viable Product)",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 22,
+                        "answer": "Eric Ries erfand es, als er kein Geld mehr hatte.",
+                        "question": "Was ist Lean Startup?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 23,
+                        "answer": "Sie ist visionär und motiviert das Scrum Team zur Arbeit an dem Produkt.",
+                        "question": "Was ist die (Produkt) Vision?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 24,
+                        "answer": "_ _ _ _ Canvas / Startup / Analytics / 'on me' ...",
+                        "question": "Was ist Lean?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 25,
+                        "answer": "Der Weihnachtsmann ist schon dort und Toyota hat es als Ziel.",
+                        "question": "Was ist True North?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Tools",
+                "answers": [
+                    {
+                        "id": 26,
+                        "answer": "Wenn alles gut ist, dann brennt es nach unten.",
+                        "question": "Was ist ein Burndown Chart?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 27,
+                        "answer": "Alex Osterwalder hat damit seine Modeling-Karriere begonnen.",
+                        "question": "Was ist Business Modeling / der Business Model Canvas?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 28,
+                        "answer": "Jeff Patton hat sie auf seiner 'Map'.",
+                        "question": "Was sind Stories?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 29,
+                        "answer": "Was man in nur einer Aufzugfahrt einem Investor erklärt.",
+                        "question": "Was ist der Elevator Pitch?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 300,
+                        "answer": "Manche schätzen es, manche schätzen es nicht.",
+                        "question": "Was ist #noestimates?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        }
+    ]
+}
