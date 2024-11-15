@@ -195,15 +195,15 @@
                   },
                   {
                       "id": 24,
-                      "answer": "AnswerString5-4",
-                      "question": "QuestionString",
+                      "answer": "Proxies.",
+                      "question": "Who is JavaScripts magic guard?",
                       "points": 400,
                       "type": "question"
                   },
                   {
                       "id": 25,
-                      "answer": "AnswerString5-5",
-                      "question": "QuestionString",
+                      "answer": "The FinalizationRegistry",
+                      "question": "Which is a somehow unreliable, likely gargabe, registry?",
                       "points": 500,
                       "type": "question"
                   }
