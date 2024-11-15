@@ -11,7 +11,7 @@ import random
 from enum import Enum
 
 # remove on a real raspberry, rasperry gpios will be used then
-Device.pin_factory = MockFactory()
+# Device.pin_factory = MockFactory()
 
 # Path to the JSON file
 
@@ -24,8 +24,8 @@ pressed_buzzer = "none"
 
 # Pin Listeners
 button1 = Button(17)  # First button connected to GPIO 17
-button2 = Button(18)  # Second button connected to GPIO 18
-button3 = Button(27)  # Third button connected to GPIO 27
+button2 = Button(23)  # Second button connected to GPIO 18
+button3 = Button(24)  # Third button connected to GPIO 27
 
 button1.when_pressed = lambda: gpio_buzzer_handler("red")
 button2.when_pressed = lambda: gpio_buzzer_handler("green")
@@ -121,19 +121,7 @@ def gpio_buzzer_handler(buzzer):
         
 
 
-async def simulate_button_press(button):
-    while True:
-        # Randomize the sleep time between presses
-        delay_before_press = random.uniform(0.5, 5.0)  # Between 0.5 and 5 seconds
-        delay_before_release = random.uniform(0.5, 2.0)  # Between 0.5 and 2 seconds
-        
-        # Wait before "pressing" the button
-        await asyncio.sleep(delay_before_press)
-        button.pin.drive_low()  # Simulate pressing the button
-        
-        # Wait before "releasing" the button
-        await asyncio.sleep(delay_before_release)
-        button.pin.drive_high()  # Simulate releasing the button
+
         
 def make_app():
     return tornado.web.Application([
@@ -147,11 +135,6 @@ async def main():
     app = make_app()
     app.listen(8888)
 
-    await asyncio.gather(
-            simulate_button_press(button1),
-            simulate_button_press(button2),
-            simulate_button_press(button3)
-        )
     
     # Keep the program running to allow Tornado and GPIO event handling
     await asyncio.Event().wait()

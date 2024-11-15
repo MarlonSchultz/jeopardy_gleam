@@ -6,9 +6,10 @@ authors = ["Marlon Schultz <m.schultz@ampeersenergy.de>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = "^3.11"
 tornado = "^6.4.1"
 gpiozero = "^2.0.1"
+lgpio = "^0.2.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
