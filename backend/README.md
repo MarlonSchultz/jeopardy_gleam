@@ -14,3 +14,8 @@ to start a new poetry shell and manage dependencies
  poetry run backend/server.py
  ```
  To start the server
+
+ If you want to turn of GPIO inputs use the environement variable
+  ```
+ export DISABLE_GPIO=1
+  ```

@@ -1,10 +1,25 @@
 import asyncio
 import json
 import os
+import platform
+import random
+import threading
 
 import tornado.web
 import tornado.websocket
-from gpiozero import Button
+
+# Conditional import of gpiozero
+try:
+    from gpiozero import Button
+except ImportError:
+    # Provide a mock Button class if gpiozero is unavailable
+    class Button:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def when_pressed(self, handler):
+            pass
+
 
 # Constants
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -14,25 +29,7 @@ QUESTIONS_JSON = os.path.join(SCRIPT_DIR, "../../gamefiles/product_owners_de.jso
 clients = []
 question_open: bool = False
 pressed_buzzer = "none"
-
-
-# GPIO Initialization
-def setup_gpio():
-    """Setup GPIO buttons and assign handlers."""
-    buttons = {
-        "yellow": Button(17, pull_up=False),
-        "blue": Button(23, pull_up=False),
-        "green": Button(24, pull_up=False),
-        "red": Button(25, pull_up=False),
-    }
-
-    for color, button in buttons.items():
-        button.when_pressed = lambda color=color: gpio_buzzer_handler(color)
-
-    return buttons
-
-
-buttons = setup_gpio()
+IS_RASPBERRY_PI = platform.system() == "Linux" and os.path.exists("/proc/cpuinfo")
 
 
 # GPIO Handlers
@@ -49,6 +46,48 @@ def gpio_buzzer_handler(buzzer_color: str):
         print(f"Buzz ignored (no question open): {buzzer_color}")
     elif pressed_buzzer != "none":
         print(f"Buzz ignored (already buzzed): {buzzer_color}")
+
+
+# GPIO Initialization
+def setup_gpio():
+    """Setup GPIO buttons and assign handlers."""
+    if os.environ.get("DISABLE_GPIO") == "1" or not IS_RASPBERRY_PI:
+        print("GPIO setup skipped (non-Raspberry Pi system or disabled).")
+        return {}
+
+    buttons = {
+        "yellow": Button(17, pull_up=False),
+        "blue": Button(23, pull_up=False),
+        "green": Button(24, pull_up=False),
+        "red": Button(25, pull_up=False),
+    }
+
+    for color, button in buttons.items():
+        button.when_pressed = lambda color=color: gpio_buzzer_handler(color)
+
+    return buttons
+
+
+# Initialize buttons with the conditional GPIO setup
+buttons = setup_gpio()
+
+
+# Simulate random button presses
+def simulate_button_presses():
+    """Simulate random button presses every 2 seconds if not on Raspberry Pi."""
+    colors = ["yellow", "blue", "green", "red"]
+    while True:
+        if not IS_RASPBERRY_PI and os.environ.get("DISABLE_GPIO") != "1":
+            random_color = random.choice(colors)
+            print(f"Simulating button press: {random_color}")
+            gpio_buzzer_handler(random_color)
+        asyncio.run(asyncio.sleep(2))
+
+
+# Start button simulation in a separate thread if not on Raspberry Pi
+if not IS_RASPBERRY_PI:
+    simulation_thread = threading.Thread(target=simulate_button_presses, daemon=True)
+    simulation_thread.start()
 
 
 # Tornado Handlers
