@@ -1,19 +1,20 @@
-import os
-import json
 import asyncio
+import json
+import os
+
 import tornado.web
 import tornado.websocket
 from gpiozero import Button
-from signal import pause
 
 # Constants
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-QUESTIONS_JSON = os.path.join(SCRIPT_DIR, '../../gamefiles/product_owners_de.json')
+QUESTIONS_JSON = os.path.join(SCRIPT_DIR, "../../gamefiles/product_owners_de.json")
 
 # Global Variables
 clients = []
 question_open: bool = False
 pressed_buzzer = "none"
+
 
 # GPIO Initialization
 def setup_gpio():
@@ -30,7 +31,9 @@ def setup_gpio():
 
     return buttons
 
+
 buttons = setup_gpio()
+
 
 # GPIO Handlers
 def gpio_buzzer_handler(buzzer_color: str):
@@ -47,14 +50,18 @@ def gpio_buzzer_handler(buzzer_color: str):
     elif pressed_buzzer != "none":
         print(f"Buzz ignored (already buzzed): {buzzer_color}")
 
+
 # Tornado Handlers
 class MainHandler(tornado.web.RequestHandler):
     """Main handler for the root URL."""
+
     def get(self):
         self.write("Hello, world")
 
+
 class ServeQuestionsHandler(tornado.web.RequestHandler):
     """Handler for serving questions from a JSON file."""
+
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "GET, OPTIONS")
@@ -67,7 +74,7 @@ class ServeQuestionsHandler(tornado.web.RequestHandler):
     def get(self):
         try:
             if os.path.exists(QUESTIONS_JSON):
-                with open(QUESTIONS_JSON, 'r') as f:
+                with open(QUESTIONS_JSON, "r") as f:
                     data = json.load(f)
                 self.write(json.dumps(data))
             else:
@@ -82,8 +89,10 @@ class ServeQuestionsHandler(tornado.web.RequestHandler):
             self.write_error(500, message=str(e))
             print(f"Unexpected Error: {e}")
 
+
 class ServeWebsocket(tornado.websocket.WebSocketHandler):
     """WebSocket handler for real-time communication."""
+
     def check_origin(self, origin):
         return True  # Allow CORS
 
@@ -107,14 +116,18 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
                 print("Question is now closed.")
         print(f"Message received: {message}")
 
+
 # Tornado Application Setup
 def make_app():
     """Create and configure the Tornado web application."""
-    return tornado.web.Application([
-        (r"/", MainHandler),
-        (r"/questions", ServeQuestionsHandler),
-        (r"/websocket", ServeWebsocket),
-    ])
+    return tornado.web.Application(
+        [
+            (r"/", MainHandler),
+            (r"/questions", ServeQuestionsHandler),
+            (r"/websocket", ServeWebsocket),
+        ]
+    )
+
 
 # Main Application Loop
 async def main():
@@ -123,6 +136,7 @@ async def main():
     app.listen(8888)
     print("Server running at http://localhost:8888")
     await asyncio.Event().wait()  # Keep the event loop running
+
 
 # Entry Point
 if __name__ == "__main__":

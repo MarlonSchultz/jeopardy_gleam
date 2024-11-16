@@ -1,0 +1,52 @@
+name: Lint and Format Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11  # Match your project Python version
+
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: |
+          poetry install --no-root
+
+
+      - name: Run Black
+        working-directory: ./backend
+        run: |
+          poetry run black --check .
+
+
+      - name: Run Isort
+        working-directory: ./backend
+        run: |
+          poetry run isort --check .
+
+
+      - name: Run Flake8
+        working-directory: ./backend
+        run: |
+          poetry run flake8 .
