@@ -37,8 +37,6 @@ def gpio_buzzer_handler(buzzer_color: str):
     """Handle GPIO button press events."""
     global question_open, pressed_buzzer
 
-    print(f"GPIO Event: Buzzer '{buzzer_color}' pressed. Question open: {question_open}, Current buzzer: {pressed_buzzer}")
-
     if question_open and pressed_buzzer == "none":
         pressed_buzzer = buzzer_color
         for client in clients:
