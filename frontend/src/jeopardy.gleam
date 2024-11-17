@@ -1,4 +1,4 @@
-import config.{rest_server_url, websocket_server_url}
+import config.{answer_file_name, rest_server_url, websocket_server_url}
 import gleam/float
 import gleam/int
 import gleam/list
@@ -28,7 +28,10 @@ fn get_json_from_api() -> effect.Effect(Msg) {
       json_decoders.decode_json_categories(),
       ApiReturnedJson,
     )
-  lustre_http.get(rest_server_url() <> "/questions", expect)
+  lustre_http.get(
+    rest_server_url() <> "/questions/" <> answer_file_name(),
+    expect,
+  )
 }
 
 fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
