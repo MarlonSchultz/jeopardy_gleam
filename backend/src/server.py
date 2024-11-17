@@ -157,6 +157,9 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
 
 
 # Tornado Application Setup
+GAMEFILES_IMAGES_PATH = os.path.abspath("../gamefiles/images")
+
+
 def make_app():
     """Create and configure the Tornado web application."""
     return tornado.web.Application(
@@ -164,6 +167,11 @@ def make_app():
             (r"/", MainHandler),
             (r"/questions", ServeQuestionsHandler),
             (r"/websocket", ServeWebsocket),
+            (
+                r"/images/(.*)",
+                tornado.web.StaticFileHandler,
+                {"path": GAMEFILES_IMAGES_PATH},
+            ),
         ]
     )
 
