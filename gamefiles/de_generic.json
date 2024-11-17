@@ -86,14 +86,14 @@
         },
         {
             "category": {
-                "name": "cat3",
+                "name": "Picture perfect peers",
                 "answers": [
                     {
                         "id": 11,
-                        "answer": "AnswerString3",
+                        "answer": "Example.jpg",
                         "question": "QuestionString",
                         "points": 100,
-                        "type": "question"
+                        "type": "image"
                     },
                     {
                         "id": 12,

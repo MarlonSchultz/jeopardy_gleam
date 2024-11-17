@@ -1,3 +1,4 @@
+import config.{rest_server_url}
 import gleam/float
 import gleam/int
 import lustre/attribute.{class}
@@ -37,7 +38,13 @@ pub fn question_modal(
           ])
         _ ->
           html.h1([class("text-4xl font-bold text-black text-center mb-4")], [
-            text("render an image instead"),
+            html.img([
+              attribute.attribute(
+                "src",
+                rest_server_url()
+                  <> get_question_by_id(model, question_id).answer,
+              ),
+            ]),
           ])
       }
       div([class("flex")], [
