@@ -9,7 +9,7 @@
                       "answer": "<img src=\"http://localhost:8888/images/Example.jpg\">",
                       "question": "Who is Barbara Liskov? (Liskov principle of substitution)",
                       "points": 100,
-                      "type": "question"
+                      "type": "image"
                   },
                   {
                       "id": 2,

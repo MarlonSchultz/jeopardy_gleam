@@ -29,6 +29,17 @@ pub fn question_modal(
           model.NoOne -> "bg-slate-400 border-8 border-slate-700"
         }
       }
+
+      let answer = case get_question_by_id(model, question_id).question_type {
+        "question" ->
+          html.h1([class("text-4xl font-bold text-black text-center mb-4")], [
+            text(get_question_by_id(model, question_id).answer),
+          ])
+        _ ->
+          html.h1([class("text-4xl font-bold text-black text-center mb-4")], [
+            text("render an image instead"),
+          ])
+      }
       div([class("flex")], [
         div(
           [
@@ -40,10 +51,7 @@ pub fn question_modal(
           [
             div([class("flex-grow flex flex-col items-center justify-center")], [
               // Answer
-              html.h1(
-                [class("text-4xl font-bold text-black text-center mb-4")],
-                [text(get_question_by_id(model, question_id).answer)],
-              ),
+              answer,
               // Question
               html.h1(
                 [

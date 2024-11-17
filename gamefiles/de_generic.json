@@ -1,0 +1,214 @@
+{
+    "categories": [
+        {
+            "category": {
+                "name": "Erzwingular",
+                "answers": [
+                    {
+                        "id": 1,
+                        "answer": "Das ist nur eines von Schwzwei.",
+                        "question": "Was ist ein Schwein?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 2,
+                        "answer": "Das ist der Singular von Zweige!",
+                        "question": "Was ist Einge?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 3,
+                        "answer": "Dreifel ist der Superlativ von diesem Substantiv!",
+                        "question": "Was ist Zweifel?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 4,
+                        "answer": "AnswerString1-4",
+                        "question": "QuestionString",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 5,
+                        "answer": "AnswerString1-5",
+                        "question": "QuestionString",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Stadtliche Sachen",
+                "answers": [
+                    {
+                        "id": 6,
+                        "answer": "Sie hat 3.4 Millionen Einwohner.",
+                        "question": "Was ist Berlin?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 7,
+                        "answer": "Das ist die Grenze von Dorf zu statt nach Einwohnern.",
+                        "question": "Was sind 5000 Einweohner?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 8,
+                        "answer": "AnswerString2-3",
+                        "question": "QuestionString",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 9,
+                        "answer": "AnswerString2-4",
+                        "question": "QuestionString",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 10,
+                        "answer": "AnswerString2-5",
+                        "question": "QuestionString",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat3",
+                "answers": [
+                    {
+                        "id": 11,
+                        "answer": "AnswerString3",
+                        "question": "QuestionString",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 12,
+                        "answer": "AnswerString3-2",
+                        "question": "QuestionString",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 13,
+                        "answer": "AnswerString3-3",
+                        "question": "QuestionString",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 14,
+                        "answer": "AnswerString3-4",
+                        "question": "QuestionString",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 15,
+                        "answer": "AnswerString3-5",
+                        "question": "QuestionString",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat4",
+                "answers": [
+                    {
+                        "id": 16,
+                        "answer": "AnswerString4",
+                        "question": "QuestionString",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 17,
+                        "answer": "AnswerString4-2",
+                        "question": "QuestionString",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 18,
+                        "answer": "AnswerString4-3",
+                        "question": "QuestionString",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 19,
+                        "answer": "AnswerString4-4",
+                        "question": "QuestionString",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 20,
+                        "answer": "AnswerString4-5",
+                        "question": "QuestionString",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "cat5",
+                "answers": [
+                    {
+                        "id": 21,
+                        "answer": "AnswerString5",
+                        "question": "QuestionString",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 22,
+                        "answer": "AnswerString5-2",
+                        "question": "QuestionString",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 23,
+                        "answer": "AnswerString5-3",
+                        "question": "QuestionString",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 24,
+                        "answer": "AnswerString5-4",
+                        "question": "QuestionString",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 25,
+                        "answer": "AnswerString5-5",
+                        "question": "QuestionString",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        }
+    ]
+}
