@@ -6,7 +6,7 @@
               "answers": [
                   {
                       "id": 1,
-                      "answer": "The L in the SOLID design principles for OOP stands for the name of this famous mathematician.",
+                      "answer": "<img src=\"http://localhost:8888/images/Example.jpg\">",
                       "question": "Who is Barbara Liskov? (Liskov principle of substitution)",
                       "points": 100,
                       "type": "question"
