@@ -170,7 +170,7 @@ def make_app():
     return tornado.web.Application(
         [
             (r"/", MainHandler),
-            (r"/questions/([a-zA-Z.]+)", ServeQuestionsHandler),
+            (r"/questions/([a-zA-Z._]+)", ServeQuestionsHandler),
             (r"/buzzer/([a-zA-Z]+)", BuzzerHandler),
             (r"/websocket", ServeWebsocket),
             (

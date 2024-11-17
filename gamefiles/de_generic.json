@@ -20,7 +20,7 @@
                     },
                     {
                         "id": 3,
-                        "answer": "Dreifel ist der Superlativ von diesem Substantiv!",
+                        "answer": "Dreifel ist der +1 Lativ von diesem Substantiv!",
                         "question": "Was ist Zweifel?",
                         "points": 300,
                         "type": "question"
@@ -62,22 +62,22 @@
                     },
                     {
                         "id": 8,
-                        "answer": "AnswerString2-3",
-                        "question": "QuestionString",
+                        "answer": "Der schnellste Weg dorthin zu kommen ist: Du nimmst den Daumen in die Hand und...",
+                        "question": "Was ist Dresden?",
                         "points": 300,
                         "type": "question"
                     },
                     {
                         "id": 9,
-                        "answer": "AnswerString2-4",
-                        "question": "QuestionString",
+                        "answer": "Dieser Münchner Ort klingt wie ein Teil vom Compiler.",
+                        "question": "Was ist München Pa(r)sing?",
                         "points": 400,
                         "type": "question"
                     },
                     {
                         "id": 10,
-                        "answer": "AnswerString2-5",
-                        "question": "QuestionString",
+                        "answer": "Mit 312.696 Quadratkilometern ist es das sechstgrößte Land der EU.",
+                        "question": "Was ist Polen?",
                         "points": 500,
                         "type": "question"
                     }
@@ -90,36 +90,36 @@
                 "answers": [
                     {
                         "id": 11,
-                        "answer": "Example.jpg",
-                        "question": "QuestionString",
+                        "answer": "/images/recknagel.jpg",
+                        "question": "Wer ist Lucas?",
                         "points": 100,
                         "type": "image"
                     },
                     {
                         "id": 12,
-                        "answer": "AnswerString3-2",
-                        "question": "QuestionString",
+                        "answer": "/images/alex.jpg",
+                        "question": "Wer ist Alex?",
                         "points": 200,
-                        "type": "question"
+                        "type": "image"
                     },
                     {
                         "id": 13,
-                        "answer": "AnswerString3-3",
-                        "question": "QuestionString",
+                        "answer": "/images/chris.jpg",
+                        "question": "Wer ist Chris?",
                         "points": 300,
-                        "type": "question"
+                        "type": "image"
                     },
                     {
                         "id": 14,
-                        "answer": "AnswerString3-4",
-                        "question": "QuestionString",
+                        "answer": "/images/kruhl.jpg",
+                        "question": "Wer ist Dr. Kruhl?",
                         "points": 400,
-                        "type": "question"
+                        "type": "image"
                     },
                     {
                         "id": 15,
-                        "answer": "AnswerString3-5",
-                        "question": "QuestionString",
+                        "answer": "Sein Name ist eine verniedlichte Kurzform für den harten Sper.",
+                        "question": "Wer ist Gerrit?",
                         "points": 500,
                         "type": "question"
                     }

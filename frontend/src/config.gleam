@@ -7,5 +7,5 @@ pub fn websocket_server_url() -> String {
 }
 
 pub fn answer_file_name() -> String {
-  "ae.json"
+  "de_generic.json"
 }
