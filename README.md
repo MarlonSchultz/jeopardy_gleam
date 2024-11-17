@@ -11,11 +11,16 @@ go run github.com/eliben/static-server@latest -cors
 Or run backend in via:
 ```sh
 poetry run backend/server.py
-
+```
 
 Then run gleam development server via:
 
 ```sh
 gleam run -m lustre/dev start # run development server
 gleam test  # Run the tests
+```
+
+## Building the frontend for prod
+```sh
+gleam run -m lustre/dev build app
 ```
