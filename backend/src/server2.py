@@ -23,7 +23,7 @@ except ImportError:
 
 # Constants
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-QUESTIONS_JSON = os.path.join(SCRIPT_DIR, "../../gamefiles/product_owners_de.json")
+QUESTIONS_JSON_PATH = os.path.join(SCRIPT_DIR, "../../gamefiles/")
 
 # Global Variables
 clients = []
@@ -110,22 +110,28 @@ class ServeQuestionsHandler(tornado.web.RequestHandler):
         self.set_status(204)
         self.finish()
 
-    def get(self):
+    def get(self, file_name):
         try:
-            if os.path.exists(QUESTIONS_JSON):
-                with open(QUESTIONS_JSON, "r") as f:
+            # Construct the full path to the JSON file
+            file_path = os.path.join(QUESTIONS_JSON_PATH, file_name)
+            if os.path.exists(file_path):
+                # Open and read the JSON file
+                with open(file_path, "r") as f:
                     data = json.load(f)
                 self.write(json.dumps(data))
             else:
-                raise FileNotFoundError("JSON file not found")
+                raise FileNotFoundError(f"JSON file not found: {file_name}.json")
         except FileNotFoundError as e:
-            self.write_error(404, message=str(e))
+            self.set_status(404)
+            self.write({"error": str(e)})
             print(f"Error: {e}")
         except json.JSONDecodeError as e:
-            self.write_error(500, message=str(e))
+            self.set_status(500)
+            self.write({"error": f"JSON decode error: {str(e)}"})
             print(f"JSON Error: {e}")
         except Exception as e:
-            self.write_error(500, message=str(e))
+            self.set_status(500)
+            self.write({"error": f"Unexpected error: {str(e)}"})
             print(f"Unexpected Error: {e}")
 
 
@@ -162,7 +168,7 @@ def make_app():
     return tornado.web.Application(
         [
             (r"/", MainHandler),
-            (r"/questions", ServeQuestionsHandler),
+            (r"/questions/([a-zA-Z._]+)", ServeQuestionsHandler),
             (r"/websocket", ServeWebsocket),
         ]
     )
