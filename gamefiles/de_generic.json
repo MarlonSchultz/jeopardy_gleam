@@ -48,14 +48,14 @@
                 "answers": [
                     {
                         "id": 6,
-                        "answer": "Sie hat 3.4 Millionen Einwohner.",
+                        "answer": "Diese Stadt hat 3.4 Millionen Einwohner.",
                         "question": "Was ist Berlin?",
                         "points": 100,
                         "type": "question"
                     },
                     {
                         "id": 7,
-                        "answer": "Das ist die Grenze von Dorf zu statt nach Einwohnern.",
+                        "answer": "Das ist die Grenze von Dorf zu Stadt nach Einwohnern.",
                         "question": "Was sind 5000 Einweohner?",
                         "points": 200,
                         "type": "question"
