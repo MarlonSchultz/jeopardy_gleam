@@ -35,6 +35,8 @@ def gpio_buzzer_handler(buzzer_color: str):
     """Handle GPIO button press events."""
     global question_open, pressed_buzzer
 
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
     if question_open and pressed_buzzer == "none":
         pressed_buzzer = buzzer_color
         for client in clients:
