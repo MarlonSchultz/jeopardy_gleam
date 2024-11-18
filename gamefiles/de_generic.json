@@ -56,7 +56,7 @@
                     {
                         "id": 7,
                         "answer": "Das ist die Grenze von Dorf zu Stadt nach Einwohnern.",
-                        "question": "Was sind 5000 Einweohner?",
+                        "question": "Was sind 5000 Einwohner?",
                         "points": 200,
                         "type": "question"
                     },
@@ -128,40 +128,40 @@
         },
         {
             "category": {
-                "name": "Counting things...",
+                "name": "The final frontier...",
                 "answers": [
                     {
-                      "id": 16,
-                      "answer": "This has been the goal that this fits on a CD, while designed the format.",
-                      "question": "What was Beethovens ninth symphony?",
-                      "points": 100,
-                      "type": "question"
+                        "id": 16,
+                        "answer": "This is the first human-made object to orbit Earth.",
+                        "question": "What is Sputnik 1?",
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 17,
-                        "answer": "This is the amount of months elephants are pregnant.",
-                        "question": "What are 22 months?",
+                        "answer": "This planet has the largest volcano in the solar system.",
+                        "question": "What is Mars?",
                         "points": 200,
                         "type": "question"
                     },
                     {
                         "id": 18,
-                        "answer": "This service has worldwide 602,000,000 users.",
-                        "question": "What is spotify?",
+                        "answer": "This astronaut was the first to step on the Moon.",
+                        "question": "Who is Neil Armstrong?",
                         "points": 300,
                         "type": "question"
                     },
                     {
                         "id": 19,
-                        "answer": "This is the amount of wizards that are in Middle earth.",
-                        "question": "What are 5 wizards?",
+                        "answer": "This spacecraft is currently the farthest human-made object from Earth.",
+                        "question": "What is Voyager 1?",
                         "points": 400,
                         "type": "question"
                     },
                     {
                         "id": 20,
-                        "answer": "This is the number of keys a standard piano or grand piano has.",
-                        "question": "What are 88 keys?",
+                        "answer": "This was the first space shuttle to be launched.",
+                        "question": "What is Columbia?",
                         "points": 500,
                         "type": "question"
                     }
@@ -170,87 +170,129 @@
         },
         {
             "category": {
-                "name": "_2",
+                "name": "Scribble for fame",
                 "answers": [
                     {
-                      "id": 21,
-                      "answer": "It is a saddle pad for horses.",
-                      "question": "What is a shabrack?",
-                      "points": 100,
-                      "type": "question"
+                        "id": 21,
+                        "answer": "He wrote 'Romeo and Juliet'.",
+                        "question": "Who is William Shakespeare?",
+                        "points": 100,
+                        "type": "question"
                     },
                     {
                         "id": 22,
-                        "answer": "Barney Stinson played this game to pass time",
-                        "question": "What is Laser Tag?",
+                        "answer": "This author created the character Sherlock Holmes.",
+                        "question": "Who is Sir Arthur Conan Doyle?",
                         "points": 200,
                         "type": "question"
                     },
                     {
                         "id": 23,
-                        "answer": "This is the average height above sea level of the Netherlands",
-                        "question": "What are 30 meters?",
+                        "answer": "This Russian author wrote 'War and Peace'.",
+                        "question": "Who is Leo Tolstoy?",
                         "points": 300,
                         "type": "question"
                     },
                     {
                         "id": 24,
-                        "answer": "This is a person that collects coins",
-                        "question": "What does a numismatist do?",
+                        "answer": "This author wrote '1984' and 'Animal Farm'.",
+                        "question": "Who is George Orwell?",
                         "points": 400,
                         "type": "question"
                     },
                     {
-                      "id": 25,
-                      "answer": "This was the month and year that the first part of Harry Potter was published.",
-                        "question": "When was June 1, 1997?",
+                        "id": 25,
+                        "answer": "This American author penned 'The Great Gatsby'.",
+                        "question": "Who is F. Scott Fitzgerald?",
                         "points": 500,
                         "type": "question"
-                  }
+                    }
                 ]
             }
         },
         {
-          "category": {
-              "name": "_3",
-              "answers": [
-                  {
-                    "id": 26,
-                    "answer": "This country grows the largest amount of vanilla oer year (~3000 tons)",
-                    "question": "What is Madagascar?",
-                    "points": 100,
-                    "type": "question"
-                  },
-                  {
-                      "id": 27,
-                      "answer": "1000 hours, 11,000 hours (correct), 110,000 hours",
-                      "question": "How long does a cat purr on average in its lifetime?",
-                      "points": 200,
-                      "type": "question"
-                  },
-                  {
-                      "id": 28,
-                      "answer": "This animal has the highest bloodpressure known to man.",
-                      "question": "What is a giraffe?",
-                      "points": 300,
-                      "type": "question"
-                  },
-                  {
-                      "id": 29,
-                      "answer": "This is the amount of vanilla grown annually on a global scale.",
-                      "question": "What are ~8000 tons?",
-                      "points": 400,
-                      "type": "question"
-                  },
-                  {
-                      "id": 30,
-                      "answer": "He is the namegiver of Bluetooth.",
-                      "question": "Who is Viking Harald Bluetooth?",
-                      "points": 500,
-                      "type": "question"
-                  }
-              ]
-          }
-      }
+            "category": {
+                "name": "Places to be",
+                "answers": [
+                    {
+                        "id": 26,
+                        "answer": "This tower in Paris is one of the most recognizable landmarks in the world.",
+                        "question": "What is the Eiffel Tower?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 27,
+                        "answer": "This giant statue in Rio de Janeiro is a symbol of Brazil.",
+                        "question": "What is Christ the Redeemer?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 28,
+                        "answer": "This iconic bridge spans the San Francisco Bay.",
+                        "question": "What is the Golden Gate Bridge?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 29,
+                        "answer": "This ancient city carved into rose-red rock is located in Jordan.",
+                        "question": "What is Petra?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 30,
+                        "answer": "This historical landmark in India is known as a symbol of love.",
+                        "question": "What is the Taj Mahal?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Because Astrid & Nicole..",
+                "answers": [
+                    {
+                        "id": 31,
+                        "answer": "This document outlines the expectations and responsibilities for an employee’s role.",
+                        "question": "What is a job description?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 32,
+                        "answer": "This is the process of attracting, selecting, and appointing suitable candidates for jobs.",
+                        "question": "What is recruitment?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 33,
+                        "answer": "This term describes an employee’s journey from recruitment to departure.",
+                        "question": "What is the employee lifecycle?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 34,
+                        "answer": "This is a scheduled meeting where employees receive feedback and discuss performance.",
+                        "question": "What is a performance review?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 35,
+                        "answer": "This HR policy ensures a safe, respectful, and harassment-free workplace.",
+                        "question": "What is a code of conduct?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        }
     ]
 }
