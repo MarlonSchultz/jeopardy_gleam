@@ -17,8 +17,8 @@ pub fn question_modal(
   case model.modal_open {
     model.Question(question_id) -> {
       let #(visibility_question_css, button_text) = case model.reveal_question {
-        True -> #("visible", "Hide")
-        _ -> #("invisible", "Reveal")
+        True -> #("block", "Hide")
+        _ -> #("hidden", "Reveal")
       }
 
       let css_background_for_buzzed: String = {
@@ -37,14 +37,12 @@ pub fn question_modal(
             text(get_question_by_id(model, question_id).answer),
           ])
         _ ->
-          html.h1([class("text-4xl font-bold text-black text-center mb-4")], [
-            html.img([
-              attribute.attribute(
-                "src",
-                rest_server_url()
-                  <> get_question_by_id(model, question_id).answer,
-              ),
-            ]),
+          html.img([
+            attribute.class("h-[50%]"),
+            attribute.attribute(
+              "src",
+              rest_server_url() <> get_question_by_id(model, question_id).answer,
+            ),
           ])
       }
       div([class("flex")], [
