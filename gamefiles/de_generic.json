@@ -141,28 +141,28 @@
                         "id": 17,
                         "answer": "Laser tag",
                         "question": "With which game did Barney Stinson like to pass the time?",
-                        "points": 100,
+                        "points": 200,
                         "type": "question"
                     },
                     {
                         "id": 18,
                         "answer": "June 1, 1996; June 1, 1997 (correct); June 1, 1998",
                         "question": "On what date was the first part of Harry Potter published?",
-                        "points": 100,
+                        "points": 300,
                         "type": "answer"
                     },
                     {
                         "id": 19,
                         "answer": "5",
                         "question": "How many wizards are there in Middle-earth?",
-                        "points": 100,
+                        "points": 400,
                         "type": "question"
                     },
                     {
                         "id": 20,
                         "answer": "88",
                         "question": "How many keys does the standard keyboard of a piano or grand piano have?",
-                        "points": 100,
+                        "points": 500,
                         "type": "solution"
                     }
                 ]
@@ -183,30 +183,30 @@
                         "id": 22,
                         "answer": "22 months",
                         "question": "How many months are elephants pregnant?",
-                        "points": 100,
+                        "points": 200,
                         "type": "solution"
                     },
                     {
                         "id": 23,
                         "answer": "30",
                         "question": "What is the average height above sea level of the Netherlands?",
-                        "points": 100,
+                        "points": 300,
                         "type": "question"
                     },
                     {
                         "id": 24,
                         "answer": "Collecting coins",
                         "question": "What does a numismatist do?",
-                        "points": 100,
+                        "points": 400,
                         "type": "question"
                     },
                     {
-                        "id": 25,
-                        "answer": "First victory in the conquest of England by France (Bonus: in the year 1066)",
-                        "question": "What is the Battle of Hastings known for?",
-                        "points": 100,
-                        "type": "question"
-                    }
+                      "id": 25,
+                      "answer": "602,000,000",
+                      "question": "How many active users does Spotify have worldwide?",
+                      "points": 500,
+                      "type": "solution"
+                  }
                 ]
             }
         },
@@ -225,28 +225,28 @@
                       "id": 27,
                       "answer": "1000 hours, 11,000 hours (correct), 110,000 hours",
                       "question": "How long does a cat purr on average in its lifetime?",
-                      "points": 100,
+                      "points": 200,
                       "type": "answer"
                   },
                   {
                       "id": 28,
                       "answer": "Giraffe",
                       "question": "Which animal has the highest blood pressure?",
-                      "points": 100,
+                      "points": 300,
                       "type": "question"
                   },
                   {
                       "id": 29,
                       "answer": "8,142 tons",
                       "question": "How many tons of vanilla are grown annually?",
-                      "points": 100,
+                      "points": 400,
                       "type": "solution"
                   },
                   {
                       "id": 30,
                       "answer": "Viking Harald Bluetooth",
                       "question": "Where does the name Bluetooth come from?",
-                      "points": 100,
+                      "points": 500,
                       "type": "question"
                   }
               ]
