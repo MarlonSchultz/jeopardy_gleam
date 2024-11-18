@@ -128,7 +128,7 @@
         },
         {
             "category": {
-                "name": "_",
+                "name": "Counting things...",
                 "answers": [
                     {
                       "id": 16,
@@ -139,15 +139,15 @@
                     },
                     {
                         "id": 17,
-                        "answer": "Barney Stinson played this game to pass time",
-                        "question": "What is Laser Tag?",
+                        "answer": "This is the amount of months elephants are pregnant.",
+                        "question": "What are 22 months?",
                         "points": 200,
                         "type": "question"
                     },
                     {
                         "id": 18,
-                        "answer": "This was the month and year that the first part of Harry Potter was published.",
-                        "question": "When was June 1, 1997?",
+                        "answer": "This service has worldwide 602,000,000 users.",
+                        "question": "What is spotify?",
                         "points": 300,
                         "type": "question"
                     },
@@ -181,8 +181,8 @@
                     },
                     {
                         "id": 22,
-                        "answer": "This is the amount of months elephants are pregnant.",
-                        "question": "What are 22 months?",
+                        "answer": "Barney Stinson played this game to pass time",
+                        "question": "What is Laser Tag?",
                         "points": 200,
                         "type": "question"
                     },
@@ -195,17 +195,17 @@
                     },
                     {
                         "id": 24,
-                        "answer": "This is a persin that collects coins",
+                        "answer": "This is a person that collects coins",
                         "question": "What does a numismatist do?",
                         "points": 400,
                         "type": "question"
                     },
                     {
                       "id": 25,
-                      "answer": "This service has worldwide 602,000,000 users.",
-                      "question": "What is spotify?",
-                      "points": 500,
-                      "type": "question"
+                      "answer": "This was the month and year that the first part of Harry Potter was published.",
+                        "question": "When was June 1, 1997?",
+                        "points": 500,
+                        "type": "question"
                   }
                 ]
             }
