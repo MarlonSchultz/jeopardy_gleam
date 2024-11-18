@@ -132,38 +132,38 @@
                 "answers": [
                     {
                       "id": 16,
-                      "answer": "At Sony's request, to fit Beethoven's Ninth Symphony.",
-                      "question": "How was the size of the CD determined?",
+                      "answer": "This has been the goal that this fits on a CD, while designed the format.",
+                      "question": "What was Beethovens ninth symphony?",
                       "points": 100,
                       "type": "question"
                     },
                     {
                         "id": 17,
-                        "answer": "Laser tag",
-                        "question": "With which game did Barney Stinson like to pass the time?",
+                        "answer": "Barney Stinson played this game to pass time",
+                        "question": "What is Laser Tag?",
                         "points": 200,
                         "type": "question"
                     },
                     {
                         "id": 18,
-                        "answer": "June 1, 1996; June 1, 1997 (correct); June 1, 1998",
-                        "question": "On what date was the first part of Harry Potter published?",
+                        "answer": "This was the month and year that the first part of Harry Potter was published.",
+                        "question": "When was June 1, 1997?",
                         "points": 300,
-                        "type": "answer"
+                        "type": "question"
                     },
                     {
                         "id": 19,
-                        "answer": "5",
-                        "question": "How many wizards are there in Middle-earth?",
+                        "answer": "This is the amount of wizards that are in Middle earth.",
+                        "question": "What are 5 wizards?",
                         "points": 400,
                         "type": "question"
                     },
                     {
                         "id": 20,
-                        "answer": "88",
-                        "question": "How many keys does the standard keyboard of a piano or grand piano have?",
+                        "answer": "This is the number of keys a standard piano or grand piano has.",
+                        "question": "What are 88 keys?",
                         "points": 500,
-                        "type": "solution"
+                        "type": "question"
                     }
                 ]
             }
@@ -174,38 +174,38 @@
                 "answers": [
                     {
                       "id": 21,
-                      "answer": "A saddle pad for horses.",
+                      "answer": "It is a saddle pad for horses.",
                       "question": "What is a shabrack?",
                       "points": 100,
                       "type": "question"
                     },
                     {
                         "id": 22,
-                        "answer": "22 months",
-                        "question": "How many months are elephants pregnant?",
+                        "answer": "This is the amount of months elephants are pregnant.",
+                        "question": "What are 22 months?",
                         "points": 200,
-                        "type": "solution"
+                        "type": "question"
                     },
                     {
                         "id": 23,
-                        "answer": "30",
-                        "question": "What is the average height above sea level of the Netherlands?",
+                        "answer": "This is the average height above sea level of the Netherlands",
+                        "question": "What are 30 meters?",
                         "points": 300,
                         "type": "question"
                     },
                     {
                         "id": 24,
-                        "answer": "Collecting coins",
+                        "answer": "This is a persin that collects coins",
                         "question": "What does a numismatist do?",
                         "points": 400,
                         "type": "question"
                     },
                     {
                       "id": 25,
-                      "answer": "602,000,000",
-                      "question": "How many active users does Spotify have worldwide?",
+                      "answer": "This service has worldwide 602,000,000 users.",
+                      "question": "What is spotify?",
                       "points": 500,
-                      "type": "solution"
+                      "type": "question"
                   }
                 ]
             }
@@ -216,8 +216,8 @@
               "answers": [
                   {
                     "id": 26,
-                    "answer": "Madagascar, ~3000 tons",
-                    "question": "In which country is the largest amount of vanilla grown?",
+                    "answer": "This country grows the largest amount of vanilla oer year (~3000 tons)",
+                    "question": "What is Madagascar?",
                     "points": 100,
                     "type": "question"
                   },
@@ -226,26 +226,26 @@
                       "answer": "1000 hours, 11,000 hours (correct), 110,000 hours",
                       "question": "How long does a cat purr on average in its lifetime?",
                       "points": 200,
-                      "type": "answer"
+                      "type": "question"
                   },
                   {
                       "id": 28,
-                      "answer": "Giraffe",
-                      "question": "Which animal has the highest blood pressure?",
+                      "answer": "This animal has the highest bloodpressure known to man.",
+                      "question": "What is a giraffe?",
                       "points": 300,
                       "type": "question"
                   },
                   {
                       "id": 29,
-                      "answer": "8,142 tons",
-                      "question": "How many tons of vanilla are grown annually?",
+                      "answer": "This is the amount of vanilla grown annually on a global scale.",
+                      "question": "What are ~8000 tons?",
                       "points": 400,
-                      "type": "solution"
+                      "type": "question"
                   },
                   {
                       "id": 30,
-                      "answer": "Viking Harald Bluetooth",
-                      "question": "Where does the name Bluetooth come from?",
+                      "answer": "He is the namegiver of Bluetooth.",
+                      "question": "Who is Viking Harald Bluetooth?",
                       "points": 500,
                       "type": "question"
                   }

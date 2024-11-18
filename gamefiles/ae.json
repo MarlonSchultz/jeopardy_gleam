@@ -194,19 +194,19 @@
                       "type": "question"
                   },
                   {
-                      "id": 24,
-                      "answer": "AnswerString5-4",
-                      "question": "QuestionString",
-                      "points": 400,
-                      "type": "question"
-                  },
-                  {
-                      "id": 25,
-                      "answer": "AnswerString5-5",
-                      "question": "QuestionString",
-                      "points": 500,
-                      "type": "question"
-                  }
+                    "id": 24,
+                    "answer": "They are javascripts magic guard.",
+                    "question": "What are proxies?",
+                    "points": 400,
+                    "type": "question"
+                },
+                {
+                    "id": 25,
+                    "answer": "It is a somehow unreliable, likely garbaae, registry.",
+                    "question": "What is The FinalizationRegistry?",
+                    "points": 500,
+                    "type": "question"
+                }
               ]
           }
       }
