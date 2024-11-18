@@ -6,7 +6,7 @@
               "answers": [
                   {
                       "id": 1,
-                      "answer": "<img src=\"http://localhost:8888/images/Example.jpg\">",
+                      "answer": "The L in the SOLID design principles for OOP stands for the name of this famous mathematician.",
                       "question": "Who is Barbara Liskov? (Liskov principle of substitution)",
                       "points": 100,
                       "type": "question"
@@ -44,7 +44,7 @@
       },
       {
           "category": {
-              "name": "Snakes everywhere!",
+              "name": "Snakes",
               "answers": [
                   {
                       "id": 6,
@@ -195,15 +195,15 @@
                   },
                   {
                       "id": 24,
-                      "answer": "Proxies.",
-                      "question": "What is JavaScripts magic guard?",
+                      "answer": "AnswerString5-4",
+                      "question": "QuestionString",
                       "points": 400,
                       "type": "question"
                   },
                   {
                       "id": 25,
-                      "answer": "The FinalizationRegistry",
-                      "question": "What is a somehow unreliable, likely gargabe, registry?",
+                      "answer": "AnswerString5-5",
+                      "question": "QuestionString",
                       "points": 500,
                       "type": "question"
                   }

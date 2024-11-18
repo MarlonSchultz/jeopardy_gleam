@@ -1,6 +1,6 @@
+import config.{answer_file_name, rest_server_url, websocket_server_url}
 import gleam/float
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/option.{None, Some}
 import lustre
@@ -28,7 +28,10 @@ fn get_json_from_api() -> effect.Effect(Msg) {
       json_decoders.decode_json_categories(),
       ApiReturnedJson,
     )
-  lustre_http.get("http://localhost:8888/questions", expect)
+  lustre_http.get(
+    rest_server_url() <> "/questions/" <> answer_file_name(),
+    expect,
+  )
 }
 
 fn update(model: Model, msg) -> #(Model, effect.Effect(Msg)) {
@@ -231,7 +234,7 @@ fn init(_flags) -> #(Model, effect.Effect(Msg)) {
     ),
     effect.batch([
       get_json_from_api(),
-      websocket.init("ws://localhost:8888/websocket", model.WsWrapper),
+      websocket.init(websocket_server_url(), model.WsWrapper),
     ]),
   )
 }

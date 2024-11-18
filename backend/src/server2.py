@@ -2,6 +2,8 @@ import asyncio
 import json
 import os
 import platform
+import random
+import threading
 
 import tornado.web
 import tornado.websocket
@@ -35,16 +37,10 @@ def gpio_buzzer_handler(buzzer_color: str):
     """Handle GPIO button press events."""
     global question_open, pressed_buzzer
 
-    asyncio.set_event_loop(asyncio.new_event_loop())
-
     if question_open and pressed_buzzer == "none":
         pressed_buzzer = buzzer_color
         for client in clients:
-            try:
-                print(f"Sending message to client: {buzzer_color}")
-                client.write_message(buzzer_color)
-            except Exception as e:
-                print(f"Error sending WebSocket message: {e}")
+            client.write_message(buzzer_color)
         print(f"Buzz accepted: {buzzer_color}")
     elif not question_open:
         print(f"Buzz ignored (no question open): {buzzer_color}")
@@ -74,6 +70,24 @@ def setup_gpio():
 
 # Initialize buttons with the conditional GPIO setup
 buttons = setup_gpio()
+
+
+# Simulate random button presses
+def simulate_button_presses():
+    """Simulate random button presses every 2 seconds if not on Raspberry Pi."""
+    colors = ["yellow", "blue", "green", "red"]
+    while True:
+        if not IS_RASPBERRY_PI and os.environ.get("DISABLE_GPIO") != "1":
+            random_color = random.choice(colors)
+            print(f"Simulating button press: {random_color}")
+            gpio_buzzer_handler(random_color)
+        asyncio.run(asyncio.sleep(2))
+
+
+# Start button simulation in a separate thread if not on Raspberry Pi
+if not IS_RASPBERRY_PI:
+    simulation_thread = threading.Thread(target=simulate_button_presses, daemon=True)
+    simulation_thread.start()
 
 
 # Tornado Handlers
@@ -130,7 +144,6 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
     def open(self):
         print("WebSocket connection opened")
         clients.append(self)
-        print(f"Current clients: {clients}")
 
     def on_close(self):
         print("WebSocket connection closed")
@@ -138,7 +151,6 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         global question_open, pressed_buzzer
-        print(f"Message received: {message}")
         match message:
             case "Question open":
                 question_open = True
@@ -147,39 +159,17 @@ class ServeWebsocket(tornado.websocket.WebSocketHandler):
                 question_open = False
                 pressed_buzzer = "none"
                 print("Question is now closed.")
-
-
-class BuzzerHandler(tornado.web.RequestHandler):
-    """Handler for simulating button presses."""
-
-    def get(self, buzzer_color):
-        """Receive a simulated button press and send it to WebSocket clients."""
-        try:
-            print(f"Simulated button press: {buzzer_color}")
-            gpio_buzzer_handler(buzzer_color)  # Directly call the handler
-            self.write(f"Simulated button press: {buzzer_color}")
-        except Exception as e:
-            print(f"Error processing simulated button press: {e}")
-            self.write_error(500, message=str(e))
+        print(f"Message received: {message}")
 
 
 # Tornado Application Setup
-GAMEFILES_IMAGES_PATH = os.path.abspath("../gamefiles/images")
-
-
 def make_app():
     """Create and configure the Tornado web application."""
     return tornado.web.Application(
         [
             (r"/", MainHandler),
             (r"/questions/([a-zA-Z._]+)", ServeQuestionsHandler),
-            (r"/buzzer/([a-zA-Z]+)", BuzzerHandler),
             (r"/websocket", ServeWebsocket),
-            (
-                r"/images/(.*)",
-                tornado.web.StaticFileHandler,
-                {"path": GAMEFILES_IMAGES_PATH},
-            ),
         ]
     )
 
@@ -190,7 +180,6 @@ async def main():
     app = make_app()
     app.listen(8888)
     print("Server running at http://localhost:8888")
-
     await asyncio.Event().wait()  # Keep the event loop running
 
 

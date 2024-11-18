@@ -1,0 +1,256 @@
+{
+    "categories": [
+        {
+            "category": {
+                "name": "Erzwingular",
+                "answers": [
+                    {
+                        "id": 1,
+                        "answer": "Das ist nur eines von Schwzwei.",
+                        "question": "Was ist ein Schwein?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 2,
+                        "answer": "Das ist der Singular von Zweige!",
+                        "question": "Was ist Einge?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 3,
+                        "answer": "Dreifel ist der +1 Lativ von diesem Substantiv!",
+                        "question": "Was ist Zweifel?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 4,
+                        "answer": "AnswerString1-4",
+                        "question": "QuestionString",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 5,
+                        "answer": "AnswerString1-5",
+                        "question": "QuestionString",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Stadtliche Sachen",
+                "answers": [
+                    {
+                        "id": 6,
+                        "answer": "Diese Stadt hat 3.4 Millionen Einwohner.",
+                        "question": "Was ist Berlin?",
+                        "points": 100,
+                        "type": "question"
+                    },
+                    {
+                        "id": 7,
+                        "answer": "Das ist die Grenze von Dorf zu Stadt nach Einwohnern.",
+                        "question": "Was sind 5000 Einweohner?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 8,
+                        "answer": "Der schnellste Weg dorthin zu kommen ist: Du nimmst den Daumen in die Hand und...",
+                        "question": "Was ist Dresden?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 9,
+                        "answer": "Dieser Münchner Ort klingt wie ein Teil vom Compiler.",
+                        "question": "Was ist München Pa(r)sing?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 10,
+                        "answer": "Mit 312.696 Quadratkilometern ist es das sechstgrößte Land der EU.",
+                        "question": "Was ist Polen?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "Picture perfect peers",
+                "answers": [
+                    {
+                        "id": 11,
+                        "answer": "/images/recknagel.jpg",
+                        "question": "Wer ist Lucas?",
+                        "points": 100,
+                        "type": "image"
+                    },
+                    {
+                        "id": 12,
+                        "answer": "/images/alex.jpg",
+                        "question": "Wer ist Alex?",
+                        "points": 200,
+                        "type": "image"
+                    },
+                    {
+                        "id": 13,
+                        "answer": "/images/chris.jpg",
+                        "question": "Wer ist Chris?",
+                        "points": 300,
+                        "type": "image"
+                    },
+                    {
+                        "id": 14,
+                        "answer": "/images/kruhl.jpg",
+                        "question": "Wer ist Dr. Kruhl?",
+                        "points": 400,
+                        "type": "image"
+                    },
+                    {
+                        "id": 15,
+                        "answer": "Sein Name ist eine verniedlichte Kurzform für den harten Sper.",
+                        "question": "Wer ist Gerrit?",
+                        "points": 500,
+                        "type": "question"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "_",
+                "answers": [
+                    {
+                      "id": 16,
+                      "answer": "At Sony's request, to fit Beethoven's Ninth Symphony.",
+                      "question": "How was the size of the CD determined?",
+                      "points": 100,
+                      "type": "question"
+                    },
+                    {
+                        "id": 17,
+                        "answer": "Laser tag",
+                        "question": "With which game did Barney Stinson like to pass the time?",
+                        "points": 200,
+                        "type": "question"
+                    },
+                    {
+                        "id": 18,
+                        "answer": "June 1, 1996; June 1, 1997 (correct); June 1, 1998",
+                        "question": "On what date was the first part of Harry Potter published?",
+                        "points": 300,
+                        "type": "answer"
+                    },
+                    {
+                        "id": 19,
+                        "answer": "5",
+                        "question": "How many wizards are there in Middle-earth?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                        "id": 20,
+                        "answer": "88",
+                        "question": "How many keys does the standard keyboard of a piano or grand piano have?",
+                        "points": 500,
+                        "type": "solution"
+                    }
+                ]
+            }
+        },
+        {
+            "category": {
+                "name": "_2",
+                "answers": [
+                    {
+                      "id": 21,
+                      "answer": "A saddle pad for horses.",
+                      "question": "What is a shabrack?",
+                      "points": 100,
+                      "type": "question"
+                    },
+                    {
+                        "id": 22,
+                        "answer": "22 months",
+                        "question": "How many months are elephants pregnant?",
+                        "points": 200,
+                        "type": "solution"
+                    },
+                    {
+                        "id": 23,
+                        "answer": "30",
+                        "question": "What is the average height above sea level of the Netherlands?",
+                        "points": 300,
+                        "type": "question"
+                    },
+                    {
+                        "id": 24,
+                        "answer": "Collecting coins",
+                        "question": "What does a numismatist do?",
+                        "points": 400,
+                        "type": "question"
+                    },
+                    {
+                      "id": 25,
+                      "answer": "602,000,000",
+                      "question": "How many active users does Spotify have worldwide?",
+                      "points": 500,
+                      "type": "solution"
+                  }
+                ]
+            }
+        },
+        {
+          "category": {
+              "name": "_3",
+              "answers": [
+                  {
+                    "id": 26,
+                    "answer": "Madagascar, ~3000 tons",
+                    "question": "In which country is the largest amount of vanilla grown?",
+                    "points": 100,
+                    "type": "question"
+                  },
+                  {
+                      "id": 27,
+                      "answer": "1000 hours, 11,000 hours (correct), 110,000 hours",
+                      "question": "How long does a cat purr on average in its lifetime?",
+                      "points": 200,
+                      "type": "answer"
+                  },
+                  {
+                      "id": 28,
+                      "answer": "Giraffe",
+                      "question": "Which animal has the highest blood pressure?",
+                      "points": 300,
+                      "type": "question"
+                  },
+                  {
+                      "id": 29,
+                      "answer": "8,142 tons",
+                      "question": "How many tons of vanilla are grown annually?",
+                      "points": 400,
+                      "type": "solution"
+                  },
+                  {
+                      "id": 30,
+                      "answer": "Viking Harald Bluetooth",
+                      "question": "Where does the name Bluetooth come from?",
+                      "points": 500,
+                      "type": "question"
+                  }
+              ]
+          }
+      }
+    ]
+}

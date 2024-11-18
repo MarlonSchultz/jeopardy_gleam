@@ -1,3 +1,4 @@
+import config.{rest_server_url}
 import gleam/float
 import gleam/int
 import lustre/attribute.{class}
@@ -16,8 +17,8 @@ pub fn question_modal(
   case model.modal_open {
     model.Question(question_id) -> {
       let #(visibility_question_css, button_text) = case model.reveal_question {
-        True -> #("visible", "Hide")
-        _ -> #("invisible", "Reveal")
+        True -> #("block", "Hide")
+        _ -> #("hidden", "Reveal")
       }
 
       let css_background_for_buzzed: String = {
@@ -28,6 +29,21 @@ pub fn question_modal(
           model.Green -> "bg-green-200 border-8 border-green-400"
           model.NoOne -> "bg-slate-400 border-8 border-slate-700"
         }
+      }
+
+      let answer = case get_question_by_id(model, question_id).question_type {
+        "question" ->
+          html.h1([class("text-4xl font-bold text-black text-center mb-4")], [
+            text(get_question_by_id(model, question_id).answer),
+          ])
+        _ ->
+          html.img([
+            attribute.class("h-[50%]"),
+            attribute.attribute(
+              "src",
+              rest_server_url() <> get_question_by_id(model, question_id).answer,
+            ),
+          ])
       }
       div([class("flex")], [
         div(
@@ -40,10 +56,7 @@ pub fn question_modal(
           [
             div([class("flex-grow flex flex-col items-center justify-center")], [
               // Answer
-              html.h1(
-                [class("text-4xl font-bold text-black text-center mb-4")],
-                [text(get_question_by_id(model, question_id).answer)],
-              ),
+              answer,
               // Question
               html.h1(
                 [
