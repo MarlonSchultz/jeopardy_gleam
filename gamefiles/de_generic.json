@@ -128,87 +128,129 @@
         },
         {
             "category": {
-                "name": "cat4",
+                "name": "_",
                 "answers": [
                     {
-                        "id": 16,
-                        "answer": "AnswerString4",
-                        "question": "QuestionString",
+                      "id": 16,
+                      "answer": "At Sony's request, to fit Beethoven's Ninth Symphony.",
+                      "question": "How was the size of the CD determined?",
+                      "points": 100,
+                      "type": "question"
+                    },
+                    {
+                        "id": 17,
+                        "answer": "Laser tag",
+                        "question": "With which game did Barney Stinson like to pass the time?",
                         "points": 100,
                         "type": "question"
                     },
                     {
-                        "id": 17,
-                        "answer": "AnswerString4-2",
-                        "question": "QuestionString",
-                        "points": 200,
-                        "type": "question"
-                    },
-                    {
                         "id": 18,
-                        "answer": "AnswerString4-3",
-                        "question": "QuestionString",
-                        "points": 300,
-                        "type": "question"
+                        "answer": "June 1, 1996; June 1, 1997 (correct); June 1, 1998",
+                        "question": "On what date was the first part of Harry Potter published?",
+                        "points": 100,
+                        "type": "answer"
                     },
                     {
                         "id": 19,
-                        "answer": "AnswerString4-4",
-                        "question": "QuestionString",
-                        "points": 400,
+                        "answer": "5",
+                        "question": "How many wizards are there in Middle-earth?",
+                        "points": 100,
                         "type": "question"
                     },
                     {
                         "id": 20,
-                        "answer": "AnswerString4-5",
-                        "question": "QuestionString",
-                        "points": 500,
-                        "type": "question"
+                        "answer": "88",
+                        "question": "How many keys does the standard keyboard of a piano or grand piano have?",
+                        "points": 100,
+                        "type": "solution"
                     }
                 ]
             }
         },
         {
             "category": {
-                "name": "cat5",
+                "name": "_2",
                 "answers": [
                     {
-                        "id": 21,
-                        "answer": "AnswerString5",
-                        "question": "QuestionString",
+                      "id": 21,
+                      "answer": "A saddle pad for horses.",
+                      "question": "What is a shabrack?",
+                      "points": 100,
+                      "type": "question"
+                    },
+                    {
+                        "id": 22,
+                        "answer": "22 months",
+                        "question": "How many months are elephants pregnant?",
+                        "points": 100,
+                        "type": "solution"
+                    },
+                    {
+                        "id": 23,
+                        "answer": "30",
+                        "question": "What is the average height above sea level of the Netherlands?",
                         "points": 100,
                         "type": "question"
                     },
                     {
-                        "id": 22,
-                        "answer": "AnswerString5-2",
-                        "question": "QuestionString",
-                        "points": 200,
-                        "type": "question"
-                    },
-                    {
-                        "id": 23,
-                        "answer": "AnswerString5-3",
-                        "question": "QuestionString",
-                        "points": 300,
-                        "type": "question"
-                    },
-                    {
                         "id": 24,
-                        "answer": "AnswerString5-4",
-                        "question": "QuestionString",
-                        "points": 400,
+                        "answer": "Collecting coins",
+                        "question": "What does a numismatist do?",
+                        "points": 100,
                         "type": "question"
                     },
                     {
                         "id": 25,
-                        "answer": "AnswerString5-5",
-                        "question": "QuestionString",
-                        "points": 500,
+                        "answer": "First victory in the conquest of England by France (Bonus: in the year 1066)",
+                        "question": "What is the Battle of Hastings known for?",
+                        "points": 100,
                         "type": "question"
                     }
                 ]
             }
-        }
+        },
+        {
+          "category": {
+              "name": "_3",
+              "answers": [
+                  {
+                    "id": 26,
+                    "answer": "Madagascar, ~3000 tons",
+                    "question": "In which country is the largest amount of vanilla grown?",
+                    "points": 100,
+                    "type": "question"
+                  },
+                  {
+                      "id": 27,
+                      "answer": "1000 hours, 11,000 hours (correct), 110,000 hours",
+                      "question": "How long does a cat purr on average in its lifetime?",
+                      "points": 100,
+                      "type": "answer"
+                  },
+                  {
+                      "id": 28,
+                      "answer": "Giraffe",
+                      "question": "Which animal has the highest blood pressure?",
+                      "points": 100,
+                      "type": "question"
+                  },
+                  {
+                      "id": 29,
+                      "answer": "8,142 tons",
+                      "question": "How many tons of vanilla are grown annually?",
+                      "points": 100,
+                      "type": "solution"
+                  },
+                  {
+                      "id": 30,
+                      "answer": "Viking Harald Bluetooth",
+                      "question": "Where does the name Bluetooth come from?",
+                      "points": 100,
+                      "type": "question"
+                  }
+              ]
+          }
+      }
     ]
 }
